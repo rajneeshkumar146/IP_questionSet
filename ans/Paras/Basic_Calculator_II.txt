@@ -1,0 +1,56 @@
+class Solution {
+   
+        public int calculate(String s) {
+        Stack<Integer> stack = new Stack<>();
+        int i = 0;
+        char sign = '+';
+       
+            while(i < s.length())
+        {
+            if(Character.isDigit(s.charAt(i)))
+            {
+                int num = 0;
+                while(i < s.length() &&                                       Character.isDigit(s.charAt(i)))
+                {
+                    num = num*10 + s.charAt(i) - '0';
+                    i++;
+                }
+                if(sign == '-')
+                {
+                    stack.push(-num);
+                }
+                else if(sign == '+')
+                {
+                    stack.push(num);
+                }
+                else if(sign == '*')
+                {
+                    stack.push(stack.pop()*num);
+                }
+                else
+                {
+                    stack.push(stack.pop()/num);
+                }
+            }
+            else if(s.charAt(i) == '+' || s.charAt(i) == '-' || s.charAt(i) == '*' || s.charAt(i) == '/')
+            {
+                sign = s.charAt(i);
+                i++;
+            }
+            else
+            {
+                i++; // empty space
+            }
+        }
+        
+        int result = 0;
+        while(!stack.isEmpty())
+        {
+            result += stack.pop();
+        }
+        return result;
+    }
+    
+  
+    
+}

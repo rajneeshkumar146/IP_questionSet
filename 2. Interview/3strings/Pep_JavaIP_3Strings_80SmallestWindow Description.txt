@@ -1,0 +1,102 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a string. You have to print the smallest size of substring 
+which contains all the unique characters of the string.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/smallest-window-contains-characters-string/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Pehle unique characters count le lo
+2. Take 2 pointers. Start and end. Fir loop ko traverse karo, aur har naye character
+ke liye count ko increase kar do. jaise hi count, unique character ke count ke equal
+aa jata, pehli window mil gyi. Jab tak nhin milta sirf end ko increase karo.
+3. Ab iss window ka size chhota karne ki koshish, jab tak count, unique character
+ke count ke equal rehta h. Size ko chhota karne ke liye sirf start ko increase karo.
+4. ek overall min variable le kar, minimum window update karte raho. End mai minimum
+window size print kar do. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Strings;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_3Strings_80SmallestWindow {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		String s = scn.next();
+
+		solve(s);
+
+	}
+
+	private static void solve(String s) {
+		boolean[] arr = new boolean[26];
+		int count_unique = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (arr[s.charAt(i) - 'a'] == false) {
+				arr[s.charAt(i) - 'a'] = true;
+				count_unique++;
+			}
+		}
+		// System.out.println(count_unique); This is correct
+		int[] arr_count = new int[26];
+		int si = 0, ei = 0;
+		int omin = Integer.MAX_VALUE, osi = 0, oei = 0;
+		int count_uniquecharaters = 0;
+		while (ei < s.length()) {
+			if (count_uniquecharaters != count_unique) {
+				if (arr_count[s.charAt(ei) - 'a'] == 0) {
+					// this means I have come here for the first time
+					count_uniquecharaters++;
+					arr_count[s.charAt(ei) - 'a']++;
+				} else {
+					arr_count[s.charAt(ei) - 'a']++;
+				}
+				ei++;
+			} else {
+				while (count_uniquecharaters == count_unique) {
+					if (omin > ei - si) {
+						omin = ei - si;
+						osi = si;
+						oei = ei;
+
+					}
+					arr_count[s.charAt(si) - 'a']--;
+					if (arr_count[s.charAt(si) - 'a'] == 0) {
+						count_uniquecharaters--;
+					}
+					si++;
+
+				}
+			}
+
+		}
+
+		while (count_uniquecharaters == count_unique) {
+			if (omin > ei - si) {
+				omin = ei - si;
+				osi = si;
+				oei = ei;
+
+			}
+			arr_count[s.charAt(si) - 'a']--;
+			if (arr_count[s.charAt(si) - 'a'] == 0) {
+				count_uniquecharaters--;
+			}
+			si++;
+
+		}
+
+		System.out.println(omin);
+
+	}
+
+}

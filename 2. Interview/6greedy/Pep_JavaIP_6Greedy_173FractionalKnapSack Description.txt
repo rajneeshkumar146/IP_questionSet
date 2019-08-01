@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given n pairs of value and weights. You are also given capacity of
+the bag.
+2. We have to fill the bag with the weights such that value is maximized.
+3. We can also fraction of a weight in the bag.
+4. Print the maximized profit possible.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/fractional-knapsack-problem/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Sort the pairs in decreasing order of their value to weight ratios.
+2. We will keep on filling the weights according to sorted sequence till the sum
+of weights is less than capacity.
+3. We will put a fraction of weight and value of the last permissible weight,
+according to the capacity.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Greedy;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Pep_JavaIP_6Greedy_173FractionalKnapSack {
+
+	static class Pair{
+		int value;
+		int weight;
+
+		public Pair(int value, int weight) {
+			this.value=value;
+			this.weight=weight;
+		}
+	}
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		Pair[] pairs=new Pair[scn.nextInt()];
+		for(int i=0; i<pairs.length; i++) {
+			pairs[i]=new Pair(scn.nextInt(),scn.nextInt());
+		}
+
+		int capacity=scn.nextInt();
+		Arrays.sort(pairs, new Comparator<Pair>() {
+
+			@Override
+			//using it this way, gives us desc comparator
+			public int compare(Pair o1, Pair o2) {
+				return (int) (o2.value/o2.weight)-(o1.value/o1.weight);
+			}
+		});
+
+		int currWeight=0;
+		double finalValue=0.0;
+
+		for(int i=0; i<pairs.length; i++) {
+			if(currWeight+pairs[i].weight<=capacity) {
+				currWeight+=pairs[i].weight;
+				finalValue+=pairs[i].value;
+			}else {
+				int remainingcapacity=capacity-currWeight;
+				double answer=(double)remainingcapacity/pairs[i].weight;
+				finalValue+=pairs[i].value*answer;
+				break;
+			}
+		}
+
+		System.out.println(finalValue);
+	}
+
+}

@@ -1,0 +1,15 @@
+class Solution {
+    public String toLowerCase(String str) {
+       String ans="";
+        for(char ch:str.toCharArray())
+       {
+           if(ch-'A'>=0&& ch-'A'<=26)
+           {
+               ans=ans+(char)(ch-'A'+'a');
+           }
+           else
+               ans=ans+ch;
+       }
+        return ans;
+    }
+}

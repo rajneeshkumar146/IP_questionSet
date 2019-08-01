@@ -1,0 +1,27 @@
+class Solution {
+    public int numSubarrayBoundedMax(int[] A, int L, int R) {
+        
+        Boolean needed=false;
+        int start=0;
+        int end=0;
+        int count=0;
+        int val=0;
+		while (end < A.length) {
+			if (A[end] > R) {
+				start = end + 1;
+				needed = false;
+			} else if (A[end] >= L && A[end] <= R) {
+				if (needed == false)
+					needed = true;
+				val=(end - start) + 1;
+				count = count + val;
+						
+			} else {
+				if (needed)
+					count = count + val;
+			}
+			end++;
+		}
+        return count;
+    }
+}

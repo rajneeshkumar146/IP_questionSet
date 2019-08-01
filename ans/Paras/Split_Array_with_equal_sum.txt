@@ -1,0 +1,57 @@
+public class Solution {
+    /**
+     * @param nums: a list of integer
+     * @return: return a boolean
+     */
+    public boolean splitArray(List<Integer> nums) {
+        
+        int leftsum[]=new int[nums.size()];
+        int rightsum[]=new int[nums.size()];
+        
+        int n=nums.size();
+        leftsum[0]=nums.get(0);
+        for(int i=1;i<n;i++)
+        {
+            leftsum[i]=leftsum[i-1]+nums.get(i);
+        }
+        
+        rightsum[n-1]=nums.get(n-1);
+    
+        for(int i=n-2;i>=0;i--)
+        {
+            rightsum[i]=rightsum[i+1]+nums.get(i);
+        }
+    
+    
+       
+        for(int j=3;j<n-3;j++)
+        {HashSet<Integer>sum=new HashSet<Integer>();
+            
+         for(int i=1;i<j-1;i++)
+         {
+                if(leftsum[i-1]==(rightsum[i+1]-rightsum[j]))
+                {
+                    sum.add(leftsum[i-1]);                    
+                }
+         }
+         
+         for(int k=j+2;k<n-1;k++)
+         {
+             if(((leftsum[k-1]-leftsum[j])==rightsum[k+1])&&sum.contains(rightsum[k+1]))
+                {
+                    return true;
+                }
+         }
+         
+            
+            
+        }
+        
+        
+        return false;
+    }
+}}
+        
+        
+        return false;
+    }

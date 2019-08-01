@@ -1,0 +1,18 @@
+class Solution {
+	public boolean divisorGame(int N) {
+    	if(N<2)return false;
+    	boolean[] dp=new boolean[N+1];
+    	dp[2]=true;
+    	for(int n=2;n<=N;n++){
+        	if(dp[n]==true)continue;
+        	for(int i=2;i<=Math.sqrt(n);i++){
+            	if(n%i==0 && (!dp[n-i] || !dp[n-n/i])){
+                	dp[n]=true;
+                	break;
+            	}
+        	}
+        	if(dp[n]==false && n<N)dp[n+1]=true;
+    	}
+    	return dp[N];
+	}
+}

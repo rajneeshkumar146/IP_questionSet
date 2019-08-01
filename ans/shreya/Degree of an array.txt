@@ -1,0 +1,59 @@
+class Solution {
+    public int findShortestSubArray(int[] nums) {
+        
+        //for the left most index of an number
+        HashMap<Integer, Integer> leftmostocc = new HashMap<>();
+        
+        //for right most index of number
+        HashMap<Integer, Integer> rightmostocc = new HashMap<>(); 
+        
+        
+        //count of that number
+        HashMap<Integer,Integer> count = new HashMap<>();
+
+        
+        //fill all the hashmaps
+        for (int i = 0; i < nums.length; i++) {
+            int val = nums[i];
+            
+            rightmostocc.put(val, i);
+            
+            if (!leftmostocc.containsKey(val))
+                leftmostocc.put(val, i);
+            
+            if(count.containsKey(val))
+            {
+                int value=count.get(val)+1;
+                count.put(val,value);
+            }
+                else
+                count.put(val,1);
+        }
+
+        int ans = nums.length;
+        int degree=Integer.MIN_VALUE;
+
+        
+        //calculate degree
+        for(Map.Entry<Integer,Integer> entry:count.entrySet())
+        {
+            if(entry.getValue()>degree)
+                degree=entry.getValue();
+        }
+        
+        //calculate the leghts of all the value having count=degree
+        for(Map.Entry<Integer,Integer> entry:count.entrySet())
+        {
+            int val=entry.getKey();
+            if(count.get(val)==degree)
+            {
+                int length=rightmostocc.get(val)-leftmostocc.get(val)+1;
+                if(ans>length)
+                    ans=length;
+            }
+                
+        }
+        
+        return ans;
+    }
+}

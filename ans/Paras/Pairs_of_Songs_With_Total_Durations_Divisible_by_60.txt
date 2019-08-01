@@ -1,0 +1,28 @@
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+       HashMap<Integer,Integer> freq=new HashMap<>();
+        for(int t:time)
+        {
+            if(freq.containsKey(t%60))
+                freq.put(t%60,freq.get(t%60)+1);
+            else{
+                freq.put(t%60,1);
+            }
+        }
+        
+        ArrayList<Integer>keys=new ArrayList<>(freq.keySet());
+        int count=0;
+        for(int key:keys)
+        {
+            if((60-key)%60!=key)
+            {
+                if(freq.containsKey(60-key))
+                   count+=freq.get(60-key)*freq.get(key);
+            }else{
+                int n=freq.get(key)-1;
+                count+=(n*(n+1));
+                }
+    }
+        return count/2;
+    }
+}

@@ -1,0 +1,26 @@
+class Solution {
+    public boolean canThreePartsEqualSum(int[] A) {
+        
+        int sumarr[]=new int[A.length];
+     
+        sumarr[0]=A[0];
+        for(int i=1;i<A.length;i++)
+        {
+            sumarr[i]=sumarr[i-1]+A[i];
+        }
+        
+        int val=sumarr[A.length-1];
+        int count=1;
+        
+        
+        for(int i=0;i<A.length;i++)
+        {
+            if(sumarr[i]/count==val/3)
+                count++;
+        }
+        
+        if(count==4)
+            return true;
+        return false;
+    }
+}

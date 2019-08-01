@@ -1,0 +1,53 @@
+class Solution {
+	public double knightProbability(int N, int K, int r, int c) {	 
+    	int box=r*N+c;
+    	double[][] dp=new double[K+1][N*N];
+    	dp[0][box]=1.0;
+    	for(int i=0;i<K;i++){
+        	for(int j=0;j<dp[0].length;j++){
+            	if(dp[i][j]!=0){
+                	fillValues(dp, i, j);
+            	}
+        	}
+    	}
+                                                          	 
+    	double ans=0;
+    	for(int j=0;j<dp[0].length;j++)
+        	ans+=dp[K][j];
+                                                            	 
+    	return ans;
+	}
+	public void fillValues(double[][] dp, int i, int b){
+    	int L=(int)Math.sqrt(dp[0].length);
+    	int r=b/L;
+    	int c=b%L;
+   	 
+    	if(r-1>-1 && c+2<L){
+        	dp[i+1][bno(r-1, c+2, L)]+=(dp[i][b]*1/8);
+    	}
+    	if(r+1<L && c+2<L){
+        	dp[i+1][bno(r+1, c+2, L)]+=(dp[i][b]*1/8);
+    	}
+    	if(r+2<L && c+1<L){
+        	dp[i+1][bno(r+2, c+1, L)]+=(dp[i][b]*1/8);   
+    	}
+    	if(r+2<L && c-1>-1){
+        	dp[i+1][bno(r+2, c-1, L)]+=(dp[i][b]*1/8);
+    	}
+    	if(r-1>-1 && c-2>-1){
+        	dp[i+1][bno(r-1, c-2, L)]+=(dp[i][b]*1/8);
+    	}
+    	if(r+1<L && c-2>-1){
+        	dp[i+1][bno(r+1, c-2, L)]+=(dp[i][b]*1/8);   
+    	}
+    	if(r-2>-1 && c+1<L){
+        	dp[i+1][bno(r-2, c+1, L)]+=(dp[i][b]*1/8);
+    	}
+    	if(r-2>-1 && c-1>-1){
+        	dp[i+1][bno(r-2, c-1, L)]+=(dp[i][b]*1/8);
+    	}
+	}
+	public int bno(int r, int c, int L){
+    	return (L*r)+c;
+	}
+}

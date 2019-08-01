@@ -1,0 +1,56 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a number N. We have to count all the set bits in numbers from 
+1 to N.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/count-total-set-bits-in-all-numbers-from-1-to-n/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We count set bits vertically. First we will all set bits on LSB position using
+the expression - (N+1)%2. Because LSB is set alternately from 0 to N.
+2. For next bit preceeded by LSB, we will use the expression : no of set bits=
+(N+1)%4 * 2, because each set of 4 contains 2 set bits. We also have to into consi
+-deration the fact that given number may not be perfectly divisible by 4,8,16 etc. 
+3. This loop goes on for number of bits in the given number.    
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_478CountAllSetBitsFrom1toN {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int num=scn.nextInt();
+		
+		int count=countnumberofbitsinnumber(num);
+		
+		int ans=0;
+		for(int i=1; i<=count; i++) {
+//			1<<i
+			ans+=(1<<i-1)*((num+1)/(1<<i));
+			int factor=1<<i;
+			int rem=(num+1)%(1<<i);
+			if(factor-rem < factor/2) {
+				ans+=rem-factor/2;
+			}
+		}
+		System.out.println(ans);
+	}
+
+	private static int countnumberofbitsinnumber(int num) {
+		int count=0;
+		while(num!=0) {
+			count++;
+			num>>=1;
+		}
+		return count;
+	}
+
+}

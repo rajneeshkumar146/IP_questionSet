@@ -1,0 +1,89 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers. 
+2. Let i and j be the array indices. You have to print the maximum difference 
+between j and i, such that arr[j]>arr[i].
+3. If there is no such j and i for which this condition is true, then print -1.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/given-an-array-arr-find-the-maximum-j-i-such-that-
+arrj-arri/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Make 2 arrays. MinArray : formed by left to right traversal. At i, it stores
+minimum of array elements from 0 to i. MaxArray : formed by right to left 
+traversal. At i, it stores maximum of all elements between i t0 arr.length-1.
+2. Start with 2 pointers (i and j), i: one pointing to MinArray and j: to other 
+MaxArray.
+3. Traverse and update currdiff and odiff as follows:
+			if (rarr[j] > larr[i]) {
+				currdiff = j - i;
+				j++;
+			} else {
+				i++;
+			}
+			if (currdiff > omaxdiff) {
+				omaxdiff = currdiff;
+			}   
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_36Maximumjminusi {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+
+	}
+
+	private static void solve(int[] arr) {
+		// create a left arr
+		int[] larr = new int[arr.length];
+		larr[0] = arr[0];
+		for (int i = 1; i < arr.length; i++) {
+
+			larr[i] = Math.min(larr[i - 1], arr[i]);
+		}
+
+		// create a right arr
+		int[] rarr = new int[arr.length];
+		rarr[arr.length - 1] = arr[arr.length - 1];
+		for (int i = arr.length - 2; i >= 0; i--) {
+			rarr[i] = Math.max(rarr[i + 1], arr[i]);
+		}
+
+		// traverse
+		int omaxdiff = Integer.MIN_VALUE;
+		int currdiff = Integer.MIN_VALUE;
+		for (int i = 0, j = 0; i < arr.length && j < arr.length;) {
+			if (rarr[j] > larr[i]) {
+				currdiff = j - i;
+				j++;
+			} else {
+				i++;
+			}
+			if (currdiff > omaxdiff) {
+				omaxdiff = currdiff;
+			}
+		}
+		if (omaxdiff != Integer.MIN_VALUE)
+			System.out.println(omaxdiff);
+		else {
+			System.out.println(-1);
+		}
+
+	}
+
+}

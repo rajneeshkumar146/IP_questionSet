@@ -1,0 +1,75 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given two sorted arrays. Print k pair of numbers - one from each array -
+with smallest sum in increasing order of sum.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Nagarro, DEShaw
+https://www.geeksforgeeks.org/find-k-pairs-smallest-sums-two-arrays/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Create an index map with index of second array as values against index of
+first array as keys.
+2. Increase the value (hence index of second array used by first array),
+when a key-value pair from index map is used.
+3. Why does it work?
+Every element of two can potentially get paired with every element of one - in
+the idxMap a spot is reserved for one and elements of two against can change all
+the way. By keeping the smallest relevant element paired against each element
+of one, we save needless comparisons.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_12kpairsmallest {
+	public static void main(String[] args) {
+		// Geeks
+
+		// Hackerrank
+		Scanner scn = new Scanner(System.in);
+		int[] one = new int[scn.nextInt()];
+		for (int i = 0; i < one.length; i++) {
+			one[i] = scn.nextInt();
+		}
+
+		int[] two = new int[scn.nextInt()];
+		for (int i = 0; i < two.length; i++) {
+			two[i] = scn.nextInt();
+		}
+
+		int k = scn.nextInt();
+		solve(one, two, k);
+	}
+
+	private static void solve(int[] one, int[] two, int k) {
+		// keys are one's indices, values are two's indices
+		int[] idxMap = new int[one.length];
+
+		for (int i = 0; i < k; i++) {
+			int min = Integer.MAX_VALUE;
+			int oneIdx = -1;
+			int twoIdx = -1;
+
+			for (int j = 0; j < one.length; j++) {
+				if (idxMap[j] == two.length) {
+					continue;
+				}
+
+				if (one[j] + two[idxMap[j]] < min) {
+					min = one[j] + two[idxMap[j]];
+					oneIdx = j;
+					twoIdx = idxMap[j];
+				}
+			}
+
+			idxMap[oneIdx]++;
+			System.out.print("(" + one[oneIdx] + " " + two[twoIdx] + ") ");
+		}
+	}
+}

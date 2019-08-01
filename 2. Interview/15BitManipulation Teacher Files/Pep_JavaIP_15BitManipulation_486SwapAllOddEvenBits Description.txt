@@ -1,0 +1,38 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an integer. You have to print the modified number formed after
+swapping odd and even bits. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/swap-all-odd-and-even-bits/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We first do '&' of the given number with ...101010 and then we right shift by 1.
+2. We then do '&' of the given number with ....01010101 and then we left shift by
+1.
+3. We now bitwise 'or' the 2 results.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_486SwapAllOddEvenBits {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int num = scn.nextInt();
+		int evenbits = num & 0xAAAAAAAA;	//	this gives only evenbits
+		int oddbits = num & 0x55555555;		//	this gives only oddbits
+		evenbits >>= 1;
+		oddbits <<= 1;
+		System.out.println(oddbits | evenbits);
+	}
+
+}
+
+

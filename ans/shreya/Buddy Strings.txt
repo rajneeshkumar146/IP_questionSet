@@ -1,0 +1,52 @@
+Time- Worst-O(2n)
+space O(1);
+
+
+class Solution {
+    public boolean buddyStrings(String A, String B) {
+        
+        if(A.length()==B.length()){
+            int idx1=0;
+            int idx2=0;
+            int count=0;
+            
+            for(int i=0;i<A.length();i++)
+            {
+                if(A.charAt(i)!=B.charAt(i)){ 
+                    count++;
+        
+                    if(count>2)
+                        return false;
+                    
+                    if(count==1){   
+                        idx1=i;
+                    }else{
+                        idx2=i;
+                    }  
+                }   
+            }
+            
+            if(count==0)
+            {
+                int freq[]=new int[26];
+                for(int i=0;i<A.length();i++)
+                {
+                    freq[A.charAt(i)-'a']++;
+                    
+                    if(freq[A.charAt(i)-'a']>=2)
+                        return true;
+                }
+                return false;
+            }
+            
+            if(count!=2)
+                return false;
+        
+            
+            if(A.charAt(idx1)==B.charAt(idx2) && A.charAt(idx2)==B.charAt(idx1))
+                return true;
+        } 
+            return false;
+        
+    }
+}

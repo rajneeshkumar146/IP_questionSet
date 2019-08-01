@@ -1,0 +1,139 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given a string of characters ranging from a to z.
+Find the maximum length substring that contains given no. of 
+unique characters
+For example-1.String: abcdefgha and given no. is 8
+true, only 8 diff characters are present in the string.the complete
+ string is an answer.
+2.String: aahhgg and given no. is 1
+aa,hh,gg are three substring which contains exactly 1 unique
+character in max length substring
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+SAMSUNG MAQ-SOFTWARE ,CISCO,GOOGLE
+https://www.geeksforgeeks.org/find-the-longest-substring-with-k-unique-characters-in-a-given-string/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+The idea is to store the count of characters in an array ,
+and maintain two indices start and end of an array.
+if no. of characters exceeds the given no.
+increment the value of start upto the point where one of the 
+value included in the array becomes zero.
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+String (a<=ch<=z) of m length
+k-integer representing unique characters
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+1<=m<=5000
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+String representing the max length with k unique characters.
+--------------------------------------------------------------------------------
+Test Cases
+--------------------------------------------------------------------------------
+1.Sample
+aabacbebebe
+3
+--------------------------------------------------------------------------------
+cbebebe 7
+
+--------------------------------------------------------------------------------
+2.Real
+abjsbdbbdbsabvvvvssjashs
+4
+
+--------------------------------------------------------------------------------
+bjsbdbbdbs 10
+
+--------------------------------------------------------------------------------
+3.Real
+scbkjbbcbcscskjbnmmxbbb
+5
+--------------------------------------------------------------------------------
+scbkjbbcbcscskjb 16
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+
+
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner scn = new Scanner(System.in);
+
+		String str = scn.next();
+		int k = scn.nextInt();
+
+		getprob(str, k);
+	}
+
+	public static void getprob(String str, int k) {
+		int[] arr = new int[26];//to store the indices of the visited array.
+		arr[(int) (str.charAt(0) - 'a')]++;//considering the first element.
+		int start = 0, maxstart = 0;//start represents start of the substring
+		int end = 1, maxend = 0;//end represents the end of the subsequence
+		int curr_len = 1, max_len = 1;
+		//curr_len represents the current length of the substring
+		int count = 1;
+		//no. of unique characters visited.
+		while (end < str.length()) {// move the end by 1 if charcters visited is less than k
+			if (count < k) {
+				if (arr[(int) (str.charAt(end) - 'a')] != 0) {
+
+					arr[(int) (str.charAt(end) - 'a')]++;
+					curr_len++;
+
+				} else {
+					count++;
+					arr[(int) (str.charAt(end) - 'a')]++;
+					curr_len++;
+
+				}
+			} else {
+				if (arr[(int) (str.charAt(end) - 'a')] != 0) {
+					// if the character is not unique
+					arr[(int) (str.charAt(end) - 'a')]++;
+					curr_len++;
+				} else {
+					//move start by 1 if count exceeds k.
+					count++;
+					arr[(int) (str.charAt(end) - 'a')]++;
+					curr_len++;
+					while (count > k) {//if new character becomes the part of the substring 
+						//remove all visited characters from the array so that k >count.
+						arr[(int) (str.charAt(start) - 'a')]--;
+						curr_len--;
+						if (arr[(int) (str.charAt(start) - 'a')] == 0) {
+							start++;
+							count--;
+						} else {
+							start++;
+						}
+
+					}
+				}
+
+			}
+			// update the max_len,max_start,maxend
+			if (curr_len > max_len) {
+				maxstart = start;
+				maxend = end;
+				max_len = curr_len;
+			}
+			end++;
+		}
+		System.out.println(str.substring(maxstart, maxend + 1)+" "+max_len);
+	}
+
+}

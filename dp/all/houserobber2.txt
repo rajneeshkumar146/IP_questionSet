@@ -1,0 +1,25 @@
+class Solution {
+	public int rob(int[] nums) {
+    	if(nums.length==0)return 0;
+    	if(nums.length==1)return nums[0];
+    	if(nums.length==2)return Math.max(nums[0], nums[1]);
+    	int inc1=nums[0], exc1=nums[0], inc2=0, exc2=0;
+    	int ans;
+    	//Including A[0]
+    	for(int i=2;i<nums.length-1;i++){
+        	int excp=exc1;
+        	exc1=Math.max(excp, inc1);
+        	inc1=excp+nums[i];
+    	}
+    	ans=Math.max(inc1, exc1);
+   	 
+    	//Excluding A[0]
+    	for(int i=1;i<nums.length;i++){
+        	int excp=exc2;
+        	exc2=Math.max(excp, inc2);
+        	inc2=excp+nums[i];
+    	}
+    	ans=Math.max(ans, Math.max(inc2, exc2));
+    	return ans;
+	}
+}

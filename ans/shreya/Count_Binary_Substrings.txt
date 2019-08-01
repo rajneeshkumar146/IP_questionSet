@@ -1,0 +1,30 @@
+class Solution {
+    public int countBinarySubstrings(String s) {
+        
+        //make groups of same no every count which is lesser in no than the next consecutive count will have each bit giving a new consecutive no..
+        
+        ArrayList<Integer>group=new ArrayList<>();
+        int k=0;
+        group.add(1);
+        for(int i=1;i<s.length();i++)
+        {
+            if(s.charAt(i)==s.charAt(i-1))
+            {
+                int val=group.get(k)+1;
+              
+                group.set(k,val);
+              
+            }else{
+                k++;
+                group.add(1);
+            }
+        }
+        
+        int ans=0;
+        for(int i=0;i<group.size()-1;i++)
+        {
+            ans+=Math.min(group.get(i),group.get(i+1));
+        }
+        return ans;
+    }
+}

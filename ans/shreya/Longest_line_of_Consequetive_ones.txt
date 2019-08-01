@@ -1,0 +1,83 @@
+public class Solution {
+    /**
+     * @param M: the 01 matrix
+     * @return: the longest line of consecutive one in the matrix
+     */
+    public int longestLine(int[][] M) {
+     if(M.length==0)
+         return 0;
+    
+    int rowlength=M.length;
+    int collength=M[0].length;
+    int length=0;
+    int ans=0;
+
+   
+
+    for(int i=0;i<rowlength;i++)
+        {length=0;
+        for(int j=0;j<collength;j++)
+            {
+                if(M[i][j]==1)
+                length+=1;
+                else
+                length=0;
+                ans=Math.max(ans,length);
+            }
+        }
+        
+        length=0;
+        for(int i=0;i<collength;i++)
+        {
+            length=0;
+        for(int j=0;j<rowlength;j++)
+            {
+                if(M[j][i]==1)
+                length+=1;
+                else
+                length=0;
+                ans=Math.max(ans,length);
+            }
+        }
+         for(int slide = 0; slide < rowlength;slide++) {
+            length = 0;
+            for (int i = slide, j = 0; i >= 0 && j < collength; i--,j++) {
+                if(M[i][j]==1)
+                length+=1;
+                else
+                length=0;
+                ans=Math.max(ans,length);
+            }
+            length = 0;
+            for (int i = slide, j = 0; i < rowlength && j < collength; i++, j++) {
+                if(M[i][j]==1)
+                length+=1;
+                else
+                length=0;
+                ans=Math.max(ans,length);
+            }
+        }
+       
+        for(int slide = 0; slide < collength; slide++) {
+            length = 0;
+            for (int i = 0, j = slide; i < rowlength && j < collength; i++, j++) {
+                if(M[i][j]==1)
+                length+=1;
+                else
+                length=0;
+                ans=Math.max(ans,length);
+            }
+            length = 0;
+            for(int i = 0, j = i; i < collength&& j >= 0; i++, j--) {
+                if(M[i][j]==1)
+                length+=1;
+                else
+                length=0;
+                ans=Math.max(ans,length);
+            }
+        }
+        
+        return ans;
+    }
+    
+}

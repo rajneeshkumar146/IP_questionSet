@@ -1,0 +1,29 @@
+class Solution {
+    public int partitionDisjoint(int[] A) {
+         int[] left = new int[A.length];
+        int[] right = new int[A.length];
+        
+        int min = A[A.length-1];
+        for (int i = A.length-1; i>=0; i--) {
+            min = Math.min(min, A[i]);
+            right[i] = min;
+        }
+        
+        
+        
+        int max = A[0];
+        for (int i = 0; i < A.length; ++i) {
+            max = Math.max(max, A[i]);
+            left[i] = max;
+        }
+        
+        
+        for(int i=0;i<A.length-1;i++)
+        {
+            if(left[i]<=right[i+1])
+            return i+1;
+        }
+        
+        return -1;
+    }
+}

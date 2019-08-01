@@ -1,0 +1,98 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers. 
+2. You are given another integer K, which represents size of subarrays.
+3. You have to print the maximum sum possible of 3 k sized non overlapping 
+subarrays.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/
+description/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We will make 2 arrays. First by traversing left to right. Let it be leftarr. 
+At i, it stores the maximum value of k sized subarray uptil ith index(from 0). 
+Now, second by traversing right to left. Let it be rightarr. At i, it stores the 
+maximum sum of k sized subarray upto ith index (from arr.length-1).
+2. Now, we will traverse for middle k sized subarray.
+3. Starting at kth index (position of first middle subarray), we will traverse till
+arr.length-2k.
+4. We will one maximum k sized subarray sum from leftarr and one from rightarr
+and traverse in this loop.
+5. We will keep on updating omax. omax will be returned as answer.    
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_37MaximumSumof3NonOverlappingSubarrays {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int index = 0; index < arr.length; index++) {
+			arr[index] = scn.nextInt();
+		}
+		int k = scn.nextInt();
+		solve(arr, k);
+	}
+
+	private static void solve(int[] arr, int k) {
+		// generating left array sum
+		int[] larr = new int[arr.length];
+		// sum of first k elements for left array
+		int lsum = 0;
+		for (int i = 0; i < k; i++) {
+			lsum += arr[i];
+		}
+
+		// Maximum sum k sized subarray possible till ith index[i,i-k) of arr is stored
+		// at larr[i]
+
+		larr[k - 1] = lsum;
+		for (int i = k; i < arr.length; i++) {
+			lsum += arr[i] - arr[i - k];
+			larr[i] = Math.max(larr[i - 1], lsum);
+		}
+
+		// generating right array sum
+		int[] rarr = new int[arr.length];
+
+		int rsum = 0;
+		for (int i = arr.length - 1; i > arr.length - 1 - k; i--) {
+			rsum += arr[i];
+		}
+
+		// Maximum sum k sized subarray possible till ith index[i,i+(k-1)] of arr is
+		// stored at rarr[i]
+
+		rarr[arr.length - k] = rsum;
+		for (int i = arr.length - 1 - k; i >= 0; i--) {
+			rsum += arr[i] - arr[i + k];
+			rarr[i] = Math.max(rarr[i + 1], rsum);
+		}
+
+		// traverse for middle subarray
+		int ovmax = Integer.MIN_VALUE;
+
+		for (int ti = k; ti + k <= arr.length - k; ti++) {
+			int middlesubarraysum = 0;
+			int midsubarrayindex = ti;
+			for (; midsubarrayindex < ti + k; midsubarrayindex++)
+				middlesubarraysum += arr[midsubarrayindex];
+
+			if (ovmax < larr[ti - 1] + middlesubarraysum + rarr[midsubarrayindex]) {
+				ovmax = larr[ti - 1] + middlesubarraysum + rarr[midsubarrayindex];
+
+			}
+		}
+
+		System.out.println(ovmax);
+	}
+
+}

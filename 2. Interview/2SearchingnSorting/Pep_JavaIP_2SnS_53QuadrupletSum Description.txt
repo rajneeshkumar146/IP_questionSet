@@ -1,0 +1,160 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers. You are given an integer X. You have to 
+find combinations of 4 elements in the array whose sum is equal to given value X.  
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/find-four-elements-that-sum-to-a-given-value-set-2/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Saare possible pair sums ko store karwa lo ek Pair class ke objects ke array 
+ke andar.
+2. Pair ke har object mai, unn indexes ko bhi rkhte h jiska sum karke sum bna h.
+3. Ab pair sum ke basis par sort kar do. target sum wala logic lgaa kar yeh check
+ki konse pairs ka sum target sum ke equal h.
+4. Ek aur condition statisfy honi chahiye, indice mai koi overlap nhin hona chahiye.
+5. Sirf combinations of 4 elements print ho, iske liye hum saare elements ko hashset mai daal
+denge. Aur hashcode wala function override karenge, in a way that jinke 4 indices 
+same h, unka hashcode same aaye. Fir hum hashset mai add karenge. HashSet sirf
+unique 4 elements ko hi add karega   
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+/*7 
+10 2 3 4 5 7 8
+23
+3 5 7 8 
+2 3 8 10 
+2 4 7 10 
+*/
+package SearchingSorting;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Pep_JavaIP_2SnS_53QuadrupletSum {
+
+	static class Pair implements Comparable<Pair> {
+		int sum;
+		int fp;
+		int sp;
+
+		@Override
+		public int compareTo(Pair o) {
+			// TODO Auto-generated method stub
+			return this.sum - o.sum;
+		}
+	}
+
+	static class RPair {
+		int[] arr = new int[4];
+
+		public RPair(int one, int two, int three, int four) {
+			arr[0] = one;
+			arr[1] = two;
+			arr[2] = three;
+			arr[3] = four;
+			Arrays.sort(arr);
+		}
+
+		@Override
+		public int hashCode() {
+			int hc = arr[0];
+
+			for (int i = 1; i < arr.length; i++) {
+				hc <<= 5;
+				hc ^= arr[i];
+			}
+
+			return hc;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			for (int i = 0; i < this.arr.length; i++) {
+				if (arr[i] != ((RPair)obj).arr[i]) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		public String toString() {
+			return arr[0] + " " + arr[1] + " " + arr[2] + " " + arr[3];
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i1 = 0; i1 < arr.length; i1++) {
+			arr[i1] = scn.nextInt();
+		}
+
+		int target = scn.nextInt();
+		Arrays.sort(arr);
+		int sizeofpairsumarray = (arr.length * arr.length - 1) / 2;
+
+		Pair[] pairsumarr = new Pair[sizeofpairsumarray];
+
+		for (int i = 0; i < pairsumarr.length; i++) {
+			pairsumarr[i] = new Pair();
+
+		}
+
+		int k = 0;
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = i + 1; j < arr.length; j++) {
+				pairsumarr[k].sum = arr[i] + arr[j];
+				pairsumarr[k].fp = i;
+				pairsumarr[k].sp = j;
+				k++;
+			}
+		}
+
+		Arrays.sort(pairsumarr);
+
+		int left = 0;
+		int right = pairsumarr.length - 1;
+
+		HashSet<RPair> res = new HashSet<>();
+		while (left < right) {
+			if (pairsumarr[left].sum + pairsumarr[right].sum == target) {
+				if (isPairValid(pairsumarr[left], pairsumarr[right])) {
+					res.add(new RPair(arr[pairsumarr[left].fp], arr[pairsumarr[left].sp], arr[pairsumarr[right].fp],
+							arr[pairsumarr[right].sp]));
+				}
+				left++;
+				right--;
+			} else if (pairsumarr[left].sum + pairsumarr[right].sum < target) {
+				left++;
+			} else {
+				right--;
+			}
+
+		}
+		
+		for(RPair rpair:res) {
+			for(int val: rpair.arr) {
+				System.out.print(val+" ");
+			}
+			System.out.println();
+		}
+
+	}
+
+	private static boolean isPairValid(Pair pair, Pair pair2) {
+		if (pair.fp != pair2.fp && pair.fp != pair2.sp && pair.sp != pair2.fp && pair.sp != pair2.sp) {
+			return true;
+		}
+		return false;
+	}
+
+}

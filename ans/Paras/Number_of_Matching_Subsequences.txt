@@ -1,0 +1,45 @@
+class Solution {
+    
+    public int numMatchingSubseq(String S, String[] words) {
+     
+        int count=0;
+        for(String word:words)
+        {
+            int i=0;
+            int k=0;
+
+			boolean[] arr = new boolean[word.length()];
+			for (char ch : word.toCharArray()) {
+				while (i < S.length()) {
+
+					if (S.charAt(i) == ch) {
+						arr[k] = true;
+						k++;
+						i++;
+						break;
+					}
+					i++;
+				}
+			}
+            
+            boolean found=true;
+            for(int j=0;j<word.length();j++)
+            {
+                if(arr[j]==false)
+                {
+                    found=false;
+                    break;
+                }
+            }
+            if(found==true)
+            {
+                count++;
+            }
+        }
+        
+        
+        return count;
+        
+     }
+    
+}

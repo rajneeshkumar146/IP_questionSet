@@ -1,0 +1,130 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given the root node of a binary tree.
+2. Prepare the ancestor matrix for this binary tree. Refer the image at bottom for details.
+3. Display the matrix using displayAncestorMatrix function.
+
+Notes
+1. Node class represents the node of binary tree.
+2. display is a utility function which displays the contents of tree, feel free to use it for
+debugging purposes.
+3. main takes input from the users and creates the tree. You can use display to know its contents.
+4. displayAncestorMatrix display the contents of the matrix.
+4. You should code only the solve function, feel free to change its signature if required.
+5. Don't change the code of Node, main, display and displayAncestorMatrix function.
+
+https://s3.amazonaws.com/hr-assets/0/1525877072-bdc9314d57-Capture.PNG
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/construct-ancestor-matrix-from-a-given-binary-tree/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Traverse, while maintaining pathFromRoot.
+2. Add node, before going down recursion.
+3. Remove node, while coming out of recursion.
+4. At each node, use the pathFromRoot to mark descendant of ancestors.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.binaryTree;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Pep_JavaIP_10BinaryTrees_324GenerateAncestorMatrix {
+	private static class Node {
+		int data;
+		Node left;
+		Node right;
+
+		Node(int data, Node left, Node right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
+	public static void display(Node node) {
+		if (node == null) {
+			return;
+		}
+
+		String str = "";
+
+		str += node.left == null ? "." : node.left.data;
+		str += " => " + node.data + " <= ";
+		str += node.right == null ? "." : node.right.data;
+
+		System.out.println(str);
+
+		display(node.left);
+		display(node.right);
+	}
+
+	public static void displayAncestorMatrix(boolean[][] am){
+		for(int row = 0; row < am.length; row++){
+			for(int col = 0; col < am[row].length; col++){
+				System.out.print(am[row][col] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	public static void main(String[] args) {
+		Node root = null;
+
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		Node[] nodes = new Node[arr.length];
+		int size = 0;
+		for (int i = 0; i < nodes.length; i++) {
+			if (arr[i] != -1) {
+				nodes[i] = new Node(arr[i], null, null);
+
+				if (i > 0) {
+					int pi = (i - 1) / 2;
+
+					if (i == 2 * pi + 1) {
+						nodes[pi].left = nodes[i];
+					} else {
+						nodes[pi].right = nodes[i];
+					}
+				}
+
+				size++;
+			}
+		}
+
+		// display(nodes[0]);
+		boolean[][] am = new boolean[size][size];
+		solve(nodes[0], am, new ArrayList<>());
+		displayAncestorMatrix(am);
+	}
+
+	// maintain path from root and use it to do things
+	private static void solve(Node node, boolean[][] am, ArrayList<Integer> pathFromRoot){
+		if(node == null){
+			return;
+		}
+
+		// work
+		for(int ancestor: pathFromRoot){
+			am[ancestor][node.data] = true;
+		}
+		// work
+
+		pathFromRoot.add(node.data);
+
+		solve(node.left, am, pathFromRoot);
+		solve(node.right, am, pathFromRoot);
+
+		pathFromRoot.remove(pathFromRoot.size() - 1);
+	}
+}

@@ -1,0 +1,22 @@
+Time-O(s);
+Space-O(1);
+
+class Solution {
+  public String complexNumberMultiply(String a, String b) {
+    String s1[]=a.split("\\+|i");
+    String s2[]= b.split("\\+|i");
+           
+        int num1[]=new int[2];
+        int num2[]=new int[2];    
+          
+        num1[0]=Integer.parseInt(s1[0]);
+        num1[1]=Integer.parseInt(s1[1]);
+        num2[0]=Integer.parseInt(s2[0]);
+        num2[1]=Integer.parseInt(s2[1]); 
+        
+        int realpart=(num1[0]*num2[0])-(num1[1]*num2[1]);
+        int imgpart=(num1[0]*num2[1])+(num1[1]*num2[0]);
+       
+        return realpart+"+"+imgpart+"i";
+    }
+}

@@ -1,0 +1,39 @@
+Time -O(n)
+Space-O(1)
+
+class Solution {
+    public int[] constructArray(int n, int k) {
+        int ans[]=new int[n];
+        int number=1;
+            int i=0;
+            int end=n;
+            boolean change=false;
+        
+        while(i<n)
+        {
+            if(i<(n-1-k))
+            {
+                ans[i]=number;
+                    number++;   
+            }else{
+                
+                if(!change)
+                {
+                    change=true;
+                    ans[i]=number;
+                        number++;
+                }else{
+                    ans[i]=end;
+                    end--;
+                    change=false;
+                }
+            }
+            i++;
+                
+        }
+        
+        
+        return ans;
+        
+    }
+}

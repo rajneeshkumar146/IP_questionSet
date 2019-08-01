@@ -1,0 +1,75 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+CHOCOLATE DISTRIBUTION PROBLEM
+You are given an array of n integers representing number of chocolates in n
+packets. There are m students (m <= n) and these packets should be distributed
+among these m students, so that each student gets one packet and the difference
+between the highest no. of chocolates given to a student and the lowest no. of
+chocolates given to another student should be minimum. Print the minimum
+difference obtained.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+FLIPKART
+https://www.geeksforgeeks.org/chocolate-distribution-problem/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Sort the array
+2. Consider all subarrays of m lengths - one of them is the answer
+3. The subarray of m length with minimum difference between start and end is the
+answer.
+4. Why this works? All in all, we need to choose m packets out of n, and the
+choice with minimum difference between minimum and maximum is the answer. With
+array sorted, and use of a sliding window, we ensure that mins are paired with
+appropriate maxes (elements from min to max or after the max are not relevant to
+be paired as max, for this min). With the window sliding through the array,
+we visit a pair of min-max for each window. The window with least difference
+between min-max is our answer.
+5. First element (the least element of the set) can be selected in n - m ways
+(can't select the least element from one of the m largest elements), rest m - 1
+items seemingly can be selected in (larger elements)C(m - 1) ways, but only a
+single one of them is relevant - the one which selects from next m - 1 elements
+in sorted order so as to keep difference to least.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_7Chocolate {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+		int m = scn.nextInt();
+		int[] arr = new int[n];
+
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(m, arr);
+	}
+
+	private static void solve(int m, int[] arr) {
+		Arrays.sort(arr);
+
+		int i = 0;
+		int j = i + m - 1;
+		int mindiff = Integer.MAX_VALUE;
+		while (j < arr.length) {
+			int cdiff = arr[j] - arr[i];
+			if (cdiff < mindiff) {
+				mindiff = cdiff;
+			}
+			i++;
+			j++;
+		}
+
+		System.out.println(mindiff);
+	}
+}

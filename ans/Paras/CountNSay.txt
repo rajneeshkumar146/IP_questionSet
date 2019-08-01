@@ -1,0 +1,38 @@
+Time-O(n*length of each String);
+Space O(1);
+
+class Solution {
+    public String countAndSay(int n) {
+     
+      	if(n==1)
+    	{
+    		return "1";
+    	}
+    	
+    	
+        String ans="11";
+        int count=1;
+    int i=2;
+    
+        while(i<n)
+        {   
+            char c=ans.charAt(0);
+            String temp="";        
+            for(int j=1;j<=ans.length();j++)
+            {
+            		c = ans.charAt(j-1);
+            		count=1;
+            	    while(j<ans.length()&&ans.charAt(j) == c){
+                     count++;
+                     j++;
+             }
+                temp=temp+""+count+c;
+            }
+           
+         ans=temp;
+            i++;
+        }
+        
+        return ans;
+    }
+}

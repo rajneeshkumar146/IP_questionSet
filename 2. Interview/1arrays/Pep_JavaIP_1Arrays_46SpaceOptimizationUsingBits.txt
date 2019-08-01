@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. Take as input lo and hi, two integer.
+2. Take as input k, an integer.
+3. You have to find which numbers from lo to hi are divisible by k and store
+that information in a new array of size (hi - lo) / 32 as discussed in this link
+https://www.geeksforgeeks.org/space-optimization-using-bit-manipulations/
+4. Print the contents of storage array.
+5. Retrieve from the storage array, which elements are divisible by k and print
+them.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/space-optimization-using-bit-manipulations/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Create an array of size (hi - lo) / 32. Use Math.ceil
+2. For each number between lo to hi, if it is divisible by k store its information
+in the storage array.
+3. (num % 32)th bit of (num / 32)th index will store information for num
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_46SpaceOptimizationUsingBits {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int lo = scn.nextInt();
+		int hi = scn.nextInt();
+		int k = scn.nextInt();
+
+		int[] strg = new int[(int) Math.ceil((hi - lo) / 32.0)];
+
+		// storing
+		for (int i = lo; i <= hi; i++) {
+			if(i % k == 0){
+				setBit(strg, i - lo);
+			}
+		}
+
+		// printing the storage
+		for(int val: strg){
+			System.out.print(val + " ");
+		}
+		System.out.println();
+
+		// printing the valid numbers
+		for(int i = lo; i <= hi; i++){
+			if(isBitSet(strg, i - lo)){
+				System.out.print(i + " ");
+			}
+		}
+		System.out.println();
+
+	}
+
+	private static void setBit(int[] strg, int val) {
+		// When a number is encountered it is expressed as 32 * k + rem
+		// k helps decide in which index to store this information
+		// rem helps decide in which bit to store this information at that index
+		strg[val / 32] |= (1 << (val % 32));
+		// val / 32 can also be done by val >> 32 and val % 32 can also be done by val & 31
+	}
+
+	private static boolean isBitSet(int[] strg, int val) {
+		return (strg[val / 32] & (1 << (val % 32))) != 0;
+	}
+
+}

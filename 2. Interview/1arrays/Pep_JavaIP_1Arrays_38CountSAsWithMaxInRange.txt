@@ -1,0 +1,95 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. Take as input N, number of elements in array.
+2. Take N inputs - Ai - as elements of array A.
+3. Take as input two integers - lo and hi where lo < hi.
+4. Print the count of sub-arrays in A with their maximum in the range lo to hi
+
+Note - Use lo and hi inclusively for range comparisons i.e. lo <= max <= hi.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/number-subarrays-maximum-value-given-range/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We keep two variables - inc and exc.
+2. inc counts if this element can become part of elements to be included.
+3. exc counts if this element can become part of elements to be excluded.
+4. At every Ai > hi, inc and exc are reset. inc is reset because no inclusive
+sub-arrays can be formed which start before this element and end after it, exc
+is reset because it is there to help inc exclude irrelevant elements.
+5. Within each span defined by Ai > hi, the following happens
+	5.1 If Ai < lo, such an element can become part of included sub-arrays
+	(subsequently, with help of an element which is in range) hence inc++
+	5.2 If Ai < lo, such an element can become part of excluded sub-arrays, so exc++
+	5.3 If lo <= Ai <= hi, the excluded elements subarrays are counted and added.
+	5.4 If lo <= Ai <= hi, exc is reset to 0, because old set of excluded elements
+	cannot span over this element. A new set of excluded elements has to begin.
+	5.5 If lo <= Ai <= hi, inc continues to grow.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_38CountSAsWithMaxInRange {
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+		int lo = scn.nextInt();
+		int hi = scn.nextInt();
+
+		int count = solve(arr, lo, hi);
+		System.out.println(count);
+	}
+
+	// Sample test case
+	// n = 14
+	// arr = 2 3 9 4 5 10 18 1 2 3 7 0 1 8
+	// lo = 5, hi = 12
+	private static int solve(int[] arr, int lo, int hi) {
+		int count = 0;
+
+		int inc = 0;
+		int exc = 0;
+		for(int i = 0; i < arr.length; i++){
+			if(arr[i] < lo){
+				// both inclusion and exclusion sub-array grows
+				inc++;
+				exc++;
+			} else if(arr[i] >= lo && arr[i] <= hi){
+				// collect the data from old exclusion sub-arrays
+				count -= countElementsInSA(exc);
+
+				// inclusion sub-array continues to grow, exclusion sub-array restarts
+				inc++;
+				exc = 0;
+			} else {
+				// collect the data from old inclusion and exclusion sub-arrays.
+				count += countElementsInSA(inc);
+				count -= countElementsInSA(exc);
+
+				// a new exclusion and inclusion sub-array starts
+				inc = 0;
+				exc = 0;
+			}
+		}
+
+		count += countElementsInSA(inc);
+		count -= countElementsInSA(exc);
+
+		return count;
+	}
+
+	public static int countElementsInSA(int n) {
+		return n * (n + 1) / 2;
+	}
+
+}

@@ -1,0 +1,59 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given number. You have to print position of only set bit such that 
+position of LSB is marked as 1.
+2. If there are more than 1 set bits in a number, then print 'Invalid'. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/find-position-of-the-only-set-bit/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. First count the number of set bits. If it is greater than 1, print invalid.
+2. Otherwise, traverse the bits by right shifting by 1 bit(n>>=1).
+3. Use position variable and (n&1==1) to determine position of only set bit. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_474PositionofOnlySetBit {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int num = scn.nextInt();
+		
+		int count=countsetbit(num);
+		if(count!=1) {
+			System.out.println("Invalid");
+			return;
+		}
+		int pos=1;
+		while(num!=0) {
+			if((num & 1) != 0) {
+				break;
+			}
+			num>>=1;
+			pos++;
+		}
+		
+		System.out.println(pos);
+	}
+
+	private static int countsetbit(int num) {
+		int count=0;
+		while(num!=0) {
+			if((num & 1) != 0) {
+				break;
+			}
+			num>>=1;
+			count++;
+		}
+		return count;
+	}
+
+}

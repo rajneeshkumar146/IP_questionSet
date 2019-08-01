@@ -1,0 +1,31 @@
+class Solution {
+    public int arrayNesting(int[] nums) {
+        boolean []visited=new boolean[nums.length];
+        int n=nums.length;
+        int result=0;
+        for(int i=0;i<n;i++)
+        {
+            int count=0;
+            if(visited[i]==false)
+            {
+                int j=nums[i];
+                count++;
+                visited[i]=true;
+                
+                while(j!=i)
+                {
+                    visited[j]=true;
+                    count++;
+                    j=nums[j];
+                }
+            }
+            
+                    if(result<count)
+                    result=count;
+                    
+            }
+        return result;
+        }
+        
+        
+    }

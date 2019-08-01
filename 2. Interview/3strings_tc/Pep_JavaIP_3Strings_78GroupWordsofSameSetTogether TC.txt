@@ -1,0 +1,44 @@
+--------------------------------------------------------------------------------
+Hackerrank Link
+--------------------------------------------------------------------------------
+https://www.hackerrank.com/contests/pepjava-interviewprep/challenges/pep-javaip-
+3strings-78groupwordsofsamesettogether
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+N - Integer for the size of the String array
+N Strings
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+1<= N <= 100
+Strings have maximum length of 10^5.
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+Print the strings with same set of uniques characters together.
+--------------------------------------------------------------------------------
+Test Case 1 - Sample
+--------------------------------------------------------------------------------
+18
+may student students dog
+studentssess god cat act tab
+bat flow wolf lambs amy yam
+balms looped poodle
+################################################################################
+student students studentssess 
+tab bat 
+cat act 
+lambs balms 
+may amy yam 
+looped poodle 
+dog god 
+flow wolf
+--------------------------------------------------------------------------------
+Test Case 2 - Real
+--------------------------------------------------------------------------------
+5
+navdeep vandeep pnavdee sumeet meetsu 
+################################################################################
+navdeep vandeep pnavdee 
+sumeet meetsu

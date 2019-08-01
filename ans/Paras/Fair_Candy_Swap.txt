@@ -1,0 +1,38 @@
+class Solution {
+    public int[] fairCandySwap(int[] A, int[] B) {
+        
+        int sum1=0;
+        int sum2=0;
+        
+        for(int i=0;i<A.length;i++)
+        {     
+            sum1=sum1+A[i];  
+        }
+        
+          for(int i=0;i<B.length;i++)
+            {
+                sum2=sum2+B[i];
+         } 
+        
+        int out[]=new int[2];
+        
+        int x=(sum2-sum1)/2;
+        
+        Set<Integer> set=new HashSet();
+        
+        for(int val:B)
+            set.add(val);
+        
+        for(int val:A)
+        {
+            if(set.contains(val+x))
+            {   
+                out[0]=val;
+                out[1]=val+x;
+            } 
+        }
+        
+        
+        return out;
+    }
+}

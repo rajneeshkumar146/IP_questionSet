@@ -1,0 +1,60 @@
+class Solution {
+    public int[][] intervalIntersection(int[][] A, int[][] B) {
+        
+        int i=0;
+        int j=0;
+        
+        int k=0;
+    
+        ArrayList<int[]> temp=new ArrayList<>();
+        
+        while(i<A.length&&j<B.length)
+        {
+            int[] Ainterval=A[i];
+            int [] Binterval=B[j];
+            
+            
+    // intervals not intersecting..        
+            if(Ainterval[1]<Binterval[0]||Binterval[1]<Ainterval[0]){
+                
+                if(Ainterval[1]<Binterval[0])
+                {
+                    i++;
+                }
+                else{
+                    j++;
+                }
+            }else{
+                //intervals intesecting..
+                int ans[]=new int[2];
+                if(Ainterval[0]<=Binterval[0])
+                {
+                    ans[0]=Binterval[0];
+                }else{
+                    ans[0]=Ainterval[0];
+                }
+                
+                if(Ainterval[1]<=Binterval[1])
+                {
+                    ans[1]=Ainterval[1];
+                    i++;
+                }else{
+                    ans[1]=Binterval[1];
+                    j++;
+                }
+               temp.add(ans);
+            }
+        }
+        
+        
+        int result[][]=new int[temp.size()][2];
+        i=0;
+        for(int[] val:temp)
+        {          
+            result[i]=val;
+            i++;
+        }
+        
+        return result;
+    }
+}

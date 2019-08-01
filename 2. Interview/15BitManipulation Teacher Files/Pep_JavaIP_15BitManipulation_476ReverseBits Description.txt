@@ -1,0 +1,42 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a number and you have to print modified number formed by 
+reversing the bits. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/write-an-efficient-c-program-to-reverse-bits-of-a-
+number/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We will take another number. We traverse bit by bit from back in the original
+number. Last bit of original number is formed 1st bit of that number. 2nd last
+bit of original number is formed as 2nd bit of that numberand so on.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_476ReverseBits {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int num = scn.nextInt();
+		
+		solve(num);
+	}
+
+	private static void solve (int n) {
+		int revn=0;
+		while(n!=0) {
+			revn=revn<<1;
+			revn=revn|(n&1);
+			n>>=1;
+		}
+		System.out.println(revn);
+	}
+}

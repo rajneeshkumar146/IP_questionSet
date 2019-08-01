@@ -1,0 +1,29 @@
+class Solution {
+	public int LISS(Node node){
+    	//Write your code here  	 
+    	int[] res=helper(node);
+    	return Math.max(res[0], res[1]);
+	}
+	public int[] helper(Node node){
+    	int[] res=new int[2];
+    	if(node==null)return null;
+    	int[] left=helper(node.left);
+    	int[] right=helper(node.right);
+    	if(left==null && right==null){
+        	res[0]=1;res[1]=0;
+    	}
+    	else if(left==null){
+        	res[0]=right[1]+1;
+        	res[1]=Math.max(right[0], right[1]);
+    	}
+    	else if(right==null){
+        	res[0]=left[1]+1;
+        	res[1]=Math.max(left[0], left[1]);
+    	}
+    	else{
+        	res[0]=left[1]+right[1]+1;
+        	res[1]=Math.max(left[0], left[1])+Math.max(right[0], right[1]);
+    	}
+    	return res;
+	}
+}

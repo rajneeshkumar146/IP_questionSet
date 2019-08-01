@@ -1,0 +1,39 @@
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+     HashMap<Integer,Boolean> map=new HashMap<>();
+        
+        int n=nums.length;
+        int min=Integer.MAX_VALUE;
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            min=Math.min(min,nums[i]);
+            max=Math.max(max,nums[i]);
+            
+            if(nums[i]>0)
+            {
+                if(!map.containsKey(nums[i]))
+                    map.put(nums[i],true);
+            }
+        }
+        
+        if(max<0)
+            max=1;
+        
+        if(min<1)
+            min=1;
+        else if(min>1)
+        {
+            return 1;
+        }
+        for(int i=min;i<=max;i++)
+        {
+            if(map.containsKey(i)&&map.get(i)==true)
+            {
+                continue;
+            }
+            return i;
+        }
+        return max+1;
+    }
+}

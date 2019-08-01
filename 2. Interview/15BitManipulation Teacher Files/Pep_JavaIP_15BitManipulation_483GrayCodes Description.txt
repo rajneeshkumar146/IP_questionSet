@@ -1,0 +1,81 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a number, n. You have to print 0 to 2^n-1 binary numbers such that
+adajcent numbers differ by 1 bit.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/given-a-number-n-generate-bit-patterns-from-0-to-
+2n-1-so-that-successive-patterns-differ-by-one-bit/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. See, n means we have to print all n digit binary numbers.
+2. First start by printing 0 and 1. Here both bits differ by 1. This prints for
+n=1. Now, let us try to print all 2 digit binary numbers. So, for that we will
+print 0 and 1 again in reverse order. First half are prefixed by 0 and second
+half by 1.
+So: 00
+    01
+    11
+    10
+This ensures that adjacent bits differ just by 1 bit.
+3. Similarly, we print all 3 digit binary numbers.
+    000
+    001
+    011
+    010
+    110
+    111
+    101
+    100, so on and so forth.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_483GrayCodes {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+		ArrayList<String> al=solve(n);
+		for(String str: al) {
+			System.out.println(str);
+		}
+
+	}
+
+	private static ArrayList<String> solve(int n) {
+		if (n == 0) {
+			ArrayList<String> al = new ArrayList<>();
+			al.add("");
+			return al;
+		}
+
+		ArrayList<String> al = solve(n - 1);
+		for (int j = al.size() - 1; j >= 0; j--) {
+			al.add(al.get(j));
+		}
+		ArrayList<String> ral = new ArrayList<>();
+		for (int j = 0; j < al.size(); j++) {
+
+			String str = al.get(j);
+			// for the first half add 0
+			if (j < al.size() / 2)
+				str = '0' + str;
+			// for the second half add 1
+			else
+				str = '1' + str;
+			ral.add(str);
+
+		}
+
+		return ral;
+	}
+}

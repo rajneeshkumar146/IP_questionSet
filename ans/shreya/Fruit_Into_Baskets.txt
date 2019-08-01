@@ -1,0 +1,56 @@
+class Solution {
+    public int totalFruit(int[] tree) {
+    
+        int start=0;int end=0;
+        
+        int max=Integer.MIN_VALUE;
+// used sliding window if window crosses the value should be removed..
+// window is of the size of total counts of 2 distinct continuous character ..
+
+        HashMap<Integer,Integer>count=new HashMap<>();
+        
+
+        while(end<tree.length)
+        {
+            
+            int val=tree[end];
+            // if window has number increase count adn end pointer
+            if(count.containsKey(tree[end]))
+            {
+                count.put(tree[end],count.get(tree[end])+1);
+                end++;
+            }else{
+			//if window doesnot have the number than check if i can and it to the window or not..
+                if(count.size()<2)
+                {
+                    count.put(tree[end],1);
+                    end++;
+                }else{
+
+			// cannot add remove the count of start from the number i.e remove the last element from the window
+                    int length=end-start;
+                    if(length>max)
+                        max=length;
+                    
+                    count.put(tree[start],count.get(tree[start])-1);
+                    if(count.get(tree[start])==0)
+                    {
+                        count.remove(tree[start]);
+                    }
+                    start++;
+                }
+                
+            }
+            
+            
+        }
+//	if i can add to the window till the add then max is not updated update it..
+        if(max<end-start)
+        {
+           max=end-start;
+        }
+            
+        
+        return max;
+    }
+}

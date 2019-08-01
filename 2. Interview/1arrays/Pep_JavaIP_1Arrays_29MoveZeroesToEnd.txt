@@ -1,0 +1,62 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. Take as input N, number of elements in array.
+2. Take N inputs - Ai - as elements of array A.
+3. Move all zeroes to end, without re-ordering the rest of elements.
+4. Print the re-ordered array.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/move-zeroes-end-array/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. countNZ keeps != 0 values behind it, in 0 to countNZ - 1 region.
+2. countNZ to i - 1 is the 0's area.
+3. i is at the first unknown element.
+4. If it is a !0, a swap happens and both i and countNZ increases, i increases
+because it got a 0 and countNZ because it got a !0.
+5. If it is a 0, only i increases.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_29MoveZeroesToEnd {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+	}
+
+	private static void solve(int[] arr) {
+		int countNZ = 0;
+
+		// i is the traveller idx,
+		// countNZ is the index that counts how many != 0 values have been encountered
+		for(int i = 0; i < arr.length; i++){
+			if(arr[i] != 0){
+				// countNZ collects !0 elements behind it
+				int temp = arr[countNZ];
+				arr[countNZ] = arr[i];
+				arr[i] = temp;
+
+				countNZ++;
+			}
+		}
+
+		for(int val: arr){
+			System.out.print(val + " ");
+		}
+	}
+
+}

@@ -1,0 +1,27 @@
+class Solution {
+    public int lengthOfLastWord(String s) {
+        
+        int i=0;
+        int n=s.length();
+        int length=0;
+        int prevlength=0;
+        while(i<n)
+        {
+            char ch=s.charAt(i);
+            if(ch==' ')
+            {
+                // for handling multiple spaces..("b   a     ")...
+                if(length!=0)
+                prevlength=length;
+                length=0;
+            }
+            else
+                length++;
+            i++;
+        }
+        
+        if(length==0)
+            return prevlength;
+        return length;
+    }
+}

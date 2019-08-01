@@ -1,0 +1,30 @@
+class Solution {
+    public int maximumSwap(int num) { 
+        
+        int[] rightmost = new int[10];
+        
+        
+         char[] chararr = Integer.toString(num).toCharArray();
+        int n=chararr.length;
+        
+        for (int i = 0; i < n; i++) {
+            rightmost[chararr[i] - '0'] = i;
+        }
+
+        for (int i = 0; i < n; i++) {
+            
+            int val=chararr[i]-'0';
+            for (int digit = 9; digit > val; digit--) {
+                if (rightmost[digit] > i) {
+                    char temp = chararr[i];
+                    chararr[i] = chararr[rightmost[digit]];
+                    chararr[rightmost[digit]] = temp;
+                    
+                    String ans= new String(chararr);
+                    return Integer.valueOf(ans);
+                }
+            }
+        }
+        return num;
+    }
+}

@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given start and end points of doubt sessions for many students. The
+teacher can handle more than one student simultaneously. Please identify  and
+print the time intervals for which the teacher is busy.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/merging-intervals/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Sort the pairs on start time.
+2. If ith term's start time does not lie between start and end of i - 1, none of
+items beyond i will have their start time in that range.
+3. Push 0th item in stack.
+4. Loop through i to end, if ith items' start lies in range of tos's start and
+end, update tos's end with appropriate value, else push a new value
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.*;
+
+public class Pep_JavaIP_25MergingIntervals {
+
+	private static class Pair implements Comparable<Pair> {
+		int start = 0;
+		int end = 0;
+
+		@Override
+		public int compareTo(Pair o) {
+			return this.start - o.start;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		Pair[] pairs = new Pair[scn.nextInt()];
+
+		for(int i = 0; i < pairs.length; i++){
+			pairs[i] = new Pair();
+			pairs[i].start = scn.nextInt();
+			pairs[i].end = scn.nextInt();
+		}
+
+		solve(pairs);
+	}
+
+	private static void solve(Pair[] pairs) {
+		Arrays.sort(pairs);
+
+		ArrayList<Pair> stack = new ArrayList<>();
+		stack.add(pairs[0]);
+
+		for(int i = 1; i < pairs.length; i++){
+			Pair tos = stack.get(stack.size() - 1);
+			Pair curr = pairs[i];
+
+			if(curr.start >= tos.start && curr.start <= tos.end){
+				tos.end = curr.end > tos.end? curr.end: tos.end;
+			} else {
+				stack.add(curr);
+			}
+		}
+
+		for(Pair pair: stack){
+			System.out.println(pair.start + " " + pair.end);
+		}
+	}
+
+}

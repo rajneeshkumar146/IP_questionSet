@@ -1,0 +1,14 @@
+public static void function(String s){
+    	if(s.length()==0)return ;
+    	int[][] dp=new int[s.length()][s.length()];
+    	for(int gap=1;gap<dp[0].length;gap++){
+        	for(int i=0, j=i+gap;j<dp[0].length;i++, j++){
+                	if(s.charAt(i)==s.charAt(j)){
+                    	dp[i][j]=dp[i+1][j-1];
+                	}
+                	else dp[i][j]=Math.min(dp[i+1][j-1]+2, Math.min(dp[i][j-1]+1, dp[i+1][j]+1));
+        	}
+    	}
+    	System.out.println(dp[0][dp[0].length-1]);
+    
+}

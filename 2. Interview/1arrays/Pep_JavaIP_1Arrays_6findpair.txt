@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given an array A of integers, and an integer S i.e. difference between a pair of
+elements. You have to find out all such pairs whose difference is given number.
+Print all such pairs separated by a line. And, if there isn’t any, print -1.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Adobe, amazon
+https://www.geeksforgeeks.org/find-a-pair-with-the-given-difference/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Sort, loop and find complement via binary Search
+2. Sort, loop via two pointers
+	2.1 start and end moving from left to right
+	2.2 if cdiff is higher, move start
+	2.3 if cdiff is lower, move end
+	2.4 if cdiff is equal, print and move only end
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_6findpair {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+		int diff = scn.nextInt();
+
+		int[] arr = new int[n];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(diff, arr);
+	}
+
+	private static void solve(int diff, int[] arr) {
+		Arrays.sort(arr);
+
+		int start = 0;
+		int end = 1;
+		boolean found = false;
+
+		while (start < arr.length && end < arr.length) {
+			int cdiff = arr[end] - arr[start];
+
+			if (cdiff > diff) {
+				start++;
+			} else if (cdiff < diff) {
+				end++;
+			} else {
+				if (start != end) {
+					System.out.println(arr[start] + " " + arr[end]);
+					found = true;
+				}
+
+				end++; // only increase end, maybe next number is also same
+			}
+		}
+
+		if(!found) {
+			System.out.println(-1);
+		}
+	}
+
+}

@@ -1,0 +1,80 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given an array. Find and print the elements of longest bitonic subarray.
+1. Subarray means continuous.
+2. Bitonic means first increasing then decreasing.
+3. Equal elements won't be a part of bitonic subarray.
+4. Increasing part or decreasing part of bitonic subarray may be of 0 length.
+5. For subarray of equal length, print the subarray coming later.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/maximum-length-bitonic-subarray/
+https://www.geeksforgeeks.org/maximum-length-bitonic-subarray-set-2-time-o1-space/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Subarrays are continuous, Subsets are not.
+2. Longest bitonic subsequence is a different question.
+3. Use left and right traversals to get the answer.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class MaxLenBitonic_19 {
+	/*
+	 * Max len subarray of type all increasing or all decreasing or /\ / \
+	 */
+	public static int solve(int[] arr) {
+		/*
+		 * stores sum of length of bitonic subarrays ending at i
+		 */
+		int[] incLen = new int[arr.length];
+		incLen[0] = 1;
+		// default length is 1
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i] > arr[i - 1]) {
+				incLen[i] = incLen[i - 1] + 1;
+			} else {
+				incLen[i] = 1;
+			}
+		}
+
+		// storing in same array, so +=
+		incLen[arr.length - 1] += 1;
+		for (int i = arr.length - 2; i >= 0; i--) {
+			if (arr[i] > arr[i + 1]) {
+//				incLen[i] += incLen[i + 1] + 1; , 
+//				+1 not needed as we already included ith ele in first traversal
+				incLen[i] += incLen[i + 1];
+			} else {
+				incLen[i] += 1;
+			}
+		}
+
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < incLen.length; i++) {
+			max = Math.max(incLen[i], max);
+		}
+		return max - 1;
+	}
+
+	public static void main(String[] args) {
+
+		Scanner scn = new Scanner(System.in);
+		
+		int test = scn.nextInt();
+		while (test-- > 0) {
+			int n = scn.nextInt();
+			int[] arr = new int[n];
+			for (int i = 0; i < arr.length; i++) {
+				arr[i] = scn.nextInt();
+			}
+			System.out.println(solve(arr));
+		}
+		
+	}
+
+}

@@ -1,0 +1,55 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers. You have to arrange them in a way that it
+yields biggest number.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/given-an-array-of-numbers-arrange-the-numbers-to-
+form-the-biggest-number/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. To form the biggest number using integers of an array, we would check for 2 numbers
+combined.
+2. First, we use those numbers as strings. So the input will be a string array.
+3. We override  compare function and compare by merging 2 numbers.
+4. Let there be 2 numbers : 546 and 54. these both are merged 54654 and 54546.  
+We return and define such that largest these 2 merged numbers are selected.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.*;
+
+public class Pep_JavaIP_46RearrangePrintBiggestNumber {
+	private static void solve(String[] arr) {
+		int i;
+		Arrays.sort(arr, new Comparator<String>() {
+			@Override
+			public int compare(String a, String b) {
+				String s1 = a + b;
+				String s2 = b + a;
+				return s2.compareTo(s1);//agar s2 badha h toh +ve value jayegi
+				//java sochegi ki "a" bada h aur usse piche rkhegi.
+				//isse b aage aa jayega aur bada number ban jayega
+			}
+		});
+
+		for (i = 0; i < arr.length; i++)
+			System.out.print(arr[i]);
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		String[] arr = new String[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.next();
+		}
+		solve(arr);
+
+	}
+
+}

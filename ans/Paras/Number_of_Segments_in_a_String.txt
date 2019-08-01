@@ -1,0 +1,22 @@
+class Solution {
+    public int countSegments(String s) {
+        
+        String word="";
+        int count=0;
+        for(char ch:s.toCharArray())
+        {
+            if(Character.isLetter(ch)||ch!=' ')
+            {
+                word=word+ch;
+            }else{
+                if(word.length()!=0)
+                    count++;
+                word="";
+            }
+        }
+        if(word.length()!=0)
+            count++;
+        
+        return count;
+    }
+}

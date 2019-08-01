@@ -1,0 +1,32 @@
+class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        int i=0;
+            int n=nums.length;
+       // swap till we get the right number at ith place
+        while(i<n)
+        {
+            
+                if(nums[nums[i]-1]!=nums[i])
+                {
+                       int temp=nums[nums[i]-1];
+                    nums[nums[i]-1]=nums[i];
+                    nums[i]=temp;
+              
+            }else{
+                i++;
+            }
+
+        }  
+        
+        //Now the list is kind of sorted only those number which are missing have some repeated elements..
+        
+        List<Integer> list=new ArrayList<>();
+            for(i=0;i<n;i++)
+            {
+                if(nums[i]-1!=(i))
+                    list.add(i+1);
+            }
+           
+        return list;
+    }
+}

@@ -1,0 +1,80 @@
+class Solution {
+    public int minDominoRotations(int[] A, int[] B) {
+     
+        int val1=A[0];
+        
+        int i=0; 
+        
+        boolean ans1=true;
+        boolean ans2=true;
+        
+        int value1=0;
+        int value2=0;
+        
+        int count1=0;
+        int count2=0;
+        while(i<A.length)
+        {
+            if(val1==A[i]||val1==B[i])
+            {
+                if(val1!=A[i])
+                    count1++;
+                
+                if(val1!=B[i])
+                    count2++;
+                i++;
+            }
+                else
+            { 
+                    ans1=false;
+                break;    
+             }
+        }
+        System.out.println(count1+" "+count2);
+     
+     
+        value1=Math.min(count1,count2);
+        
+        count1=0;
+        count2=0;
+        val1=B[0];
+        i=0;
+    
+        while(i<B.length)
+        {
+             if(val1==A[i]||val1==B[i])
+            {
+                if(val1!=A[i])
+                    count1++;
+                 
+                 if(val1!=B[i])
+                    count2++;
+                
+                i++;
+            }
+            else
+            {    ans2=false;
+                break;    
+            }
+        }
+        
+        
+        System.out.println(count1+" "+count2);
+        
+            value2=Math.min(count1,count2);
+        
+        
+        if(ans1||ans2)
+        {
+            if(ans1&&ans2)
+                return Math.min(value1,value2);
+            else if(ans1)
+                return value1;
+            return value2;
+        }   
+        
+        
+        return -1;
+        
+    }
+}

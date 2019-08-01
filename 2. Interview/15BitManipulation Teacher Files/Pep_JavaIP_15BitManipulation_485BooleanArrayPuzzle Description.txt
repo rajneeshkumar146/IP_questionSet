@@ -1,0 +1,44 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given array of 2 integers such that one of them is zero and other is
+one.
+2. You have to make both elements zero.
+3. You are not allowed to use if else or looping statements or simple assigning.
+4. You can only complement array elements, no other operation like and, or, multi, division, …. etc.
+5. Obviously, you can’t directly assign 0 to array elements.
+6. Print the value of both integers after making changes.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/a-boolean-array-puzzle/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We use following assignment statements :
+arr[1]=arr[arr[0]]
+2. If arr[0] is 0, then it assigns arr[1] as 0. Otherwise, arr[0] gives value as
+1. Even arr[1] gives zero and it is assigned to arr[1].
+3. After assigning 0 to arr[1], it is copied to arr[0] by : arr[0]=arr[1].
+4. This ensures both elements are 0.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_485BooleanArrayPuzzle {
+	public static void main(String args[]) {
+		Scanner scn=new Scanner(System.in);
+		int[] arr=new int[2];
+		arr[0]=scn.nextInt();
+		arr[1]=scn.nextInt();
+
+		arr[1]=arr[arr[0]];
+		arr[0]=arr[1];
+
+		System.out.println(arr[0]+" "+arr[1]);
+	}
+
+}

@@ -1,0 +1,15 @@
+class Solution {
+    public boolean isIdealPermutation(int[] A) {
+        
+        //all local inversions are global inversions and we have to check that if there is any global inversion other than local inversion we can say than the ans is false;
+        
+        // for no global inversion there should not be any no which is having any no smaller than it any na index of i+2 and above....
+        int n=A.length;
+        for(int i=0;i<n;i++)
+        {
+            if(Math.abs(A[i]-i)>1)
+                return false;
+        }
+        return true;
+    }
+}

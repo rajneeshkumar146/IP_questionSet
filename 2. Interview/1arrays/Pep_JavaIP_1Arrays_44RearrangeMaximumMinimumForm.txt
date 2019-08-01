@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given sorted array of positive numbers. You have to rearrange and print
+the array elements in maximum-minimum form. 
+2. Maximum-minimum form means first element is maximum of the array, followed by 
+minimum of array, followed by second max of the array,
+followed by second min and so on.
+3. Allowed time complexity is O(n) and allowed space complexity is O(1).
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/rearrange-array-maximum-minimum-form-set-2-o1-
+extra-space/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1.We know odd places are to be filled by minimum element and even places by maximum
+element. Now, we take a max_element= maximum value of the array + 1
+2. We initialize min_index as 0 and max_index=arr.length-1
+3. We fill 0th index first, even index by maximum vaues. So, we write : 
+arr[i]+=(arr[max_index]%max_element)*max_element and similarly for minimum elements
+:  arr[i]+=(arr[min_index]%max_element)*max_element
+4. For max elements : arr[max_index]%max_element gives us that element only. Then we
+multiply it with max_element and this makes it divisible.
+5. arr[max_index]*max_element. And then we store at 
+arr[i]=arr[i]+arr[max_index]*max_element. So that if we modulus this value with 
+max_element, it will give us arr[i].
+6. We use this approach to store 2 values. Original values can be retrieved with
+modulus and value to be put can be retrieved by dividing  
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_45RearrangeMaximumMinimumForm {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int[] arr=new int[scn.nextInt()];
+		for(int i=0; i<arr.length; i++) {
+			arr[i]=scn.nextInt();
+		}
+		
+		rearrange(arr);
+		for(int val:arr) {
+			System.out.print(val+" ");
+		}
+		
+	}
+
+	private static void rearrange(int[] arr) {
+		int max_element=arr[arr.length-1]+1;
+		int max_index=arr.length-1;
+		int min_index=0;
+		for(int i=0; i<arr.length; i++) {
+			if(i%2==0) {
+				arr[i]+=(arr[max_index]%max_element)*max_element;
+				max_index--;
+			}else {
+				arr[i]+=(arr[min_index]%max_element)*max_element;
+				min_index++;
+			}
+		}
+		
+		for(int i=0; i<arr.length; i++) {
+			arr[i]=arr[i]/max_element;
+		}
+	}
+
+}

@@ -1,0 +1,31 @@
+import java.util.*;
+
+class GFG {
+	public static void main (String[] args){
+	Scanner sc=new Scanner(System.in);
+	int t=sc.nextInt();
+	while(t>0){
+	    t--;
+	    int N=sc.nextInt();
+	    System.out.println(getMinSquares(N));
+	}
+	}
+	
+	public static int getMinSquares(int N){
+	int squares[]=new int[N+1];
+		squares[0]=0;
+		squares[1]=1;
+		squares[2]=2;
+		squares[3]=3;
+	
+	
+	    for(int i=4;i<=N;i++)
+	    {
+	        squares[i]=i;
+	        int root=(int)Math.sqrt(i);
+	        for(int j=1;j<=root;j++)
+	            squares[i]=Math.min(1+squares[i-j*j],squares[i]);
+	    }
+		return squares[N];
+	}
+}

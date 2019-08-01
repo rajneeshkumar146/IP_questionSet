@@ -1,0 +1,104 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given two strings ,you have to check whether the strings are 
+anagrams to each other or not.
+Anagrams are those which contain  same characters ,(may 
+be different in order).
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+GOLDMAN SACHS,SYNOPSYS,WIPRO
+https://www.geeksforgeeks.org/check-whether-two-strings-are-anagram-of-each-other/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+Simple idea is to sort the strings and then compare them.
+OR
+Count the characters present in the string and store each 
+occurrence in the arrays of 26 size.
+then compare all the values in both the arrays ,if the count of
+any index doesn’t match with the other array. return false .
+
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+String (a<=ch<=z) of m length(String 1)
+String (a<=ch<=z) of m length(String 2)
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+1<=m<=5000
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+True (if equal)
+False(if not)
+--------------------------------------------------------------------------------
+Test Cases
+--------------------------------------------------------------------------------
+1.Sample
+testthestring
+stringthetest
+--------------------------------------------------------------------------------
+true
+
+--------------------------------------------------------------------------------
+2.Real
+abcdefgh
+fgabcefs
+--------------------------------------------------------------------------------
+false
+--------------------------------------------------------------------------------
+3.Real
+elephant
+phantele
+
+--------------------------------------------------------------------------------
+true
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+
+
+import java.util.Scanner;
+
+public class Solution {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Scanner scn = new Scanner(System.in);
+
+		String str = scn.next();
+		String str2 = scn.next();
+
+		getprob(str, str2);
+	}
+
+	public static void getprob(String str, String str2) {
+		int[] arr = new int[26];
+		int[] arr2 = new int[26];
+		//counting the characters present in the str 
+		for (int i = 0; i < str.length(); i++) {
+			arr[(int) (str.charAt(i) - 'a')]++;
+		}
+		//counting the characters present in the str2 and store their value in the arr2 
+
+		for (int i = 0; i < str.length(); i++) {
+			arr2[(int) (str2.charAt(i) - 'a')]++;
+
+		}
+		//comparing both arrays whether they are equal or not.
+		for (int i = 0; i < 26; i++) {
+			if (arr2[i] == arr[i]) {
+				continue;
+			} else {
+				System.out.println(false);
+				return;
+			}
+		}
+		System.out.println(true);
+
+	}
+
+}

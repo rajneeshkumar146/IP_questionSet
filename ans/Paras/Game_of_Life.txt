@@ -1,0 +1,53 @@
+class Solution {
+    public void gameOfLife(int[][] board) {
+        
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col <board[0].length; col++) {
+        
+            int n=findlive(row,col,board);
+            
+                //Rule 1&3;
+                  if ((board[row][col] == 1) && (n < 2 || n> 3)) {
+                    board[row][col] = -1;
+                }
+                // Rule 4
+                if (board[row][col] == 0 && n == 3) {
+                    board[row][col] = 2;
+            }
+         }
+        }
+        
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if (board[row][col] > 0) {
+                    board[row][col] = 1;
+                } else {
+                    board[row][col] = 0;
+                }
+            }
+        }
+        
+    }   
+    int findlive(int row,int col,int [][] board)
+    {
+        int ans=0;
+        
+        if(row-1>=0&&(board[row-1][col]==1||board[row-1][col]==-1))
+	            ans++;
+	        if(row-1>=0&& col-1>=0&&(board[row-1][col-1]==1||board[row-1][col-1]==-1))
+	            ans++;
+	        if(row-1>=0&&col+1<board[0].length&&(board[row-1][col+1]==1||board[row-1][col+1]==-1))
+	            ans++;        
+	        if(col-1>=0&&(board[row][col-1]==1||board[row][col-1]==-1))
+	            ans++;      
+	        if(col+1<board[0].length&&(board[row][col+1]==1||board[row][col+1]==-1))
+	            ans++;          
+	        if(row+1<board.length&&(board[row+1][col]==1||board[row+1][col]==-1))
+	            ans++;               
+	        if(row+1<board.length&&col-1>=0&&(board[row+1][col-1]==1||board[row+1][col-1]==-1))   
+	        	ans++;
+	        if(row+1<board.length&&col+1<board[0].length&&(board[row+1][col+1]==1||board[row+1][col+1]==-1))
+	            ans++;    
+        return ans;
+    }
+}

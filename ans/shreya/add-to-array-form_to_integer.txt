@@ -1,0 +1,35 @@
+class Solution {
+    public List<Integer> addToArrayForm(int[] A, int k) {
+       int carry=0;
+        int val=0;
+        List<Integer> list=new ArrayList<>();
+        int i=A.length-1;
+        while(i>=0||k>0)
+        {
+            if(k>=0)
+            {
+             val=k%10;
+             k=k/10;
+            }
+            
+            int ans=carry+val;         
+            
+            if(i>=0)
+            {
+                ans=ans+A[i];
+                i--;
+                
+            }
+           list.add(ans%10);
+            carry=ans/10;
+        }
+        
+        if(carry>0)
+        {
+            list.add(carry);
+        }
+        
+        Collections.reverse(list);
+        return list;
+    }
+}

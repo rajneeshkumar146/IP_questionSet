@@ -1,0 +1,17 @@
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+       List<List<Integer>> result=new ArrayList<List<Integer>>();
+        for (int i = 1; i <= numRows; i++)
+      {
+      int k = 1;        
+        ArrayList<Integer>list=new ArrayList<>();
+            for (int j = 1; j <= i; j++)  
+        {
+             list.add(k);
+          k = k* (i - j) / j;  
+     }
+              result.add(list);
+  }
+        return result;
+    }
+}

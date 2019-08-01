@@ -1,0 +1,123 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given a string of characters ranging from a to z.
+You have to print the maximum length of the substring which 
+has all unique characters.
+For example-String: abcadf
+bcadf  is the longest substring with unique characters. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+MICROSOFT,HOUSING.COM,AMAZON
+https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+Longest substring works on the principle if u find any repeating
+character, then just check whether it has included in the current
+substring or not, by checking the array check which stores the 
+indices of characters visited.
+if not update the value of current position uncheck array.
+if yes, then start your substring from the next element.
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+String (a<=ch<=z) of m length
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+1<=m<=5000
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+Integer representing the length of the substring formed.
+--------------------------------------------------------------------------------
+Test Cases
+--------------------------------------------------------------------------------
+1.Sample
+abbasbjdjjjsjabj
+--------------------------------------------------------------------------------
+5
+--------------------------------------------------------------------------------
+2.Real
+abcdefghiabnj
+
+--------------------------------------------------------------------------------
+11
+--------------------------------------------------------------------------------
+3.Real
+basdhjdakhdcbbkbxc
+--------------------------------------------------------------------------------
+6
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class solution {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner scn = new Scanner(System.in);
+
+		String str = scn.nextLine();
+		getprob(str);
+
+	}
+
+	public static void getprob(String str) {
+		//integer array that stores the value of indices 
+		//of visited characters till now.
+		
+		int[] check = new int[26];
+		//-1 indicating not visited.
+		Arrays.fill(check, -1);
+		//i=start of longest substring and j= end of longest substring
+		
+		int i = 0, j = 1;
+		//already included the first char
+		int max_len = 1;
+		//marked 0 at the char index
+		check[(int) (str.charAt(i) - 'a')] = 0;
+		int curr_len = 1;
+	
+		while (j < str.length()) {
+			//catching char and checking whether it is included or not.
+			char ch = str.charAt(j);
+			
+			int ind = (int) (ch - 'a');
+			
+			//if -1, then it is not visited
+			//if j-curr_len that is the start of the curr substring is bigger than visited index 
+			//then increment the curr_len by 1
+			//update the index by j
+			//check if it exceeds the max_len
+			if (check[ind] == -1 || i > check[ind]) {
+				check[ind] = j;
+				curr_len++;
+				if (curr_len > max_len) {
+					max_len = curr_len;
+				}
+
+			} else {
+				//start of the substring becomes present index +1
+				//curr_len changes accly
+				//update index
+				i = check[ind] + 1;
+				curr_len = j - i + 1;
+				check[ind] = j;
+
+			}
+			//increment j for next iteration
+			j++;
+		}
+		System.out.println(max_len);
+
+	}
+
+}
+
+   

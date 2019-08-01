@@ -1,0 +1,91 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers.
+2. You have to print majority element of the array. Majority element is the element
+which occurs more than half of array size.
+3. If there is no such element, print "NO Majority Element".  
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/majority-element/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Pehli baar traverse karne par hum potential majority element nikalte h.
+2. pehle arr[0] ko majority element. uski har occurence count ko ++ karte h
+3. agar koi dusra element aata h, toh count ko -- karte h.
+4. agar zero par pahunch jata h, iska matlab abi tak koi majority element nhin mila h.
+5. majority element arr[i] ko bna dete h aur count ko 1 se reset kar dete h.
+6. loop ke bahar aane par agar count non-zero hota, toh apna majority element 
+potential majority hota h. Kyunki woh toh sirf last subarray ka majority h.
+Woh poore array ka majority ho bhi skta h aur nhin bhi.
+7. Lekin hoga toh sirf wahi majority element hoga varn akoi nhin hoga.
+8. isliye hum ek aur baar traverse karte h aur uss majority element ka count 
+dekhte h. agar count > arr.length/2 aata toh woh majority element h, varna nhin.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package SearchingSorting;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_2SnS_48MajorityElement {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i1 = 0; i1 < arr.length; i1++) {
+			arr[i1] = scn.nextInt();
+		}
+
+		int z = findmajority(arr);
+		if (z != -1) {
+			boolean result = isMajority(arr, z);
+			if (result) {
+				System.out.println(z);
+			} else {
+				System.out.println("NO Majority Element");
+			}
+		} else {
+			System.out.println("NO Majority Element");
+		}
+	}
+
+	private static boolean isMajority(int[] arr, int z) {
+		int count = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (z == arr[i]) {
+				count++;
+			}
+		}
+		if (count > arr.length / 2) {
+			return true;
+		}
+		return false;
+	}
+
+	private static int findmajority(int[] arr) {
+
+		int count = 1;
+		int majorityelement = arr[0];
+		for (int i = 1; i < arr.length; i++) {
+			if (count == 0) {
+				majorityelement = arr[i];
+				count = 1;
+			}
+			if (arr[i] == majorityelement) {
+				count++;
+			} else {
+				count--;
+			}
+		}
+		if (count != 0)
+			return majorityelement;
+		else {
+			return -1;
+		}
+	}
+
+}

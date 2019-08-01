@@ -1,0 +1,88 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given a graph. You have to detect and print all hamiltonian paths
+and cycles in the graph. Here are the details around hamiltonian paths and
+cycles
+https://en.wikipedia.org/wiki/Hamiltonian_path
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/backtracking-set-7-hamiltonian-cycle/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. A hamiltonian path is one which visits all the vertices but not even one twice.
+2. A hamiltonian cycle is a hamiltonian path which has an edge from last vertex
+to first.
+3. Naive approach - a permutation of vertices which honors 2 constraints.
+Constraint 1 - there is an edge between every consecutive pair of vces in the
+permutation. Constraint 1 makes sure permutation is a path.
+Constraint 2 - An edge between last and first vertex (makes sure path is a
+cycle).
+4. Better approach - Use recursion, visit only a nbr not yet encountered.
+5. Base case of path will be to just print when all vces have been visited.
+6. A cycle's base case will make sure that there is an edge between last and
+first vertex.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.backtracking;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Pep_JavaIP_5Backtracking_167HamiltonianCycle {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int n = scn.nextInt(); // num vertices
+		int e = scn.nextInt(); // num edges
+
+		boolean[][] graph = new boolean[n][n]; // adjacency vertex
+		for (int i = 0; i < e; i++) {
+			int v1 = scn.nextInt(); // vertex 1
+			int v2 = scn.nextInt(); // vertex 2
+
+			graph[v1][v2] = true;
+			graph[v2][v1] = true;
+		}
+
+		solveHamiltonianCycle(graph, 0, new ArrayList<>());
+	}
+
+	public static void solveHamiltonianCycle(boolean[][] graph, int vtx,
+										 ArrayList<Integer> hamiltonianCycle) {
+		// important here to make the last vertex included for base case
+		hamiltonianCycle.add(vtx);
+
+		if (hamiltonianCycle.size() == graph.length) {
+			System.out.println("P:" + hamiltonianCycle);
+			int fv = hamiltonianCycle.get(0);
+			int lv = hamiltonianCycle.get(hamiltonianCycle.size() - 1);
+			if (graph[fv][lv] == true) {
+				System.out.println("C:" + hamiltonianCycle);
+			} else {
+				System.out.println("C:null");
+			}
+			// no return to make sure removal happens in base case
+		}
+		else {
+			for (int nbr = 0; nbr < graph[vtx].length; nbr++) {
+				// edge exists
+				if (graph[vtx][nbr] == true) {
+					// but is not included in path yet
+					if (hamiltonianCycle.contains(nbr) == false) {
+						solveHamiltonianCycle(graph, nbr, hamiltonianCycle);
+					}
+				}
+			}
+		}
+
+		hamiltonianCycle.remove(hamiltonianCycle.size() - 1);
+	}
+
+}

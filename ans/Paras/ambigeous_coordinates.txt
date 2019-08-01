@@ -1,0 +1,29 @@
+class Solution {
+    public List<String> ambiguousCoordinates(String S) {
+          List<String> result = new ArrayList();
+        
+        for (int i = 2; i < S.length()-1; i++)
+            for (String leftpart: putchar(S, 1, i))
+                for (String rightpart: putchar(S, i, S.length()-1))
+                    
+                    result.add("(" + leftpart + ", " + rightpart + ")");
+        return result;
+    }
+    
+    ArrayList<String>putchar(String s,int i,int j)
+    {
+        ArrayList<String> ans=new ArrayList<>();
+        for(int k=1;k<=j-i;k++){
+           String one=s.substring(i,i+k);
+           String two=s.substring(i+k,j);
+            
+            if((!one.startsWith("0")||one.equals("0"))&&!two.endsWith("0"))
+            ans.add(one+(k<j-i?".":"")+two);
+            
+    
+        }  
+        return ans;
+    }
+    
+    
+}

@@ -1,0 +1,110 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given ancestor matrix (1's and 0's) of a binary tree.
+Refer the image for details
+2. Calculate and print the number of binary trees with same ancestor matrix.
+
+Notes
+1. You should code only the solve function, feel free to change its signature if
+ required.
+
+https://s3.amazonaws.com/hr-assets/0/1525878749-d89eae9893-Capture.PNG
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/construct-tree-from-ancestor-matrix/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Create a hashmap of integer vs ArrayList<Integer>, which has in its key - the
+number of descendants and as value a list of nodes which have that many descendants.
+2. Create a HashSet of integers, representing nodes available as children.
+3. Process the hashmap from least number of descendants to highest.
+4. For every key, traverse the list of nodes calculate their ways of creation
+and put them in a hashmap.
+5. While processing a node, check for possible children by checking ancestor
+matrix and list of available children. This data helps in calculation of ways
+to create a subtree with node as root.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.binaryTree;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Pep_JavaIP_10BinaryTrees_323CountTreeWithSameAncestorMatrix {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int n = scn.nextInt();
+		int[][] arr = new int[n][n];
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				arr[i][j] = scn.nextInt();
+			}
+		}
+
+		System.out.println(solve(arr));
+	}
+
+	public static int solve(int[][] arr) {
+		// key is number of descendants, value is list of nodes with that many
+		// number of descendants
+		HashMap<Integer, ArrayList<Integer>> dmap = new HashMap<>();
+		// list of nodes available as children
+		HashSet<Integer> availableChildren = new HashSet<>();
+		for (int i = 0; i < arr.length; i++) {
+			availableChildren.add(i);
+
+			int numDesc = 0;
+			for (int j = 0; j < arr[i].length; j++) {
+				numDesc += arr[i][j];
+			}
+
+			if (!dmap.containsKey(numDesc)) {
+				dmap.put(numDesc, new ArrayList<>());
+			}
+			dmap.get(numDesc).add(i);
+		}
+
+		HashMap<Integer, Integer> countTrees = new HashMap<>();
+		int max = 0;
+		for (int numDesc = 0; numDesc < arr.length; numDesc++) {
+			// if nobody has this many number of descendants
+			if (dmap.containsKey(numDesc) == false) {
+				continue;
+			}
+
+			// processing all descendants for this count of descendants
+			for (Integer node : dmap.get(numDesc)) {
+				// if there are no descendants, there is a single way to create this subtree
+				if (numDesc == 0) {
+					countTrees.put(node, 1);
+					continue;
+				}
+
+				int countWays = 2; // one for left and one for right
+				for (int nodesDesc = 0; nodesDesc < arr[node].length; nodesDesc++) {
+					// if it is a descendant and in the available children list, make
+					// it a child
+					if (arr[node][nodesDesc] == 1 && availableChildren.contains(nodesDesc)) {
+						availableChildren.remove(nodesDesc);
+						// use child's way of creation to calculate subtrees' ways of creation.
+						countWays *= countTrees.get(nodesDesc);
+					}
+				}
+				countTrees.put(node, countWays);
+
+				if (countWays > max) {
+					max = countWays;
+				}
+			}
+		}
+		return max;
+	}
+}

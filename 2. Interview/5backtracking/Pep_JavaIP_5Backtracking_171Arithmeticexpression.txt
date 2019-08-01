@@ -1,0 +1,67 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given an array of integers. You can apply any of the 3 operators on the given
+integers : +, - or *. All the operators have equal precedence. Return the numbers
+with operators as a string such that the resultant number formed by operating
+operators on numbers is divisible by 101.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.hackerrank.com/challenges/arithmetic-expressions/problem
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We take 2 variables vsf (int) and expsf(String). Before starting the whirlpool
+of calls, we intialize vsf with arr[0] and expsf+=arr[0].
+2. In recursive call, we add, subtract and multiply arr[vidx] in vsf 
+and make the same changes in expsf. At the base case, if vsf is divisible by 101,
+then we print the string.
+4. We just have to print one string. So, we have to print the first string where
+resultant number is divisible by 101.
+5. Line 1, 2, 3 are recursive calls. We do an OR operation with previously returned
+value and next call. If previously returned value is true, then it returns true
+without making next call.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.backtracking;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_5Backtracking_171Arithmeticexpression {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		int[] arr = new int[n];
+		for (int arr_i = 0; arr_i < n; arr_i++) {
+			arr[arr_i] = in.nextInt();
+		}
+		arithmeticExpressions(arr);
+		in.close();
+	}
+
+	public static void arithmeticExpressions(int[] arr) {
+		int vsf = arr[0];
+		String expsp = arr[0] + "";
+		arithmeticExpressions(arr, vsf, expsp, 1);
+	}
+
+	public static boolean arithmeticExpressions(int[] arr, int vsf, String expsf, int vidx) {
+		if (vidx == arr.length) {
+			if (vsf % 101 == 0) {
+				System.out.println(expsf);
+				return true;
+			}
+			return false;
+		}
+
+		boolean res = false;
+		res = res || arithmeticExpressions(arr, vsf + arr[vidx], expsf + "+" + arr[vidx], vidx + 1);//line1
+		res = res || arithmeticExpressions(arr, vsf - arr[vidx], expsf + "-" + arr[vidx], vidx + 1);//line2
+		res = res || arithmeticExpressions(arr, vsf * arr[vidx], expsf + "*" + arr[vidx], vidx + 1);//line3
+		return res;
+	}
+
+}

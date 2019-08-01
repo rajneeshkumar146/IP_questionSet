@@ -1,0 +1,110 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given the root node of a binary tree.
+2. You have to print what is visible from the left side of the tree. Refer the
+image below.
+
+Notes
+1. Node class represents the node of binary tree.
+2. display is a utility function which displays the contents of tree, feel free
+to use it for debugging purposes.
+3. main takes input from the users and creates the tree. You can use display to
+know its contents.
+4. You should code only the printLeftView function, feel free to change its
+signature if required.
+5. Don't change the code of Node, main and display.
+
+https://s3.amazonaws.com/hr-assets/0/1526368991-b073c1319b-Capture.PNG
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/print-left-view-binary-tree/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+What?
+The left border actually.
+How?
+Take the left child if available, if not available then right.
+Why?
+It never goes to both children and prefers the left if it is available. This helps
+in moving on the left border only.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.binaryTree;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_10BinaryTrees_347LeftView {
+	private static class Node {
+		int data;
+		Node left;
+		Node right;
+
+		Node(int data, Node left, Node right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
+	public static void display(Node node) {
+		if (node == null) {
+			return;
+		}
+
+		String str = "";
+
+		str += node.left == null ? "." : node.left.data;
+		str += " <= " + node.data + " => ";
+		str += node.right == null ? "." : node.right.data;
+
+		System.out.println(str);
+
+		display(node.left);
+		display(node.right);
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		// creation using the level order, seeing it like a heap
+		// -1 says there is no node
+		Node[] nodes = new Node[arr.length];
+		for (int i = 0; i < nodes.length; i++) {
+			if (arr[i] != -1) {
+				nodes[i] = new Node(arr[i], null, null);
+
+				if (i > 0) {
+					int pi = (i - 1) / 2;
+
+					if (i == 2 * pi + 1) {
+						nodes[pi].left = nodes[i];
+					} else {
+						nodes[pi].right = nodes[i];
+					}
+				}
+			}
+		}
+		Node root = nodes[0];
+//		display(root);
+
+		printLeftView(root);
+	}
+
+	private static void printLeftView(Node node){
+		System.out.print(node.data + " ");
+		if(node.left != null){
+			printLeftView(node.left);
+		} else if(node.right != null){
+			printLeftView(node.right);
+		}
+	}
+
+}

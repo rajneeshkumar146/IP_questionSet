@@ -1,0 +1,55 @@
+public class Solution {
+    /**
+     * @param nums: a sorted array
+     * @param a: 
+     * @param b: 
+     * @param c: 
+     * @return: a sorted array
+     */
+    public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
+        int[] result = new int[nums.length];
+        int start = 0;
+        int end = nums.length - 1;
+        int index = 0;
+
+
+        if(a >= 0){
+            index = end;
+        }
+
+        while(start <= end) {
+            int sans = getpol(nums[start], a, b, c);
+            int eans = getpol(nums[end], a, b, c);
+            if(a >= 0) {
+                if(sans >= eans) {
+                    result[index] = sans;
+                    start++;
+                    index--;
+                }
+                else{
+                    result[index] = eans;
+                    end--;
+                    index--;
+                }
+            }
+            else{
+                if(sans <= eans) {
+                    result[index] = sans;
+                    start++;
+                    index++;
+                }
+                else{
+                    result[index] = eans;
+                    end--;
+                    index++;
+                }
+            }
+        }
+        return result;  // Write your code here
+    }
+    
+    int getpol(int val,int a,int b,int c)
+    {
+        return (a*((int)Math.pow(val,2)))+(b*val)+c;
+    }
+}

@@ -1,0 +1,111 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array which contains the data required to create a binary tree.
+2. The indices of the array are to be used as data of nodes in the binary trees.
+3. The values of array represent the parent of this node. The index with value
+-1 indicates that it has no parent, hence it is the root.
+Refer the image at bottom for having more idea.
+4. Construct a binary tree and display it using the display function using the
+given array, if it is not possible to create the binary tree print "Invalid".
+
+Notes
+1. Node class represents the node of binary tree.
+2. display is a utility function which displays the contents of tree, feel free
+to use it for debugging purposes.
+3. You should code only the construct function, feel free to change its
+signature if required.
+5. Don't change the code of Node, main and display.
+
+https://s3.amazonaws.com/hr-assets/0/1525870580-b5a673ebf2-Capture.PNG
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/construct-a-binary-tree-from-parent-array-representation/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Create an array of nodes with data set, but left and right no set.
+2. Loop through the array again, for every i, go to the parent and set current
+node as it's left (or right, if left is taken.). If both are taken, it is an
+invalid input.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.binaryTree;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Pep_JavaIP_10BinaryTrees_325ConstructFromParentArray {
+	private static class Node {
+		int data;
+		Node left;
+		Node right;
+
+		Node(int data, Node left, Node right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
+	public static void display(Node node) {
+		if (node == null) {
+			return;
+		}
+
+		String str = "";
+
+		str += node.left == null ? "." : node.left.data;
+		str += " => " + node.data + " <= ";
+		str += node.right == null ? "." : node.right.data;
+
+		System.out.println(str);
+
+		display(node.left);
+		display(node.right);
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		Node root = construct(arr);
+		if (root == null) {
+			System.out.println("Invalid");
+		} else {
+			display(root);
+		}
+	}
+
+	private static Node construct(int[] arr) {
+		Node[] nodes = new Node[arr.length];
+		for (int i = 0; i < nodes.length; i++) { // create all nodes, without left and right
+			nodes[i] = new Node(i, null, null);
+		}
+
+		Node root = null;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == -1) { // if parent is -1, it is the root node
+				root = nodes[i];
+				continue;
+			}
+			if (nodes[arr[i]].left == null) { // go to the parent and set it's left
+				nodes[arr[i]].left = nodes[i];
+			} else if (nodes[arr[i]].right == null) { // go to the parent and set it's right
+				nodes[arr[i]].right = nodes[i];
+			} else { // invalid
+				return null;
+			}
+		}
+
+		return root;
+	}
+
+}

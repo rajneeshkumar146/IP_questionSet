@@ -1,0 +1,30 @@
+class Solution {
+  	    public  String findReplaceString(String S, int[] indexes, String[] sources, String[] targets) {
+        int n = S.length();
+        int[] arr = new int[n];
+        Arrays.fill(arr, -1);
+
+        for (int i = 0; i < indexes.length; i++) {
+            if (S.substring(indexes[i], indexes[i] + sources[i].length()).equals(sources[i])) {
+                arr[indexes[i]] = i;
+            }
+        }
+
+        String ans="";
+            int i=0;
+       while(i<n){
+            if (arr[i] != -1) {
+                ans=ans+targets[arr[i]];  
+                i += sources[arr[i]].length();
+            } else {
+                ans+=S.charAt(i);
+                i++;
+            }
+        }
+
+        return ans;
+        }
+    
+    
+    
+}

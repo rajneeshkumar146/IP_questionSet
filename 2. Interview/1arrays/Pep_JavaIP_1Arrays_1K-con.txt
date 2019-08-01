@@ -1,0 +1,107 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given an array A and an integer K. You have to find out
+maximum-subarray-sum of an array B where
+B = A + A + A....K times.
+E.G. If A = {6, 2} and K = 3 then, B = {6, 2, 6, 2, 6, 2}
+Print the maximum-subarray-sum that can be obtained from array B.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Codechef question january long challenge K-concatenation.
+https://www.codechef.com/JAN18/problems/KCON/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Kadane's variation.
+2. if k == 1, simple kadanes
+3. Else if sum >= 0
+max-sum-from-right + (k - 2) * sum + max-sum-from-left
+4. Else if sum < 0, kadanes for 2 arrays put together. E.G.
+10 -13 -14 3 2 6 -18 -19 21
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_1Kcon {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int n = scn.nextInt();
+		int k = scn.nextInt();
+
+		int[] arr = new int[n];
+
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		System.out.println(kconcat(arr, k));
+	}
+
+	private static long kconcat(int[] arr, int k) {
+		long rv = 0;
+
+		long sum = 0;
+		for (int val : arr) {
+			sum += val;
+		}
+
+		if (k == 1) {
+			rv = kadanesModified(arr, 1);
+		} else if (sum >= 0) {
+			rv = handleSumGreaterThan0(arr, k, sum);
+		} else if (sum < 0) {
+			rv = kadanesModified(arr, 2);
+		}
+
+		return rv;
+	}
+
+	private static long handleSumGreaterThan0(int[] arr, int k, long sum) {
+		long prefixSum = 0;
+		long peakFromLeft = Long.MIN_VALUE;
+		for (int i = 0; i < arr.length; i++) {
+			prefixSum += arr[i];
+			if (prefixSum > peakFromLeft) {
+				peakFromLeft = prefixSum;
+			}
+		}
+
+		long suffixSum = 0;
+		long peakFromRight = Long.MIN_VALUE;
+		for (int i = arr.length - 1; i >= 0; i--) {
+			suffixSum += arr[i];
+			if (suffixSum > peakFromRight) {
+				peakFromRight = suffixSum;
+			}
+		}
+
+		return peakFromRight + (k - 2) * sum + peakFromLeft;
+	}
+
+	private static long kadanesModified(int[] arr, int k) {
+		long csum = arr[0];
+		long osum = arr[0];
+
+		int numRuns = k > 1 ? 2 : 1;
+		for (int i = 1; i < numRuns * arr.length; i++) {
+			if (csum >= 0) {
+				csum += arr[i % arr.length];
+			} else {
+				csum = arr[i % arr.length];
+			}
+
+			if (csum >= osum) {
+				osum = csum;
+			}
+		}
+
+		return osum;
+	}
+}

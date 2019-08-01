@@ -1,0 +1,30 @@
+public class Solution {
+	public int kInversePairs(int n, int k) {
+// dp[i][j] stores the sum of previous answers in the row and the result of itself
+    	int[][] dp = new int[n + 1][k + 1];
+    	int M = 1000000007;
+    	for (int i = 1; i <= n; i++) {
+        	for (int j = 0; j <= k; j++) {
+            	if (j == 0)
+                	dp[i][j] = 1;
+            	else {
+                	int val = (dp[i - 1][j] + M - ((j - i) >= 0 ? dp[i - 1][j - i] : 0)) % M;
+                	dp[i][j] = (dp[i][j - 1] + val) % M;
+            	}
+        	}
+    	}
+    	return ((dp[n][k] + M - (k > 0 ? dp[n][k - 1] : 0)) % M);
+	}
+}
+/*
+EXPLANATION OF ADDING M DURING SUBTRACTION
+ if A=M*q1+a and B=M*q2+b and C=M*q3+c (q1, q2, q3 can be 0 or 1 )
+Then A+B will be stored as (A%M+B%M)%M i.e (a+b)%M	--(i)
+Now if we subtract a value C(stored as c) from A+B then it will be computed as a+b-c (Using (i) )
+if A+B is guaranteed to be greater than C, even then it is possible that our desired result (a+b-c)%M  becomes negative (if a+b < c )
+Eg A=1000000098, B=1000000001, c= 200(M*0 + c )
+(a+b-c)%M = -1 which is wrong.
+Therefore in such situations where (a+b-c)%M is guaranteed to be positive but is coming out to be negative then M must b added in the answer to rectify
+Even if the result is pos, adding an M wont change the result as it will be ruled out when modded with M 
+Therefore (a+b-c)%M must be computed as (a+b+M-c)%M 
+*/

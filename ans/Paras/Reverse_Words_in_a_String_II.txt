@@ -1,0 +1,42 @@
+public class Solution {
+    /**
+     * @param str: a string
+     * @return: return a string
+     */
+     public char[] reverseWords(char[] str) {
+	        int start= 0;
+	    	
+	    	for (int i = 0; i <= str.length; i++) {
+	    		if (i==str.length||str[i] == ' ') {
+	    
+	                int left=start;
+	                int right=i-1;
+	               while(left<right)
+	                {
+	                    char temp=str[left];
+	                    str[left]=str[right];
+	                    str[right]=temp;
+	                    System.out.println(str[left]+" "+str[right]);
+	                    left++;
+	                    right--;
+	                    
+	                }
+	                
+	    			start= i + 1;
+	    		}
+	    	}
+	    	
+	            int left=0;
+	            int right=str.length-1;
+	    
+	            while(left<right)
+	                {
+	                    char temp=str[left];
+	                    str[left]=str[right];
+	                    str[right]=temp;
+	                    left++;
+	                    right--;
+	                }
+	    	return str;
+	    }
+}

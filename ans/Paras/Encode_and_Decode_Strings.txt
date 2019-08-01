@@ -1,0 +1,46 @@
+public class Solution {
+    /*
+     * @param strs: a list of strings
+     * @return: encodes a list of strings to a single string.
+     */
+    public String encode(List<String> strs) {
+        String encoded="";
+        
+        for(String str:strs)
+        {
+            encoded+=str;
+                encoded+=":;";
+        }
+        System.out.println(encoded.substring(0,encoded.length()-2));
+        return encoded.substring(0,encoded.length()-2);
+    }
+
+    public List<String> decode(String str) {
+      
+      String decoded="";
+     
+     
+     List<String> ans=new ArrayList<>();
+      for(int i=0;i<str.length();i++)
+      {
+          if(str.charAt(i)==':')
+          {
+              if(i+1<str.length()&&str.charAt(i+1)==';'){
+              ans.add(decoded);
+              decoded="";
+             i++;
+            }
+            else{
+                decoded+=str.charAt(i);
+            }
+          }else{
+              decoded+=str.charAt(i);
+          }
+      }
+      
+      ans.add(decoded);    
+          
+          return ans;
+      }
+    
+}

@@ -1,0 +1,18 @@
+class Solution {
+	public int numTilings(int N) {
+    	if(N<3){
+        	return N;
+    	}
+    	int MOD=1000000007;
+    	long[] dp=new long[N+1];
+    	dp[0]=1;dp[1]=1;dp[2]=2;
+    	long s=1;
+    	int b=1;
+    	for(int i=3;i<=N;i++){
+        	dp[i]=dp[i-1]+dp[i-2]+s*2;
+        	s=s+dp[b];
+        	b++;
+    	}
+    	return (int)(dp[N]%MOD);
+	}
+}

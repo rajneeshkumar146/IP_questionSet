@@ -1,0 +1,29 @@
+class Solution {
+    public int missingNumber(int[] nums) {
+        
+        int i=0;
+        while(i<nums.length)
+        {
+            
+            if(nums[i]==nums.length)
+                i++;
+            else if(nums[i]==i){
+                i++;                
+            }
+            else{
+                int temp=nums[i];
+                nums[i]=nums[temp];
+                nums[temp]=temp;
+            }
+        }
+        i=0;
+        while(i<nums.length)
+        {
+            if(nums[i]!=i)
+                return i;
+            i++;
+        }
+        
+        return i;
+    }
+}

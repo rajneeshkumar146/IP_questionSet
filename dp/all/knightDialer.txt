@@ -1,0 +1,34 @@
+class Solution {
+	public int knightDialer(int N) {
+    	if(N==0)return 0;
+    	if(N==1)return 10;
+    	int M=1000000007;
+    	ArrayList[] map=new ArrayList[10];
+    	for(int i=0;i<map.length;i++)
+        	map[i]=new ArrayList<Integer>();
+    	map[0].add(4);map[0].add(6);
+    	map[1].add(6);map[1].add(8);
+    	map[2].add(7);map[2].add(9);
+    	map[3].add(4);map[3].add(8);
+    	map[4].add(0);map[4].add(3);map[4].add(9);
+    	map[6].add(0);map[6].add(1);map[6].add(7);
+    	map[7].add(2);map[7].add(6);
+    	map[8].add(1);map[8].add(3);
+    	map[9].add(2);map[9].add(4);
+   	 
+    	int ans=0;
+    	int[][] dp=new int[N+1][10];
+    	Arrays.fill(dp[1], 1);
+    	for(int i=1;i<N;i++){
+        	for(int j=0;j<dp[0].length;j++){
+            	for(int k=0;k<map[j].size();k++){
+                	int d=(int)map[j].get(k);
+                	dp[i+1][d]=(dp[i+1][d]+dp[i][j])%M;
+            	}
+        	}
+    	}
+    	for(int j=0;j<dp[0].length;j++)
+        	ans=(ans+dp[N][j])%M;
+    	return ans;
+	}
+}

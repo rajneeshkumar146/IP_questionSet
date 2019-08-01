@@ -1,0 +1,75 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given an array A, where A(i) represents stock's price on ith day. A transaction 
+means you can buy and sell the stock. You are allowed to make atmost 2 
+transsactions. You have to print the maximum profit that can be genreated from the 
+given stock. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-
+most-twice/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We would make 2 traversals : first from right to left and second from left to
+right.
+2. First traversal : using a max variable , we would populate the array where A(i)
+represents maximum profit that can be generated from buying and selling stock at
+most 1 time, between ith to (arr.length-1)th day.
+3. Second traversal : using a min variable, we would populate and update the same   
+array A, where A(i) will represent maximum profit that can be generated from 0th to
+ith day such we can buy and sell stocks atmost one time.
+4. Maximum in this array is our answer.  
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_26StockBuySell2times {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int[] arr=new int[scn.nextInt()];
+		for(int i=0; i<arr.length; i++) {
+			arr[i]=scn.nextInt();
+		}
+		
+		solve(arr);
+	}
+
+	public static void solve(int[] arr) {
+		int[] max_profit = new int[arr.length];
+
+		// right to left traversal
+		int max = arr[arr.length - 1];
+		
+		
+		for (int i = arr.length - 2; i >= 0; i--) {
+			if(arr[i]>max) {
+				max=arr[i];
+			}
+			
+			max_profit[i]=(max-arr[i]>max_profit[i+1])? max-arr[i]: max_profit[i+1];
+			
+		}
+		int min=arr[0];
+		int profit=max_profit[0];
+		for(int i=1; i<arr.length; i++) {
+			if(arr[i]<min) {
+				min=arr[i];
+			}
+			
+			max_profit[i]=arr[i]-min>0?(arr[i]-min+max_profit[i]):max_profit[i];
+			if(max_profit[i]>profit) {
+				profit=max_profit[i];
+			}
+		}
+		
+		System.out.println(profit);
+	}
+
+}

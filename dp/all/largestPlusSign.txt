@@ -1,0 +1,47 @@
+class Solution {
+	public int orderOfLargestPlusSign(int N, int[][] mine) {
+    	int[][] dp=new int[N][N];
+    	int[][] mines=new int[N][N];
+    	for(int i=0;i<mine.length;i++){
+        	mines[mine[i][0]][mine[i][1]]=1;
+    	}
+    	for(int i=0;i<N;i++){
+        	int l=0;
+        	// Calculating distance of each element in a row from the immediate 0 on the left
+        	for(int j=0;j<N;j++){
+            	l=mines[i][j]==1?0:l+1;
+            	dp[i][j]=l;
+        	}
+        	// Calculating distance of each element in a row from the immediate 0 on the right
+        	l=0;
+        	for(int j=N-1;j>=0;j--){
+            	l=mines[i][j]==1?0:l+1;
+            	dp[i][j]=Math.min(dp[i][j], l);
+        	}
+    	}
+   	 
+    	for(int j=0;j<N;j++){
+        	int l=0;
+        	// Calculating distance of each element from the immediate 0 in the North
+        	for(int i=0;i<N;i++){
+         	l=mines[i][j]==1?0:l+1;
+            	dp[i][j]=Math.min(dp[i][j], l);
+        	}
+       	 
+        	// Calculating distance of each element from the immediate 0 in the South
+        	l=0;
+        	for(int i=N-1;i>=0;i--){
+         	l=mines[i][j]==1?0:l+1;
+            	dp[i][j]=Math.min(dp[i][j], l);
+        	}
+    	}
+   	 
+    	int order=0;
+    	for(int i=0;i<N;i++){
+        	for(int j=0;j<N;j++){
+            	order=Math.max(dp[i][j], order);
+        	}
+    	}
+    	return order;
+	}
+}

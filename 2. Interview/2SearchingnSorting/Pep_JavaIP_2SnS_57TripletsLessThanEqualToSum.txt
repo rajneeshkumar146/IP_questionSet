@@ -1,0 +1,68 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given N - number of elements in array
+2. You are given N space-separated integers - as contents of array
+3. You are give target - an integer.
+4. Find and print the count of all distinct triplets with sum less than the given target.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/count-triplets-with-sum-smaller-that-a-given-value/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Sort the array.
+2. For a given i, play meet in middle with j and k.
+3. If the time i + j + k >, k keeps on reducing.
+4. Else, we collect all items from j to k and then continue with a higher j.
+5. If a pair of j and k is done, we try with a higher i.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_2SnS_57TripletsLessThanEqualToSum {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+		int sum = scn.nextInt();
+
+		solve(arr, sum);
+	}
+
+	private static void solve(int[] arr, int sum) {
+		Arrays.sort(arr);
+
+		int count = 0;
+		// iterator moving (i can't go beyond n - 2, has to have space for j and k)
+		for (int i = 0; i < arr.length - 2; i++) {
+			// the meet in middle trick for j and k
+			int j = i + 1;
+			int k = arr.length - 1;
+
+			while(j < k){
+				// too high a sum, reduce k
+				if(arr[i] + arr[j] + arr[k] > sum){
+					k--;
+				} else {
+					// if the sum is low for this k (and i, j)
+					// it'll be low for all values of k from j + 1 to k
+					count += k - j;
+					// trying a higher sum combination of i, j and k.
+					j++;
+				}
+			}
+		}
+
+		System.out.println(count);
+	}
+}

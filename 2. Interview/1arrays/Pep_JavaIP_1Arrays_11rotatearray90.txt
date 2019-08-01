@@ -1,0 +1,117 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given a 2-D array, rotate the matrix by 90 degrees (without using extra space)
+ 1. in clockwise direction
+ 2. in anti-clockwise direction.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+AMAZON, FLIPKART,NAGARRO,ZS ASSOCIATES
+Part 1 : https://www.geeksforgeeks.org/inplace-rotate-square-matrix-by-90-degrees/
+Part 2 : https://www.geeksforgeeks.org/rotate-matrix-90-degree-without-using-extra-space-set-2/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Convert the 2-D matrix into its transpose equivalent.
+2. Reverse the columns of the transpose equivalent for rotating by 90 degrees
+in clockwise directions
+3. Reverse the rows for rotating by 90 degrees in anticlockwise direction.
+4. Why it works? Because
+  4.1 A clockwise rotation converts first row into last columns and so on.
+  4.2 An anti-clockwise rotation converts last column into first row and so on.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Problems;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_11rotatearray90 {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int N = scn.nextInt();
+		int[][] arr = new int[N][N];
+		for (int r = 0; r < N; r++) {
+			for (int c = 0; c < N; c++) {
+				arr[r][c] = scn.nextInt();
+			}
+		}
+
+		solve(arr);
+		System.out.println();
+		solveanti(arr);
+	}
+
+	private static void solveanti(int[][] arr) {
+		//undoing the effect
+
+		for (int left = 0, right = arr[0].length - 1; left < right; left++, right--) {
+			for (int r = 0; r < arr.length; r++) {
+				swap(arr, r, left, r, right);
+			}
+		}
+
+		for (int r = 0; r < arr.length; r++) {
+			for (int c = r; c < arr[0].length; c++) {
+				swap(arr, r, c, c, r);
+			}
+		}
+
+		// transpose
+		for (int r = 0; r < arr.length; r++) {
+			for (int c = r; c < arr[0].length; c++) {
+				swap(arr, r, c, c, r);
+			}
+		}
+
+		// for anti clockwise, we reverse the rows
+		for (int left = 0, right = arr.length - 1; left < right; left++, right--) {
+			for (int c = 0; c < arr[0].length; c++) {
+				swap(arr, left, c, right, c);
+			}
+		}
+
+		// print
+		for (int r = 0; r < arr.length; r++) {
+			for (int c = 0; c < arr[0].length; c++) {
+				System.out.print(arr[r][c] + " ");
+			}
+			System.out.println();
+		}
+
+	}
+
+	private static void solve(int[][] arr) {
+		// transpose
+		for (int r = 0; r < arr.length; r++) {
+			for (int c = r; c < arr[0].length; c++) {
+				swap(arr, r, c, c, r);
+			}
+		}
+
+		// for clockwise, we reverse the columns
+		for (int left = 0, right = arr[0].length - 1; left < right; left++, right--) {
+			for (int r = 0; r < arr.length; r++) {
+				swap(arr, r, left, r, right);
+			}
+		}
+
+		// print
+		for (int r = 0; r < arr.length; r++) {
+			for (int c = 0; c < arr[0].length; c++) {
+				System.out.print(arr[r][c] + " ");
+			}
+			System.out.println();
+		}
+
+	}
+
+	private static void swap(int[][] arr, int r1, int c1, int r2, int c2) {
+		int temp = arr[r1][c1] ^ arr[r2][c2];
+		arr[r1][c1] ^= temp;
+		arr[r2][c2] ^= temp;
+	}
+}

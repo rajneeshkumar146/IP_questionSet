@@ -1,0 +1,71 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given n pairs of numbers. In the pair, first number is always less
+than second number.
+2. A pair (c,d) can follow another pair (a,b) and form a chain only if (b<c).
+3. Find the longest chain that can be formed from the given pairs.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/dynamic-programming-set-20-maximum-length-chain-of
+-pairs/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. LIS variation.
+2. At each pair, we will store the longest chain that can be formed including that
+pair.
+3. We will return the maximum of all the chain length, stored at each indexes. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Greedy;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_6Greedy_175MaximumLengthChainofPairs {
+	static class Pair {
+		int start;
+		int end;
+
+		public Pair(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		Pair[] pairs = new Pair[scn.nextInt()];
+		for (int i = 0; i < pairs.length; i++) {
+			pairs[i] = new Pair(scn.nextInt(), scn.nextInt());
+		}
+
+		solve(pairs);
+	}
+
+	private static void solve(Pair[] pairs) {
+		int[] arr = new int[pairs.length];
+		Arrays.fill(arr, 1);
+		int omax=0;
+		for (int i = 1; i < arr.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if(pairs[j].end<pairs[i].start) {
+					if(arr[i]<arr[j]+1) {
+						arr[i]=arr[j]+1;
+					}
+				}
+			}
+			if(omax<arr[i]) {
+				omax=arr[i];
+			}
+
+		}
+
+		System.out.println(omax);
+
+	}
+
+}

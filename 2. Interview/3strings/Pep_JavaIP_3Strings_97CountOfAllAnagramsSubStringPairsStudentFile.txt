@@ -1,0 +1,59 @@
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+                                       Question Description
+-----------------------------------------------------------------------------------------
+1. You are given a string of lower alphabet characters.
+2. You have to print the number of pairs of substrings of this string which are anagrams to each other.
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+package Strings;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Pep_JavaIP_3Strings_97CountOfAllAnagramsSubStringPairs {
+
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner scn = new Scanner(System.in);
+		String str = scn.next();
+		getprob(str);
+
+	}
+
+	public static HashMap<String, Integer> hm = new HashMap<>();
+
+	public static void getprob(String str) {
+
+        //function to print the number of pairs of substrings of this string,
+        //which are anagrams to each other
+		
+	}
+
+	public static void putinmap(String sub) {
+		
+        //utility function to put run length encoded string in hashmap
+	}
+
+}
+
+/*
+Test cases:
+xyyx
+----------------------
+4
+geeg
+-----------------
+4
+pepcoding
+------------------------
+2
+	
+	
+Source: https://www.geeksforgeeks.org/count-total-anagram-substrings/
+ */

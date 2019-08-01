@@ -1,0 +1,35 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    public static void main (String[] args) {
+   	 //code
+   	 Scanner sc=new Scanner(System.in);
+   	 int T=sc.nextInt();
+   	 while(T>0){
+   	 	T--;
+   	 	int N=sc.nextInt();
+   	 	int[] A=new int[N];
+   	 	for(int i=0;i<N;i++)A[i]=sc.nextInt();
+   	 	System.out.println(longestAlternatingSeq(A));
+   	 }
+    
+    public static int longestAlternatingSeq(int[] A){
+    	int[][] dp = new int[2][A.length];
+    	// dp[0][j] = longest seq till j with last element being smaller than the second last
+    	// dp[1][j] = longest seq till j with last element being greater than the second last
+    	dp[0][0]=1;dp[1][0]=1;
+    	for(int i=1;i<dp[0].length;i++){
+        	for(int k=0;k<i;k++){
+            	if(A[i]<A[k]){
+                	dp[0][i]=Math.max(dp[0][i], dp[1][k]+1);
+            	}
+            	else if(A[i]>A[k]){
+                	dp[1][i]=Math.max(dp[1][i], dp[0][k]+1);
+            	}
+        	}
+    	}
+    	return Math.max(dp[0][dp[0].length-1], dp[1][dp[0].length-1]);
+    
+}

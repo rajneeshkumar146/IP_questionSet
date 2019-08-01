@@ -1,0 +1,12 @@
+public static void function(int[] hi, int[] li){
+    	int le=0, he=0, ne=0;
+    	for(int i=0;i<hi.length;i++){
+        	int leprev=le; int heprev=he;
+        	le=Math.max(le, Math.max(he, ne)) + li[i];
+        	he=ne+hi[i];
+        	ne=Math.max(leprev, Math.max(heprev, ne));
+    	}
+    	int ans=Math.max(le, Math.max(he, ne));
+    	System.out.println(ans);
+    
+}

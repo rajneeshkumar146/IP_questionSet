@@ -1,0 +1,37 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    public static void main (String[] args) {
+   	 //code
+   	 Scanner sc=new Scanner(System.in);
+   	 int T=sc.nextInt();
+   	 while(T>0){
+   	 	T--;
+   	 	int l1=sc.nextInt(); int l2=sc.nextInt(); int l3=sc.nextInt();
+   	 	String s1=sc.next();String s2=sc.next();String s3=sc.next();
+   	 	System.out.println(LCS_3Strings(s1, s2, s3));
+   	 }
+    
+    public static int LCS_3Strings(String s1, String s2, String s3){
+    	//System.out.println(s1);System.out.println(s2);System.out.println(s3);
+    	int[][][] dp=new int[s1.length()][s2.length()][s3.length()];
+    	for(int i=0;i<s1.length();i++){
+        	for(int j=0;j<s2.length();j++){
+            	for(int k=0;k<s3.length();k++){
+                	if( (s1.charAt(i)==s2.charAt(j)) && (s1.charAt(i)==s3.charAt(k)) ){
+                    	dp[i][j][k]= (i==0 || j==0 || k==0?0:dp[i-1][j-1][k-1])+1;
+                	}
+                	else{
+                    	int x= i-1<0?0 : dp[i-1][j][k];
+                    	int y= j-1<0?0 : dp[i][j-1][k];
+                    	int z= k-1<0?0 : dp[i][j][k-1];
+                    	dp[i][j][k]=Math.max(x, Math.max(y, z));
+                	}
+            	}
+        	}
+    	}
+    	return dp[dp.length-1][dp[0].length-1][dp[0][0].length-1];
+    
+}

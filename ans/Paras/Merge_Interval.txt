@@ -1,0 +1,77 @@
+class Solution {
+    
+    class Interval{
+        int start;
+        int end;
+        Interval() {
+            start = 0;
+            end = 0; 
+        }
+        
+     Interval(int s, int e) {
+         start = s; 
+         end = e;
+     }
+    }
+    
+    public int[][] merge(int[][] intervals) {
+    
+        if(intervals.length==0)
+            return intervals;
+        
+            ArrayList<Interval> list=new ArrayList<>();
+         ArrayList<Interval> ans=new ArrayList<>();
+        
+        for(int i=0;i<intervals.length;i++)
+        {
+            Interval inter=new Interval(intervals[i][0],intervals[i][1]);
+            list.add(inter);
+        }
+        
+         Collections.sort(list,new Comparator<Interval>(){
+            
+            public int compare(Interval one,Interval two)
+            {
+                return (one.start-two.start);
+            }
+        }); 
+        
+        
+        Interval first=list.get(0);
+     
+        for(int i=1;i<list.size();i++)
+        {
+            Interval second=list.get(i);
+            
+            
+            if(first.end<second.start)
+            {
+                ans.add(first);
+                first=second;
+                
+            }else{
+                if(first.start>=second.start)
+                    first.start=second.start;
+                
+                if(first.end<=second.end)
+                    first.end=second.end;
+                 
+            }
+            
+        }
+        ans.add(first);
+        
+        int [][] result=new int[ans.size()][2];
+        
+            for(int i=0;i<result.length;i++)
+        {
+                int arr[]=new int[2];
+                Interval temp=ans.get(i);
+                arr[0]=temp.start;
+                arr[1]=temp.end;
+                result[i]=arr;
+        }
+        
+        return result;
+    }
+}

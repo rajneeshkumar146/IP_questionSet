@@ -1,0 +1,43 @@
+--------------------------------------------------------------------------------
+Hackerrank Link
+--------------------------------------------------------------------------------
+https://www.hackerrank.com/contests/pepjava-interviewprep/challenges/pep-javaip-10binarytrees-324generateancestormatrix
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+1. Not applicable. main manages the input for you.
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+0 < tree.size()
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+1. Output of the displayAncestorMatrix function.
+--------------------------------------------------------------------------------
+Test Case 1 - Sample
+--------------------------------------------------------------------------------
+11
+0 1 2 3 4 -1 5 -1 -1 6 7
+################################################################################
+false true true true true true true true
+false false false true true false true true
+false false false false false true false false
+false false false false false false false false
+false false false false false false true true
+false false false false false false false false
+false false false false false false false false
+false false false false false false false false
+--------------------------------------------------------------------------------
+Test Case 2 - Real
+--------------------------------------------------------------------------------
+7
+0 1 2 3 4 5 6
+################################################################################
+false true true true true true true
+false false false true true false false
+false false false false false true true
+false false false false false false false
+false false false false false false false
+false false false false false false false
+false false false false false false false 

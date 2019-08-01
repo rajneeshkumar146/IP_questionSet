@@ -1,0 +1,35 @@
+class Solution {
+    public String intToRoman(int num) {
+    
+        //created an array of all romans than can be made..
+        
+        String romans[]{"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        
+        
+        //value associated with each roman character...
+       
+	 int vals[]=
+        {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        
+        
+//Till the number is greater than a perticular roman character value subract its value and add the string to the ans..       
+ String ans="";
+        for(int i=0;i<vals.length;i++)
+        {     
+            while(num>0)
+            {   
+             if(num>=vals[i])
+                {
+                    num=num-vals[i];
+                    ans=ans+romans[i];
+                }
+                else
+                    break;
+            }
+    }
+    
+    
+    return ans;
+    
+    }
+}

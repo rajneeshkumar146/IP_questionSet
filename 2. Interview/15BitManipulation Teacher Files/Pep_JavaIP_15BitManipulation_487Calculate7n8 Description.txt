@@ -1,0 +1,37 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a number.
+2. You have to print 7n/8, without using multiplication, division operators.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/calculate-7n8-without-using-division-and-
+multiplication-operators/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We can divide any number by 2, by right shifting the number 1. Similarly.
+we can divide any element by right shifting the number by 3.
+2. Here, we multiply the number by 7 by left shifting the number by 3 and then
+subtracting by n. So, 7n=n<<3-n. n<<3, multiplies given number by 8 i.e. 8n and
+after subtracting by n, we get 7n.
+3. After getting 7n, we right shift the number by 3, to get 7n/8.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_487Calculate7n8 {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int n=scn.nextInt();
+
+		int ans=(((n<<3)-n)>>3);
+		System.out.println(ans);
+	}
+
+}

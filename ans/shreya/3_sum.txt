@@ -1,0 +1,67 @@
+
+
+//Time complexity-O(n^2);
+//Space complexity-O(1);
+
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        
+        int n=nums.length;
+        Arrays.sort(nums);
+        
+        List<List<Integer>> result=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            int c=-(nums[i]);
+            
+            if(i>0 && nums[i-1]==nums[i])
+            {
+                continue;
+            }
+    
+            int j=i+1;
+            int k=n-1;
+            
+           // checking for "=" will contains dublicate numbers...
+            while(j<k)
+            {
+                int val=nums[j]+nums[k];   
+                
+                
+                
+                
+     // just have to check between any one between j or k u can use k also..           
+
+                if(nums[j-1]==nums[j]&&j-1!=i){
+                    j++;
+                    continue;
+                }                
+               
+                
+                if(val==c)
+                {
+                      List<Integer> list=new ArrayList<>();
+                    list.add(-c);
+                    list.add(nums[j]);
+                    list.add(nums[k]);
+                    result.add(list);
+                    j++;
+                    k--;
+                }
+                else{
+                    
+                    if(val>c)
+                    {
+                        k--;
+                    }else{
+                        j++;
+                    }
+                    
+                }
+            }
+        }
+            return result;
+        
+    }
+}

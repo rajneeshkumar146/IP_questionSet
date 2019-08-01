@@ -1,0 +1,41 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers. The array of integers are represented 
+such that all the numbers are occuring even no of times, except one.
+2. You have to print that odd occuring element.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/find-the-number-occurring-odd-number-of-times/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. This is based on the property : a^a=0 and a^0=a. So, even occuring elements 
+when xored with each other, give 0. The result is xored with odd occuring element
+and we get that number itself.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_470FindOddOccuringElement {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int[] arr=new int[scn.nextInt()];
+		for(int i=0; i<arr.length; i++) {
+			arr[i]=scn.nextInt();
+		}
+		
+		int xor=arr[0];
+		for(int i=1; i<arr.length; i++) {
+			xor^=arr[i];
+		}
+		
+		System.out.println(xor);
+	}
+
+}

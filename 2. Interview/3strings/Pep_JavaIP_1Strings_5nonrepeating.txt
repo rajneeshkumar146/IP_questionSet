@@ -1,0 +1,124 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given a String ,find its first non repeating character.
+for ex-geeksforgeeks
+output-f
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+AMAZON,ACCOLLTE,
+https://www.geeksforgeeks.org/check-string-can-obtained-rotating-another-string-2-places/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+I used a Hashmap of variables index, count and character.
+then i checked for the one with only one occurrence. whose index is the smallest will 
+be the first nonrepeating character.
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+String (a<=ch<=z) of m length(String 1).
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+1<=m<=5000
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+every charcater is repeated(in case of no character with count =1)
+first character that is repeated :ch(ch is the first non repeating character).
+
+--------------------------------------------------------------------------------
+Test Cases
+--------------------------------------------------------------------------------
+1.Sample
+pepcoding
+
+--------------------------------------------------------------------------------
+first character that is repeated :e
+
+--------------------------------------------------------------------------------
+2.Real
+ivikasjakharv
+--------------------------------------------------------------------------------
+first character that is repeated :s
+--------------------------------------------------------------------------------
+3.Real
+assjvjasvjhsavjhasvhsvhvashvbsacbvacskjbsk
+
+--------------------------------------------------------------------------------
+every charcater is repeated
+
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+
+
+package Strings;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Solution {
+
+	static HashMap<Character, Check> hm = new HashMap<Character, Check>(26);
+	//creating a hashmap that will give the count of character reapeated plus the index of those which are  occured only once.
+	//function to update the hashmap acc. to the string
+	static void calculate(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			if (hm.containsKey(str.charAt(i))) {
+				hm.get(str.charAt(i)).count();
+			}
+
+			else {
+				hm.put(str.charAt(i), new Check(i));
+			}
+
+		}
+	}
+	//function to check whether a character is inserted or not.
+	//finding the nonrepeating character 
+	public static int NR(String str) {
+		calculate(str);
+		int result = Integer.MAX_VALUE, i;
+		//result with occurence equals to more than one ==Integer.MAX_Value
+		for (i = 0; i < str.length(); i++) {
+			
+			if (hm.get(str.charAt(i)).occurence == 1 && result > hm.get(str.charAt(i)).ind) {
+				result = hm.get(str.charAt(i)).ind;
+			}
+
+		}
+
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		String str = scn.next();
+		int index = NR(str);
+		if(index == Integer.MAX_VALUE){
+			System.out.println("every charcater is repeated");
+		}else{
+			System.out.println("first character that is repeated :" + str.charAt(index));
+		}
+	
+	}
+}
+
+// this class is responsible for maintaining the two parameters index and occurences for an object.
+//
+class Check {
+	int occurence, ind;
+
+	public Check(int ind) {
+		this.occurence = 1;
+		this.ind = ind;
+	}
+
+	public void count() {
+		this.occurence++;
+	}
+}

@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given two arrays, array1 represents the arrival timings of trains,
+array2 represents the departure timings of the same trains. You need to
+calculate the minimum number of platforms required so that no train waits.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+HIKE, DE DHAW,BOOMERANG, AMAZON,ZILLIOUS,WALMART LABS, PAYTM ,AIRTEL
+https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Merge sort variation.
+2. Sort the two arrays.
+3. Try the merge step, between two arrays. Each time an element from arrival is
+used, increase the count; each time an element from departure is used, decrease
+the count. Update max with count, if count beats max.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_8platforms {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+
+		int[] arrivals = new int[n];
+		int[] departures = new int[n];
+
+		for(int i = 0; i < arrivals.length; i++) {
+			arrivals[i] = scn.nextInt();
+		}
+
+		for(int i = 0; i < departures.length; i++) {
+			departures[i] = scn.nextInt();
+		}
+
+		solve(arrivals, departures);
+	}
+
+	private static void solve(int[] arrivals, int[] departures) {
+		Arrays.sort(arrivals);
+		Arrays.sort(departures);
+
+		int i = 0;
+		int j = 0;
+		int count = 0;
+		int max = Integer.MIN_VALUE;
+
+		while(i < arrivals.length && j < departures.length) {
+			if(arrivals[i] < departures[j]) {
+				count++;
+				i++;
+			} else {
+				count--;
+				j++;
+			}
+
+			if(count > max) {
+				max = count;
+			}
+		}
+
+		System.out.println(max);
+	}
+
+}

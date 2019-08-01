@@ -1,0 +1,29 @@
+class Solution {
+    public int[][] imageSmoother(int[][] arr) {
+        
+        
+               int m = arr.length;
+        int n = arr[0].length;
+         int ans[][]=new int[m][n];
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int sum = 0;
+                int count = 0;
+                
+                for (int x = i - 1; x <= i + 1; x++) {
+                    for (int y = j - 1; y <= j + 1; y++) {
+                        if (0 <= x && x < m && 0 <= y && y < n) {
+                            sum += arr[x][y] ;
+                            count++;
+                        }
+                    }
+                }
+                
+                ans[i][j] = (sum / count);
+            }
+        }
+    return ans;
+ 
+    }
+}

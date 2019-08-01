@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given number of soldiers.
+2. Soldiers are sitting in a circle. Starting from 1st soldier, every soldier
+murders its neighbour. You have to print the position which would survive the
+murders.
+3. For example: Lets suppose there are 5 soldiers. 1 will kill 2, then 3 will
+kill 4, 5 will kill 1 and 3 will kill 5. As, 3 is the last man standing. He
+survives the killing spree. You have to print 3 for the given input of 5.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/josephus-problem-set-1-a-on-solution/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. There is a pattern here. For n = 2^a+L, safe position is 2*L+1. Here, 2^a is
+biggest number perfect power of 2 preceding n.
+2. For all the numbers which are perfect powers of n, safe position is 1 because
+L is 0.
+3. For each L, safe position shifts by 2.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_484JosephusProblem {
+
+	// Here, k is variable. Bit solution is for the problem where k is fixed to 2
+	/*
+	 * public static void main(String[] args) { Scanner scn = new
+	 * Scanner(System.in); int n = scn.nextInt(); int k=scn.nextInt();
+	 * ArrayList<Integer> al=new ArrayList<>(); for(int i=1; i<=n; i++) { al.add(i);
+	 * }
+	 *
+	 * solve(al, 0,k); }
+	 *
+	 * private static void solve(ArrayList<Integer> al, int idx, int k) {
+	 * if(al.size()==1) { System.out.println(al); return; } int
+	 * idxtoberemoved=(idx+k-1)%al.size(); al.remove(idxtoberemoved);
+	 * solve(al,idxtoberemoved,k); }
+	 */// k=2, fixed.
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+
+    //here we find the MSB position
+    int pos=findMSBPosition(n);
+
+    //bitmask is formed with the MSB Position
+		int j=1<<pos-1;
+    //XOR n with j, this makes MSB zero
+		n=n^j;
+
+    //We right shift to multiply by 2 and create space.
+		n<<=1;
+
+    //Finally, we add 1 and n now represents 2*L+1
+		n|=1;
+		System.out.println(n);
+	}
+
+	private static int findMSBPosition(int n) {
+		int pos=0;
+		while(n!=0) {
+			pos++;
+			n>>=1;
+		}
+		return pos;
+	}
+}

@@ -1,0 +1,43 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+       
+        int i=nums.length-2;
+           while(i>=0 &&nums[i+1]<=nums[i])
+           i--;    
+           
+           if(i==-1)
+           {
+               reverse(0,nums.length-1,nums);
+               return;
+           }
+           
+           int j=nums.length-1;
+           while(j>=i&&nums[j]<=nums[i])
+           j--;
+       
+       
+           if(j>=0)
+           {
+               int temp=nums[i];
+               nums[i]=nums[j];
+               nums[j]=temp;
+           
+           
+           reverse(i+1,nums.length-1,nums);
+           }
+       
+                
+       }
+        
+        void reverse(int start,int end,int nums[])
+        {
+        while (start < end) {
+            int temp=nums[start];
+            nums[start]=nums[end];
+            nums[end]=temp;
+            start++;
+            end--;
+        }
+        }
+    
+}

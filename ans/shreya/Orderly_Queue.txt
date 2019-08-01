@@ -1,0 +1,21 @@
+class Solution {
+    public String orderlyQueue(String S, int K) {
+        if (K == 1) {
+            String ans = S;
+            for (int i = 0; i < S.length(); i++) {
+                String temp = S.substring(i) + S.substring(0, i);
+                if (temp.compareTo(ans) < 0) ans = temp;
+            }
+            return ans;
+    }
+        else{
+            char ch[]=S.toCharArray();
+            Arrays.sort(ch);
+            String ans="";
+            for(int i=0;i<ch.length;i++)
+                ans=ans+ch[i];
+            return ans;
+        }
+            
+}
+}

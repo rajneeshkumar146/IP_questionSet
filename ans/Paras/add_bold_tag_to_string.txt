@@ -1,0 +1,54 @@
+public class Solution {
+    /**
+     * @param s: a string
+     * @param dict: a list of strings
+     * @return: return a string
+     */
+    public String addBoldTag(String s, String[] dict) {
+       
+       int bropen=-1;
+       int brclose=-1;
+       boolean Bold[]=new boolean[s.length()];
+       int end=0;
+       for(int i=0;i<s.length();i++)
+       {
+           for(String word:dict){
+                   if(s.startsWith(word,i))
+                   {
+                     if(end<i+word.length())
+                        end=i+word.length();
+                   }
+           }       
+                   if(end>i)
+                   Bold[i]=true;
+           }
+           
+           String result="";
+           boolean tagadded=false;
+           for(int i=0;i<Bold.length;i++)
+           {
+               if(Bold[i]==true)
+               {
+                   if(!tagadded){
+                       result=result+"<b>"+s.charAt(i);
+                            tagadded=true;
+                   }else{
+                   result=result+s.charAt(i);    
+                   }
+               }else{
+                    if(tagadded)
+                    {
+                        result+="</b>";
+                        tagadded=false;
+                    }
+                    result+=s.charAt(i);
+               }
+           }
+           if(Bold[s.length()-1]==true)
+	        	   result+="</b>";
+           
+           return result;
+       
+       
+    }
+}

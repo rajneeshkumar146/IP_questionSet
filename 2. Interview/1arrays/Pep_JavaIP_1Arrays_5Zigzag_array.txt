@@ -1,0 +1,69 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given an array A of distinct numbers, rearrange the numbers into zig-zag fashion
+such that every alternate number is local maximum and local minimum.
+E.G. - a < b > c < d > e < f > g.
+Target Complexity : O(n).
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+PAYTM, AMAZON
+https://www.geeksforgeeks.org/convert-array-into-zig-zag-fashion/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+The first simple idea is to sort the elements of array, but this can also be
+achieved by simple traversal and comparing values with the next term. Only
+swapping is needed, no need to sort the array completely. This problem can have
+multiple results. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_5Zigzag_array {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+
+		for(int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+	}
+
+	private static void solve(int[] arr) {
+		for(int i = 0; i < arr.length - 1; i++) {
+			if(i % 2 == 0) {
+				if(arr[i] > arr[i + 1]) {
+					swap(arr, i, i + 1);
+				}
+			} else {
+				if(arr[i] < arr[i + 1]) {
+					swap(arr, i, i + 1);
+				}
+			}
+//
+//			if((i % 2 == 0) ^ (arr[i] < arr[i + 1])) {
+//				swap(arr, i, i + 1);
+//			}
+		}
+
+		for(int val: arr) {
+			System.out.print(val + " ");
+		}
+		System.out.println();
+	}
+
+	private static void swap(int[] arr, int i, int j) {
+		int temp = arr[i] ^ arr[j];
+		arr[i] ^= temp;
+		arr[j] ^= temp;
+	}
+
+}

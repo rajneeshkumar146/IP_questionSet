@@ -1,0 +1,70 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given an array representing the value of stock on different days, you have to
+find out pairs of days to buy and sell for maximizing profit. Also find the
+maximum profit - you are allowed to buy or sell any number of times.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+FLIPKART, DIRECTI, AMAZON, ACCOLITE, MAKEMYTRIP, INTUIT, GOLDMAN SACHS, PAYTM,
+ORACLE, OLA CABS, MICROSOFT, SWIGGY, SAPIENT, QUICKR, PUBMATIC, WALMART LABS.
+https://www.geeksforgeeks.org/stock-buy-sell/
+https://www.geeksforgeeks.org/maximum-difference-between-two-elements/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Buy at lows and sell at highs.
+2. Hold the stock till the price is increasing.
+3. When a dip is encountered, sell at the day before the dip (that was a peak),
+buy at the dip.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_10StockBuySell {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int n = scn.nextInt();
+		int[] arr = new int[n];
+
+		for(int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+	}
+
+	private static void solve(int[] arr) {
+		int sum = 0;
+
+		int boughtOn = 0;
+		int soldOn = 0;
+
+		for(int i = 1; i < arr.length; i++) {
+			if(arr[i] >= arr[i - 1]) {
+				soldOn++;
+			} else {
+				if(boughtOn != soldOn) {
+					System.out.println(boughtOn + " " + soldOn);
+				}
+
+				sum += arr[soldOn] - arr[boughtOn];
+				boughtOn = i;
+				soldOn = i;
+			}
+		}
+
+		if(boughtOn != soldOn) {
+			System.out.println(boughtOn + " " + soldOn);
+		}
+
+		sum += arr[soldOn] - arr[boughtOn];
+		System.out.println(sum);
+	}
+}

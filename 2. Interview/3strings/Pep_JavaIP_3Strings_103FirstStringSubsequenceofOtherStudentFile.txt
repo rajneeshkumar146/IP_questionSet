@@ -1,0 +1,49 @@
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+                                       Question Description
+-----------------------------------------------------------------------------------------
+1. You are given two strings string1 and string2.
+2. You have to print True if string2 is a subsequence of string1, otherwise False.
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class Pep_JavaIP_3Strings_103FirstStringSubsequenceofOther {
+
+	static boolean isSubSequence(String str1, String str2)
+    {
+
+
+    }
+
+        public static void main (String[] args)
+    {
+        Scanner scn=new Scanner(System.in);
+        String str1=scn.next();
+        String str2=scn.next();
+
+        boolean res = isSubSequence(str1, str2);
+        System.out.println(res);
+    }
+}
+/*
+Test cases:
+abcdefgh
+aefg
+----------------------
+true
+
+
+abcdefgh
+aefz
+----------------------
+false
+
+
+abcdefghdd
+aefghd
+----------------------
+true
+
+Source: https://www.geeksforgeeks.org/given-two-strings-find-first-string-subsequence-second/
+*/

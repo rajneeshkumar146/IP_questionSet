@@ -1,0 +1,38 @@
+Time-O(n)
+space-O(1)
+
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        
+        
+        int i=0;
+            if(Character.isUpperCase(word.charAt(i))==true)
+            {
+                    i++;             
+                if(i<word.length()&&Character.isUpperCase(word.charAt(i))==true)
+                {
+                        for(int j=2;j<word.length();j++)
+                        {
+                            if(Character.isUpperCase(word.charAt(j))==false)
+                                return false;
+                        }
+                    return true;
+                }
+                else if(i<word.length()&&Character.isUpperCase(word.charAt(i))==true){
+                            i++;                
+                }
+            }
+             
+                    while(i<word.length())
+                    {
+                    if(Character.isUpperCase(word.charAt(i))==true) 
+                        return false;
+                        i++;
+                }
+                return true;
+            }
+            
+            
+        }
+        

@@ -1,0 +1,15 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+    
+    
+        String temp=s;
+        
+        temp=temp+temp;
+    
+        temp=temp.substring(1,temp.length()-1);
+        if(temp.contains(s))
+            return true;
+        return false;
+    
+    }
+}

@@ -1,0 +1,59 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a string of D's and I's, where D represent decreasing and I 
+represent increasing. 
+2. You have to print minimum number possible following this sequence. The number
+can contain digits from 1 to 9 only.
+3. The digits cannnot be repeated in the number.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/form-minimum-number-from-given-sequence/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We will use stack to solve this question.
+2. Loop from i=[0 to str.length()]. We will push i+1 eveytime into the satck.
+3. If we get 'I' or we reach at str.length(), we pop and keep adding it in the 
+answer string.
+4. If we get 'D', we do nothing.
+5. This ensures that we get decreasing numbers while 'D' is there as stack 
+works as LIFO, so last element pushed will maximum and is popped first.
+6. Answer string is the answer.	
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Pep_JavaIP_32MinimumNumberDISequence {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		String seqDI=scn.next();
+		
+		solve(seqDI);
+	}
+
+	private static void solve(String seqDI) {
+		//We use stack for this question. We keep on pushing onto stack i+1 and we empty the stack when we encounter a I.
+		//We go from 0 to seq.length() because for a sequence of 7, we have give a string containing 8 numbers.
+		
+		String ans="";
+		Stack<Integer> st=new Stack<>();
+		for(int i=0; i<=seqDI.length(); i++) {
+			st.push(i+1);
+			if(i==seqDI.length()|| seqDI.charAt(i)=='I'){
+				while(!st.empty()) {
+					ans+=st.pop();	
+				}
+			}
+		}
+		
+		System.out.println(ans);
+	}
+
+}

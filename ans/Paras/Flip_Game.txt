@@ -1,0 +1,18 @@
+public class Solution {
+    /**
+     * @param s: the given string
+     * @return: all the possible states of the string after one valid move
+     */
+    public List<String> generatePossibleNextMoves(String s) {
+        
+        
+    List<String> list=new ArrayList<>();    
+        
+        for(int i=0;i<s.length()-1;i++)
+        {
+            if(s.substring(i,i+2).equals("++"))
+            list.add(s.substring(0,i)+"--"+s.substring(i+2));
+        }
+            return list;
+    }
+}

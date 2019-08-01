@@ -1,0 +1,58 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given an array. The array can be rotated. Out of the all rotated
+configurations, give the one with maximum sum for SUM(i * arr[i]). Print the
+maximum sum thus calculated.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Amazon
+https://www.geeksforgeeks.org/maximum-sum-iarri-among-rotations-given-array/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Find initial iarrisum and sum.
+2. Find iarrisum for next rotation using formula and update maxsum.
+Formula s1 - so = sum + arr.length * (last element)
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_16PairSumInSortedAndRotated {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+	}
+
+	private static void solve(int[] arr) {
+		int sum = 0;
+		int iarrisum = 0;
+
+		for (int i = 0; i < arr.length; i++) {
+			sum += arr[i];
+			iarrisum += i * arr[i];
+		}
+
+		int omaxsum = iarrisum;
+		for (int i = 1; i < arr.length; i++) {
+			int riarrisum = iarrisum + (sum - arr.length * arr[arr.length - i]);
+			if (riarrisum > omaxsum) {
+				omaxsum = riarrisum;
+			}
+			iarrisum = riarrisum;
+		}
+
+		System.out.println(omaxsum);
+	}
+
+}

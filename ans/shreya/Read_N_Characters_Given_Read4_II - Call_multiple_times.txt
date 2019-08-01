@@ -1,0 +1,36 @@
+public class Solution extends Reader4 {
+   
+     
+     char mybuffer[]=new char[4]; 
+     int start=0;
+     int cap=0;
+     
+     
+    public int read(char[] buf, int n) {
+      
+      int count=0;
+      
+      
+      while(count<n){
+          if(start==0){
+            cap=read4(mybuffer);
+          }
+          
+        if(cap==0)
+       break;
+       
+        while(count<n&&start<cap)
+        {
+            buf[count]=mybuffer[start];
+            count++;
+            start++;
+        }
+        if(start==cap)
+        start=0;
+        if(cap<4)
+        break;
+    }
+      
+      return count;
+    }
+}

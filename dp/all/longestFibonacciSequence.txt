@@ -1,0 +1,23 @@
+class Solution {
+	public int lenLongestFibSubseq(int[] A) {
+    	HashMap<Integer, Integer> index=new HashMap<>();
+    	HashMap<Integer, Integer> longest=new HashMap<>();
+    	for(int i=0;i<A.length;i++){
+        	index.put(A[i], i);
+    	}
+    	int ans=0;
+    	for(int j=0;j<A.length;j++){
+        	for(int k=j+1;k<A.length;k++){
+            	int i=index.getOrDefault(A[k]-A[j], -1);
+            	if(i>=0 && i<j){
+		//Encoding used for storing (i, j)pairs uniquely
+                	int prev=longest.getOrDefault(i*A.length+j, 2);
+		//Encoding used for storing (i, j)pairs uniquely
+                	longest.put(j*A.length+k, prev+1);
+                	ans=Math.max(ans, prev+1);
+            	}
+        	}
+    	}
+    	return ans;
+	}
+}

@@ -1,0 +1,78 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given 2 arrays, one representing start time of activity and other end time of
+activity respectively. A person X has to work such that he completes maximum
+number of activities. Print all those activities with their start time and end time.
+Note -> A person must not be doing more than activity at a point of time.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Amazon, Flipkart, MakeMyTrip
+https://www.geeksforgeeks.org/greedy-algorithms-set-1-activity-selection-problem/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Sort on basis of finish times.
+2. Select first activity.
+3. Loop through the arrays, pick first available activity with start-time greater
+than finish-time of last activity (actually, among the set of valid activities,
+this one has the smallest finish-time, therefore the greediest or the best pick.)
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Backtracking;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_6Greedy_173ActivitySelectionProblems {
+
+	private static class Pair implements Comparable<Pair> {
+		int start;
+		int finish;
+
+		public Pair(int start, int finish) {
+			this.start = start;
+			this.finish = finish;
+		}
+
+		public int compareTo(Pair o) {
+			return this.finish - o.finish;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] stime = new int[scn.nextInt()];
+		for (int i = 0; i < stime.length; i++) {
+			stime[i] = scn.nextInt();
+		}
+		int[] ftime = new int[stime.length];
+		for (int i = 0; i < ftime.length; i++) {
+			ftime[i] = scn.nextInt();
+		}
+
+		Pair[] pairs = new Pair[stime.length];
+		for (int i = 0; i < pairs.length; i++) {
+			pairs[i] = new Pair(stime[i],ftime[i]);
+		}
+		solve(pairs);
+
+	}
+
+	public static void solve(Pair[] pairs) {
+		Arrays.sort(pairs);
+
+		System.out.println(pairs[0].start+" "+pairs[0].finish);
+		int i=0;
+		for(int j=1; j<pairs.length; j++) {
+			if(pairs[j].start>=pairs[i].finish) {
+				System.out.println(pairs[j].start+" "+pairs[j].finish);
+				i=j;
+			}
+		}
+
+	}
+
+}

@@ -1,0 +1,46 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    public static void main (String[] args) {
+   	 //code
+   	 Scanner sc=new Scanner(System.in);
+   	 int T=sc.nextInt();
+   	 while(T>0){
+   	 	T--;
+   	 	int N=sc.nextInt();
+   	 	int[][] M=new int[N][N];
+   	 	for(int i=0;i<N;i++){
+   	     	for(int j=0;j<N;j++){
+   	         	M[i][j]=sc.nextInt();
+   	     	}
+   	 	}
+   	 	System.out.println(largestZigZag(M));
+   	 }
+    
+    public static int largestZigZag(int[][] M){
+    	int[][] dp=new int[M.length][M[0].length];
+   	 
+    	for(int j=0;j<M[0].length;j++)dp[dp.length-1][j]=M[M.length-1][j];
+    	int maxc=-1, smaxc=-1;
+    	for(int i=M.length-2;i>=0;i--){
+       	 
+        	maxc=0; smaxc=-1;
+        	for(int j=1;j<M[0].length;j++){
+            	if(dp[i+1][j]>dp[i+1][maxc]){
+                	smaxc=maxc;maxc=j;
+            	}
+            	else if(smaxc==-1 || dp[i+1][smaxc]<dp[i+1][j])smaxc=j;
+        	}
+       	 
+        	for(int j=0;j<dp[0].length;j++){
+            	dp[i][j]=M[i][j]+ (maxc==j?dp[i+1][smaxc]:dp[i+1][maxc]);
+        	}
+       	 
+    	}
+    	int ans=0;
+    	for(int j=0;j<dp[0].length;j++)ans=Math.max(ans, dp[0][j]);
+    	return ans;
+    
+}

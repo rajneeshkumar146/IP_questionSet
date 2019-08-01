@@ -1,0 +1,14 @@
+class Solution {
+	public int integerBreak(int N) {
+    	int[] dp=new int[N+1];
+    	dp[1]=1;
+    	for(int n=2;n<=N;n++){
+        	dp[n]=n-1;
+        	for(int i=1;i<=n/2;i++){
+            	dp[n]=Math.max(dp[n], Math.max(dp[i]*dp[n-i], Math.max(i*(n-i), Math.max(dp[i]*(n-i), i*dp[n-i]))));
+        	}
+    	}
+    	//for(int i=1;i<dp.length;i++)System.out.print(dp[i]+" ");
+    	return dp[N];
+	}
+}

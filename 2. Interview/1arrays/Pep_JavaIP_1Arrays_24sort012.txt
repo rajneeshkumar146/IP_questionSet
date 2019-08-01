@@ -1,0 +1,75 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given an array with only 0s, 1s and 2s. Sort the array in single pass
+and print the sorted array.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Dutch national flag strategy - lo, mid and hi.
+2. 0 to lo - 1 is 0s area, lo to mid - 1 is 1s area, arr.length - 1 to hi + 1 is
+2s area, mid to hi is unknown.
+3. mid picks a 0, sends it to lo and lo++, mid++. lo increments to celebrate a 0,
+mid increments to celebrate a 1 (there is certainity that it got a 1 from lo).
+lo is the first guy in 1s area.
+4. mid picks a 1, increments itself to celebrate a 1 in 1s area.
+5. mid picks a 2, sends it to hi and hi decrements. hi-- to celebrate receipt of
+a 2. mid does not increment because it is not certain what it got from hi. hi
+is the last element in unknown area.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_24sort012 {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+	}
+
+	public static void solve(int[] arr) {
+		int lo = 0;
+		int mid = 0;
+		int hi = arr.length - 1;
+
+		while (mid <= hi) {
+			if (arr[mid] == 0) {
+				swap(arr, mid, lo);
+				lo++;
+				mid++;
+			} else if (arr[mid] == 2) {
+				swap(arr, mid, hi);
+				hi--;
+			} else {
+				mid++;
+			}
+		}
+
+		printarray(arr);
+	}
+
+	private static void printarray(int[] arr) {
+		for (int val : arr) {
+			System.out.print(val + " ");
+		}
+	}
+
+	public static void swap(int[] arr, int fp, int sp) {
+		int temp_var = arr[fp] ^ arr[sp];
+		arr[fp] ^= temp_var;
+		arr[sp] ^= temp_var;
+	}
+
+}

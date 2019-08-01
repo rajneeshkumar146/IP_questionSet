@@ -1,0 +1,50 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+     
+        //send -1 for leftboundary and +1 for rightboundary 
+         int val=binarysearch(nums,target,-1);
+        int val2=binarysearch(nums,target,1);
+        
+        System.out.println(val+" "+val2);
+        int out[]= {val,val2};
+        return out;
+    }
+    
+    int binarysearch(int arr[],int target,int val)
+    {
+        
+        
+            int start=0;
+            int end=arr.length-1;
+        
+        while(start<=end)
+        {     
+        
+            int mid=start+(end-start)/2;
+            
+            if(arr[mid]==target)
+            {   
+                
+                     //val is-1 then mid-1 and if +1 then mid +1 
+                if(mid+val>=start&&mid+val<=end&&arr[mid+val]==target)
+                {
+                	if(val==-1)
+                    end=mid+val;//for left
+                	else {
+                		start=mid+val;//for right
+                	}
+                }
+                else{
+                    return mid;
+                }
+            }
+                else if(arr[mid]<target)
+                {
+                	 start=mid+1;
+                }else{
+                	end=mid-1;   
+            }
+        }
+        return -1;
+}
+}

@@ -1,0 +1,72 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of Strings. You have to print all those strings together
+which have same set of unique characters. 
+2. Please refer to sample test case for output format. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/print-words-together-set-characters/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. For each word, we will make a unique sorted pattern. Those who have same unique
+character set, will have same soted pattern of unique characters.
+2. HashMap bnao of String vs ArrayList<String>. For each of the strings which 
+have same unique sorted pattern, add it to the arraylist correspomding to that 
+String.
+3. Har arrayList ko print karwa do, last mai.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Pep_JavaIP_3Strings_78GroupWordsofSameSetTogether {
+
+	public static void main(String[] args) {
+
+		Scanner scn = new Scanner(System.in);
+		String[] arr = new String[scn.nextInt()];
+
+		HashMap<String, ArrayList<String>> map = new HashMap();
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.next();
+			developHasmap(arr[i], map);
+		}
+		ArrayList<String> wordsmap = new ArrayList<>(map.keySet());
+
+		for (String word : wordsmap) {
+
+			for (String similarword : map.get(word)) {
+				System.out.print(similarword + " ");
+			}
+			System.out.println();
+		}
+
+	}
+
+	private static void developHasmap(String word, HashMap<String, ArrayList<String>> map) {
+		boolean[] fmap = new boolean[26];
+		for (int i = 0; i < word.length(); i++) {
+			fmap[word.charAt(i) - 'a'] = true;
+		}
+		String unique_characterset = "";
+		for (int i = 0; i < 26; i++) {
+			if (fmap[i] == true) {
+				unique_characterset += (char) (i + 'a');
+			}
+		}
+		ArrayList<String> patterns = new ArrayList<>();
+		if (map.containsKey(unique_characterset) == true) {
+			patterns = map.get(unique_characterset);
+			patterns.add(word);
+		} else {
+			patterns.add(word);
+		}
+		map.put(unique_characterset, patterns);
+	}
+
+}

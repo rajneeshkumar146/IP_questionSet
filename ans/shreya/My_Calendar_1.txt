@@ -1,0 +1,16 @@
+class MyCalendar {
+ TreeMap<Integer, Integer> calendar;
+    public MyCalendar() {
+       calendar = new TreeMap();
+    }
+   public boolean book(int start, int end) {
+        Integer lastschedule = calendar.floorKey(start),
+                nextschedule = calendar.ceilingKey(start);
+        if ((lastschedule == null || calendar.get(lastschedule) <= start) &&
+                (nextschedule == null || end <= nextschedule)) {
+            calendar.put(start, end);
+            return true;
+        }
+        return false;
+    }
+}

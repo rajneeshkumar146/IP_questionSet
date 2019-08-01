@@ -1,0 +1,23 @@
+class Solution {
+    public int maxChunksToSorted(int[] arr) {    
+        if(arr.length==0)
+            return 0; 
+        
+        int i=0;
+        int indexsum=0;
+        int n=arr.length;
+        int chunk=0;
+        int sum=0;
+        // we can sort till an point where all the element less than that element are on the ledt of it;
+        while(i<n)
+        { 
+         sum=sum+arr[i];
+        indexsum=indexsum+i;
+        if(sum==indexsum)
+            chunk++;
+            i++;    
+        }
+    
+    return chunk;
+}
+}

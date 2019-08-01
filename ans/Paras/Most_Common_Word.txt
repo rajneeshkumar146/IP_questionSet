@@ -1,0 +1,56 @@
+class Solution {
+    public String mostCommonWord(String paragraph, String[] banned) {
+     
+        if(paragraph.length()>0)
+            paragraph+=" ";
+        
+        HashMap <String,Integer> unique =new HashMap<String,Integer>();
+        
+        
+        String word="";
+        for(char ch:paragraph.toCharArray())
+        {
+            if(Character.isLetter(ch))
+                word=word+Character.toLowerCase(ch);
+            
+            else{
+                if(word.length()!=0)
+                {
+                   if(unique.containsKey(word)){
+                    unique.put(word,unique.get(word)+1);    
+                   }
+                    else{
+                        unique.put(word,1);
+                    }
+                    word="";
+                }
+            } 
+        }
+        if(unique.size()==0)
+            unique.put(paragraph,1);
+        
+        for(String ban:banned)
+        {
+            if(unique.containsKey(ban))
+            {
+                unique.put(ban,0);
+            }
+        }
+        
+        ArrayList<String>keys=new ArrayList<>(unique.keySet());
+       
+        int count=0;
+        String ans="";
+        for(String key:keys)
+        {
+         
+            if(count<unique.get(key))
+            {
+                count=unique.get(key);
+                ans=key;
+            }
+        }
+        
+        return ans;
+    }
+}

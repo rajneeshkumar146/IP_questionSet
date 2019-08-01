@@ -1,0 +1,92 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. Take as input N, number of elements in array.
+2. Take N inputs - Ai - as elements of array A.
+3. Take as input K.
+4. Print the longest sub-array, sum of whose elements is divisible by k.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/longest-subarray-sum-divisible-k/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Calculate prefix-sums and store modulus of it in a new array.
+2. The elements between equal mod-prefix-sums form a set whose sum is divisible by k.
+3. Longest such set is the answer.
+4. Traverse the mod array, using a hashmap track whether a mod is detected for
+the first time or again.
+5. For every fresh detection put an entry in map, for re-detect update its length.
+6. Keep updating omaxl.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_40LongestSubArrayDivisibleByK {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+		int k = scn.nextInt();
+
+		solve(arr, k);
+	}
+
+	private static class Pair {
+		int sp; // starting point of sequence
+		int length; // length of sequence
+
+		Pair(int sp, int length) {
+			this.sp = sp;
+			this.length = length;
+		}
+	}
+
+	private static void solve(int[] arr, int k) {
+		int[] mod = new int[arr.length];
+		HashMap<Integer, Pair> map = new HashMap<>();
+
+		int sum = 0;
+		for (int i = 0; i < arr.length; i++) {
+			sum += arr[i];
+			mod[i] = sum % k; // storing modulus of prefix sums
+		}
+
+		int osp = -1;
+		int omaxl = Integer.MIN_VALUE;
+
+		map.put(0, new Pair(-1, 0)); // to begin with sum is 0, assuming a seq of 0 length starts at -1
+		for (int i = 0; i < mod.length; i++) {
+			Pair pair;
+
+			if (!map.containsKey(mod[i])) {
+				pair = new Pair(i, 1); // if the mod is detected for first time putting in a pair of 1 length
+				map.put(mod[i], pair);
+			} else {
+				// if an existing pair is detected, calculate how far it is from the point same mod was detected
+				pair = map.get(mod[i]);
+				pair.length = i - pair.sp;
+			}
+
+			// updating overall length for a longer sequence
+			if (pair.length > omaxl) {
+				osp = pair.sp + 1;
+				omaxl = pair.length;
+			}
+		}
+
+		for(int i = 0; i < omaxl; i++){
+			System.out.print(arr[osp + i] + " ");
+		}
+	}
+
+}

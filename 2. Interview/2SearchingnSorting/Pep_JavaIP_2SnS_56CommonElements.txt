@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given N1 - number of elements in first array
+2. You are give N1 space-separated integers - contents of first array.
+3. You are given N2 - number of elements in second array
+4. You are give N2 space-separated integers - contents of second array.
+5. You are given N3 - number of elements in third array
+6. You are give N3 space-separated integers - contents of third array.
+7. All arrays are sorted.
+8. Print the common elements across 3 arrays in a space-separated single line.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/find-common-elements-three-sorted-arrays/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Merge type strategy.
+2. Three indices - i, j and k.
+3. The one for which we are sure that it is not the largest increases.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_2SnS_56CommonElements {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] one = new int[scn.nextInt()];
+		for (int i = 0; i < one.length; i++) {
+			one[i] = scn.nextInt();
+		}
+
+		int[] two = new int[scn.nextInt()];
+		for (int i = 0; i < two.length; i++) {
+			two[i] = scn.nextInt();
+		}
+
+		int[] three = new int[scn.nextInt()];
+		for (int i = 0; i < three.length; i++) {
+			three[i] = scn.nextInt();
+		}
+
+		solve(one, two, three);
+	}
+
+	private static void solve(int[] one, int[] two, int[] three) {
+		int i = 0, j = 0, k = 0;
+
+		// merge type strategy from merge sort
+		while (i < one.length && j < two.length && k < three.length) {
+			if (one[i] == two[j] && two[j] == three[k]) {
+				System.out.print(one[i] + " ");
+				i++;
+				j++;
+				k++;
+			} else if (one[i] < two[j]) { // one of the smaller increases
+				i++;
+			} else if (two[j] < three[k]) { // one of the smaller increases
+				j++;
+			} else { // one of the smaller increases
+				k++;
+			}
+			// the check above provides certainity that either i or j or k (one in each case)
+			// is one of the two smaller elements.
+		}
+	}
+}

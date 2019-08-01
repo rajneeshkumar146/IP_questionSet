@@ -1,0 +1,36 @@
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+      boolean[] time = new boolean[24 * 60];
+        for (String currenttime : timePoints) {
+            String[] val = currenttime.split(":");
+            int hour = Integer.parseInt(val[0]);
+            int minute = Integer.parseInt(val[1]);
+            if (time[hour * 60 + minute])
+                return 0;
+            else
+            time[hour * 60 + minute] = true;
+        }
+        
+        
+        int starttime=-1;
+        int endtime=-1;
+        int prevtime=-1;
+        int ans=Integer.MAX_VALUE;
+       for(int i=0;i<time.length;i++)
+       {
+           if(time[i]==true)
+           {
+               if(starttime==-1){
+                   starttime=i;
+                   prevtime=i;
+                   continue;
+            }
+                endtime=i;
+                ans=Math.min(ans,endtime-prevtime);
+                prevtime=endtime;
+           }
+       }
+        
+        return Math.min(ans,starttime+24*60-endtime);
+    }
+}

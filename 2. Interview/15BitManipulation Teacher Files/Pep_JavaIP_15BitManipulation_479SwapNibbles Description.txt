@@ -1,0 +1,31 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a byte. You have to swap its first four bits with its last 4 bits.
+2. Print the modified number as output.  
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/swap-two-nibbles-byte/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. To swap first 4 bits with last 4 bits, we '&' num with 00001111 and left shifted
+by 4 bits. And vice versa and then we ORed the result. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_479SwapNibbles {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int num=scn.nextInt();
+		int result =((num & 00001111) << 4) | ((num & 11110000) >> 4); //num & 0xF0 gives us first 4 bits and vice versa
+		System.out.println(result);
+	}
+
+}

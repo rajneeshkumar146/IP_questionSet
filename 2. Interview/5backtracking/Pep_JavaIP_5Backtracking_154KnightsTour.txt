@@ -1,0 +1,84 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given a chess-board and a starting point co-ordinates. You are given a
+knight, which starts at the starting point. You've to check whether the knight
+can visit all the spots in the chess-board.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/backtracking-set-1-the-knights-tour-problem/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Flood fill's variation.
+2. Mark a spot as soon as you visit it.
+3. Avail all the valid spots from this spot - a valid spot is in the board and
+unvisited.
+4. If any valid spot returns a true, return a true.
+5. Otherwise, mark the spot unvisited (important for becoming part of another
+route) and return false.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.backtracking;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_5Backtracking_154KnightsTour {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt(); // board size
+		int x = scn.nextInt(); // start x
+		int y = scn.nextInt(); // start y
+
+		Integer[][] board = new Integer[n][n];
+		int[] xdirs = {2, 1, -1, -2, -2, -1, 1, 2};
+		int[] ydirs = {1, 2, 2, 1, -1, -2, -2, -1};
+		boolean res = solve(board, x, y, 1, xdirs, ydirs);
+		System.out.println(res);
+	}
+
+	private static boolean solve(Integer[][] board, int x, int y, int moveNum,
+								 							 int[] xdirs, int[] ydirs){
+		if(moveNum == board.length * board.length){
+/*			board[x][y] = moveNum;
+			for(int r = 0; r < board.length; r++){
+				for(int c = 0; c < board[0].length; c++){
+					System.out.print(board[r][c] + " ");
+				}
+				System.out.println();
+			}
+*/			return true;
+		}
+
+		board[x][y] = moveNum;
+
+		for(int dir = 0; dir < xdirs.length; dir++){
+			int xdash = x + xdirs[dir];
+			int ydash = y + ydirs[dir];
+
+			if(IsValidMove(board, xdash, ydash) == false){
+				continue;
+			} else {
+				boolean rres = solve(board, xdash, ydash, moveNum + 1, xdirs, ydirs);
+				if (rres == true){
+					return true;
+				}
+			}
+		}
+
+		board[x][y] = null;
+		return false;
+	}
+
+	private static boolean IsValidMove(Integer[][] board, int row, int col) {
+		if(row < 0 || row >= board.length || col < 0 || col >= board[0].length){
+			return false;
+		}
+
+		return board[row][col] == null; // open box is valid, fill box is not
+	}
+
+}

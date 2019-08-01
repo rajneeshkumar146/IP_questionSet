@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given an array with positive and negative values. Rearrange the numbers
+such that positive and negative numbers appear alternatively, starting with
+a positive number.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Paytm, Amazon
+https://www.geeksforgeeks.org/rearrange-positive-and-negative-numbers-publish/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Use partition of quick sort taking 0 as pivot - separates +ves and -ves.
+2. Traverse using a pos and neg index
+	2.1 pos starts at 1, neg at partition index
+	2.2 swap pos and neg
+	2.3 pos += 2, neg++
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_17RearrangePositiveNegative {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+
+		for(int i = 0; i < arr.length; i++){
+			arr[i] = scn.nextInt();
+		}
+
+		solve(arr);
+	}
+
+	private static void solve(int[] arr) {
+		int neg = partition(arr);
+		int pos = 1;
+
+		// last condition to cover the case when there are no positive numbers
+		while(neg < arr.length && pos < neg){
+			swap(arr, pos, neg);
+			pos += 2;
+			neg += 1;
+		}
+
+		for(int val: arr){
+			System.out.print(val + " ");
+		}
+	}
+
+	private static int partition(int[] arr){
+		int i = -1;
+
+		// 0 to i is +ves area, i + 1 to j - 1 is -ves area, j and beyond is unknown
+		for(int j = 0; j <= arr.length - 1; j++){
+			if(arr[j] >= 0){
+				i++;
+				swap(arr, i, j);
+			}
+		}
+
+		return i + 1;
+	}
+
+	private static void swap(int[] arr, int i, int j){
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+
+}

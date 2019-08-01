@@ -1,0 +1,51 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given 2 integers, namely x and y. You are also given range with the help
+of 2 integers : r and l.
+2. Given that if number of bits is n, least significant bit is marked as 1 and
+most significant bits is n.
+3. Now, you have to copy set bits between r and l in y to x.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/copy-set-bits-in-a-range/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. First create a window of all set bits of size (r-l+1). This is done by creating
+a mask which is one greater than the length of (r-l+1). So, to create a mask for 
+r=3 and l=2, we will create mask of length 3. So, mask=1<<r-l+1. Now, we subtract
+by 1, this toggles all bits from last till last set bit(including last set bit).
+2. Now when we have got a window of all set bits. We now have to shift it exactly
+below r and l bits. for that we will right shift l-1.
+3. Then we will & with y and result is | with x.  
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_472CopySetBitsInaRange {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int x=scn.nextInt();
+		int y=scn.nextInt();
+		int l=scn.nextInt();
+		int r=scn.nextInt();
+		int mask=1;
+		/*for(int i=l; i<r; i++) {
+			mask*=10+1;
+		}*///This can be replaced by following code.
+		mask=mask<<r-l+1;
+		mask-=1;
+		mask=mask<<(l-1);
+
+		mask=mask&y;
+		mask=mask|x;
+		System.out.println(mask);
+	}
+
+}

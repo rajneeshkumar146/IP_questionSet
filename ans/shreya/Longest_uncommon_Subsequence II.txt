@@ -1,0 +1,48 @@
+class Solution {
+    public int findLUSlength(String[] strs) {
+         int len = strs.length;
+        
+        Arrays.sort(strs, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                return s2.length() - s1.length();
+            }
+        });
+        
+        int count=0;
+        for(int i=0; i<len; i++){
+            count=0;
+            for(int j=0; j<len; j++){
+                if(i != j && isSub(strs[i], strs[j])==false){
+                    count++;
+                }
+            }
+            
+            if(count == len-1){
+                return strs[i].length();
+            }
+        }
+        
+        return -1;
+        }
+
+    boolean isSub(String s1,String s2)
+    {
+        if(s1.length()>s2.length())
+            return false;
+        
+        int i=0;
+        int j=0;
+        
+           while(i<s2.length()){
+            if(j < s1.length() && s2.charAt(i) == s1.charAt(j)){
+                j++;
+            }
+               i++;
+        }
+        
+        if(j==s1.length())
+            return true;
+        
+       return false; 
+    }
+}

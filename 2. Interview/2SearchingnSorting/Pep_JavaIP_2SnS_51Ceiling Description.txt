@@ -1,0 +1,79 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a sorted array and a number.
+2. You have to return ceil of the given number in the array.
+3. Ceil is the smallest number which is just greater than or equal to given number.
+4. If there is no ceil, print "There is no ceiling"
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/ceiling-in-a-sorted-array/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Binary Search ka use karenge. Pehle middle element hi check karenge. agar woh
+ceiling_number ke equal to wohi answer h.
+2. Otherwise 2 case banege, 
+2.1 ceiling_number greater than arr[mid]
+ab just ek greater element check karenge, agar woh >= ceiling_number, toh mid+1
+return kar denge.
+warna recursive call lagga denge greater elements ki side
+2.2 ceiling_number less than arr[mid]
+ab just ek smaller elements ko check karenge, agar arr[mid-1] choota hoga ceiling_number
+toh mid return kar denge
+warna recursive call lagga denge smaller elements ki side
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package SearchingSorting;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_2SnS_51Ceiling {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+
+		int[] arr = new int[scn.nextInt()];
+		for (int i1 = 0; i1 < arr.length; i1++) {
+			arr[i1] = scn.nextInt();
+		}
+
+		int ceiling_number = scn.nextInt();
+		int answer = solve(arr, ceiling_number, 0, arr.length - 1);
+		if (answer != -1)
+			System.out.println(arr[answer]);
+		else {
+			System.out.println("There is no ceiling");
+		}
+	}
+
+	private static int solve(int[] arr, int ceiling_number, int lo, int hi) {
+		if (ceiling_number < arr[lo]) {
+			return lo;
+		}
+		if (ceiling_number > arr[hi]) {
+			return -1;
+		}
+		int mid = (lo + hi) / 2;
+		if (arr[mid] == ceiling_number) {
+			return arr[mid];
+		} else if (arr[mid] > ceiling_number) {
+			if (mid - 1 >= lo && arr[mid - 1] < ceiling_number) {
+				return mid;
+			} else {
+				return solve(arr, ceiling_number, lo, mid - 1);
+			}
+		} else {
+			if (mid + 1 <= hi && arr[mid + 1] >= ceiling_number) {
+				return mid + 1;
+			} else {
+				return solve(arr, ceiling_number, mid + 1, hi);
+			}
+		}
+
+
+	}
+
+}

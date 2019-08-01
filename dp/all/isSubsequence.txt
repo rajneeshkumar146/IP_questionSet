@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if(s.length()>t.length())return false;
+        if(s.length()==0)return true;
+        if(t.length()==0)return false;
+        boolean[][] dp=new boolean[s.length()][t.length()];
+        for(int i=0;i<dp.length;i++){
+            for(int j=i;j<dp[0].length;j++){
+                if(i==0 && j==0){
+                    if(s.charAt(0)==t.charAt(0))dp[i][j]=true;
+                }
+                else if(i==0)dp[i][j]=dp[i][j-1] || s.charAt(i)==t.charAt(j);
+                else if(j==i)dp[i][j]=(s.charAt(i)==t.charAt(j) && dp[i-1][j-1]);
+                else if(s.charAt(i)==t.charAt(j)){
+                    dp[i][j]=dp[i][j-1] || dp[i-1][j-1];
+                }
+                else dp[i][j]=dp[i][j-1];
+            }
+        }
+        return dp[dp.length-1][dp[0].length-1];
+    }
+}

@@ -1,0 +1,86 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given two strings, the task is to find if a string ('a') can be
+ obtained by rotating another string ('b') by two places.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+AMAZON,ACCOLLTE,
+https://www.geeksforgeeks.org/check-string-can-obtained-rotating-another-string-2-places/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+Simple problem ,we can check for the given strings  that 
+whether they are equal after shifting two places or not.
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+String (a<=ch<=z) of m length(String 1).
+String (a<=ch<=z) of m length(String 2).
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+1<=m<=5000
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+True (if equal)
+False(if not)
+--------------------------------------------------------------------------------
+Test Cases
+--------------------------------------------------------------------------------
+1.Sample
+testthestring
+ringthetestst
+--------------------------------------------------------------------------------
+true
+
+--------------------------------------------------------------------------------
+2.Real
+abcdefgh
+bdcdfgha
+--------------------------------------------------------------------------------
+false
+--------------------------------------------------------------------------------
+3.Real
+elephant
+ntelepha
+
+
+--------------------------------------------------------------------------------
+true
+
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+
+
+import java.util.Scanner;
+
+public class Solution {
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Scanner scn = new Scanner(System.in);
+
+		String str = scn.next();
+		String str2 = scn.next();
+
+		getprob(str, str2);
+	}
+
+	public static void getprob(String str, String str2) {
+		//String formed by rotating the string 1 by two places
+		//can str2 be obtained by rotating the str 
+		String strchanged1=str.substring(2)+str.substring(0, 2);
+		String strchanged2=str.substring(str.length()-2)+str.substring(0, str.length()-2);
+		if(strchanged1.equals(str2)||strchanged2.equals(str2)){
+			System.out.println(true);
+		}
+		else{
+			System.out.println(false);
+		}
+	}
+
+}

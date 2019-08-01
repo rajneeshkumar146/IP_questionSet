@@ -1,0 +1,22 @@
+class Solution {
+	public int deleteAndEarn(int[] nums) {
+    	HashMap<Integer, Integer>map=new HashMap();
+    	for(int i=0;i<nums.length;i++){
+        	int ov=map.getOrDefault(nums[i], 0);
+        	map.put(nums[i], ov+1);
+    	}
+    	int inc=0, exc=0;
+    	for(int num : map.keySet()){
+        	if(map.containsKey(num-1)){
+            	int t=inc;
+            	inc=num*map.get(num)+exc;
+            	exc=Math.max(t, exc);
+        	}
+        	else{
+            	exc=Math.max(inc, exc);
+            	inc=exc+num*map.get(num);
+        	}
+    	}
+    	return Math.max(inc, exc);
+	}
+}

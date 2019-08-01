@@ -1,0 +1,37 @@
+public class Solution {
+    /**
+     * @param length: the length of the array
+     * @param updates: update operations
+     * @return: the modified array after all k operations were executed
+     */
+    public int[] getModifiedArray(int length, int[][] updates) {
+    
+        int equiupdate[]=new int[length+1];
+        int result[]=new int[length];
+        
+        for(int i=0;i<updates.length;i++)
+        {
+            int left=updates[i][0];
+            int right=updates[i][1];
+            int inc=updates[i][2];
+            
+            
+            equiupdate[left]+=inc;
+            equiupdate[right+1]-=inc;
+        }
+        
+        
+        result[0]=equiupdate[0];
+        
+        
+        for(int i=1;i<result.length;i++)
+        {
+            result[i]=result[i-1]+equiupdate[i];
+        }
+    
+    return result;
+}
+    
+    
+    
+}

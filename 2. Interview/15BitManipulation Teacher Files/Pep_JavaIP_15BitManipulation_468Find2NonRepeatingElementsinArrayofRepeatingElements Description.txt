@@ -1,0 +1,77 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an array of integers. All the array elements are occuring even 
+number of times, except two.
+2. Those two elements are occuring only once.
+3. You have to print those 2 numbers. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/find-two-non-repeating-elements-in-an-array-of-
+repeating-elements/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Since, all the numbers are occuring even no of times, except 2 which occur 
+once only. If we XOR all the elements we get XOR of those 2 numbers only because
+XOR of all other elements becomes zero.
+2. Now, last set bit of this XOR value will tell us the first bit where 2 numbers
+differ.
+3. Now, we will divide our array into 2 parts:
+one whose that bit is set and other whose that bit is unset.
+4. to do that we will make a bitmask. 'and' each array elementwith that bitmask.
+We will keep 2 variables : Xor1 and Xor2.
+if(the 'and' result is equal to bitmask), then xor xor1 and arr[i] and update xor1
+with it.
+else we xor with xor2 and update it.
+5. Loop se bahar aakar, jo value xor1 and xor2 mai rkhi h woh answers h.       
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_468Find2NonRepeatingElementsinArrayof
+RepeatingElements {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		
+		int[] arr=new int[scn.nextInt()];
+		for(int i=0; i<arr.length; i++) {
+			arr[i]=scn.nextInt();
+		}
+		
+		int xor=arr[0];
+		for(int i=1; i<arr.length; i++) {
+			xor^=arr[i];
+		}
+		
+		//Now we want to find last set bit of this xor result 
+		// because in xor, set bits are the places where both numbers will differ.
+		
+		int lastsetbit=xor & -xor;
+	
+		//Now we divide the numbers into 2 sets, those who on doing 
+		//& operation with lastsetbit gives lastsetbit itself and those who give zero on & operation 
+		int x=0; int y=0;//because anything xor 0=that same number
+		for(int i=0; i<arr.length; i++) {
+			if((arr[i] & lastsetbit)==lastsetbit) {
+				x^=arr[i];
+			}else {
+				y^=arr[i];
+			}
+		}
+		
+		//the non repeating elements are x and y
+		
+		System.out.println(x+" "+y);
+		
+		
+	}
+	
+
+}
+

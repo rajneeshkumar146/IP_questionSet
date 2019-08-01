@@ -1,0 +1,54 @@
+--------------------------------------------------------------------------------
+Hackerrank Link
+--------------------------------------------------------------------------------
+https://www.hackerrank.com/contests/pepjava-interviewprep/challenges/
+pep-javaip-5backtracking-158wordbreakproblem
+--------------------------------------------------------------------------------
+Input Format
+--------------------------------------------------------------------------------
+N (integer) - size of Dictionary array
+N spaced strings for the Dictionary
+S String
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+0 <= N <= 10^5
+|A|<=10^5 where A is a String used in the queston.
+--------------------------------------------------------------------------------
+Output Format
+--------------------------------------------------------------------------------
+Print all the possible sentences, that can be formed from the given string.
+--------------------------------------------------------------------------------
+Test Case 1 - Sample
+--------------------------------------------------------------------------------
+5
+lr m lrm hcdar wk
+hcdarlrm
+################################################################################
+(hcdar lr m)(hcdar lrm)
+--------------------------------------------------------------------------------
+Test Case 2 - Real
+--------------------------------------------------------------------------------
+6
+oachw mxxr oachwmxxr yx n tukw
+oachwmxxryxnmxxroachwmxxrmxxroachwmxxroachwmxxr
+################################################################################
+(oachw mxxr yx n mxxr oachw mxxr mxxr oachw mxxr oachw mxxr)(oachw mxxr yx n mxxr oachw mxxr mxxr oachw mxxr oachwmxxr)(oachw mxxr yx n mxxr oachw mxxr mxxr oachwmxxr oachw mxxr)(oachw mxxr yx n mxxr oachw mxxr mxxr oachwmxxr oachwmxxr)(oachw mxxr yx n mxxr oachwmxxr mxxr oachw mxxr oachw mxxr)(oachw mxxr yx n mxxr oachwmxxr mxxr oachw mxxr oachwmxxr)(oachw mxxr yx n mxxr oachwmxxr mxxr oachwmxxr oachw mxxr)(oachw mxxr yx n mxxr oachwmxxr mxxr oachwmxxr oachwmxxr)(oachwmxxr yx n mxxr oachw mxxr mxxr oachw mxxr oachw mxxr)(oachwmxxr yx n mxxr oachw mxxr mxxr oachw mxxr oachwmxxr)(oachwmxxr yx n mxxr oachw mxxr mxxr oachwmxxr oachw mxxr)(oachwmxxr yx n mxxr oachw mxxr mxxr oachwmxxr oachwmxxr)(oachwmxxr yx n mxxr oachwmxxr mxxr oachw mxxr oachw mxxr)(oachwmxxr yx n mxxr oachwmxxr mxxr oachw mxxr oachwmxxr)(oachwmxxr yx n mxxr oachwmxxr mxxr oachwmxxr oachw mxxr)(oachwmxxr yx n mxxr oachwmxxr mxxr oachwmxxr oachwmxxr)
+--------------------------------------------------------------------------------
+Test Case 3 - Real
+---------------------------------------------------------------------------------
+4
+qscdx mowfr qscdxmowfr jy
+qscdxmowfrqscdxmowfrqscdxmowfrmowfrqscdxmowfr
+################################################################################
+(qscdx mowfr qscdx mowfr qscdx mowfr mowfr qscdx mowfr)(qscdx mowfr qscdx mowfr qscdx mowfr mowfr qscdxmowfr)(qscdx mowfr qscdx mowfr qscdxmowfr mowfr qscdx mowfr)(qscdx mowfr qscdx mowfr qscdxmowfr mowfr qscdxmowfr)(qscdx mowfr qscdxmowfr qscdx mowfr mowfr qscdx mowfr)(qscdx mowfr qscdxmowfr qscdx mowfr mowfr qscdxmowfr)(qscdx mowfr qscdxmowfr qscdxmowfr mowfr qscdx mowfr)(qscdx mowfr qscdxmowfr qscdxmowfr mowfr qscdxmowfr)(qscdxmowfr qscdx mowfr qscdx mowfr mowfr qscdx mowfr)(qscdxmowfr qscdx mowfr qscdx mowfr mowfr qscdxmowfr)(qscdxmowfr qscdx mowfr qscdxmowfr mowfr qscdx mowfr)(qscdxmowfr qscdx mowfr qscdxmowfr mowfr qscdxmowfr)(qscdxmowfr qscdxmowfr qscdx mowfr mowfr qscdx mowfr)(qscdxmowfr qscdxmowfr qscdx mowfr mowfr qscdxmowfr)(qscdxmowfr qscdxmowfr qscdxmowfr mowfr qscdx mowfr)(qscdxmowfr qscdxmowfr qscdxmowfr mowfr qscdxmowfr)
+--------------------------------------------------------------------------------
+Test Case 4 - Real
+---------------------------------------------------------------------------------
+13
+mobile samsung sam sung man mango icecream and go i love ice cream
+iloveicecreamandmango
+################################################################################
+
+(i love ice cream and man go)(i love ice cream and mango)(i love icecream and man go)
+(i love icecream and mango)

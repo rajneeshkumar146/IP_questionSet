@@ -1,0 +1,65 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an integer array.
+2. For all possible permutation of array elements, find the maximum sum possible
+ of following expression
+|a1 - a2| + |a2 - a3| + |a3 - a4| + |a4 - a5| + .. + |an-1 - an-2| + |an - an-1| +
+|a1 - an|
+
+Notes
+1. main handles the input and output.
+2. You should code only the solve function, feel free to change its signature
+if required.
+3. Don't change the code of main.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/maximize-sum-consecutive-differences-circular-array/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Pair each min with an available max (so greedy), next min with next best max
+and so on.
+2. Sum will turn out to be 2 * (sum of larger half - sum of smaller half)
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.greedy;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Pep_JavaIP_6Greedy_181MaximizeSumConsecutiveDifferences {
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+
+		int res = solve(arr);
+		System.out.println(res);
+	}
+
+	// sort and find difference between elements of smaller half
+	// and larger half. Twice of sum of those differences is the answer.
+	// Greediness - Pairing each min with available max.
+	public static int solve(int[] arr) {
+		Arrays.sort(arr);
+		int res = 0;
+
+		int left = 0;
+		int right = arr.length - 1;
+		while(left < right){
+			res -= 2 * arr[left];
+			res += 2 * arr[right];
+
+			left++;
+			right--;
+		}
+
+		return res;
+	}
+
+}

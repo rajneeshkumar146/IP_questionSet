@@ -1,0 +1,47 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given an integer. You have to print "Yes", if it is perfect power of 2,
+and "No" otherwise.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/program-to-find-whether-a-no-is-power-of-two/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We count number of set bits for the given number.
+2. If the count is not equal to 1, then it is not perfect power of 2.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package BitManipulation;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_15BitManipulation_481IsAPowerof2 {
+
+	public static void main(String[] args) {
+		Scanner scn=new Scanner(System.in);
+		int num=scn.nextInt();
+		int count=countsetbits(num);
+		if(count!=1) {
+			System.out.println("No");
+		}else {
+			System.out.println("Yes");
+		}
+	}
+	
+	private static int countsetbits(int xor) {
+		int count = 0;
+		while (xor != 0) {
+			if ((xor & 1) == 1) {
+				count++;
+			}
+			xor >>= 1;
+		}
+
+		return count;
+
+	}
+}

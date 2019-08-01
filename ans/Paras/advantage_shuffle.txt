@@ -1,0 +1,54 @@
+class Solution {
+    public int[] advantageCount(int[] A, int[] B) {
+        
+        int[]cloneB=B.clone();
+        
+        Arrays.sort(A);
+        Arrays.sort(B);
+        
+    
+        //stores the values of a which i used to win against B
+        HashMap<Integer,LinkedList<Integer>> map=new HashMap<>();
+        
+        //stores the value which will lose against B.
+        ArrayList<Integer> unused=new ArrayList<>();
+        
+        for(int b:B)
+        {
+            map.put(b,new LinkedList<>());
+        }
+        int j=0;
+        for(int a:A)
+        {
+            if(a>B[j])
+            {
+                // win use add in Map
+                LinkedList<Integer> list=map.get(B[j]);
+                list.addLast(a);
+                map.put(B[j],list);
+                j++;
+            }
+            else{
+                // lost can win with some other add in used..
+                unused.add(a);
+            }
+        }
+        
+        int result[]=new int[B.length];
+        int i=0;
+        for(int val:cloneB)
+        {
+            //win added in result
+            if(map.get(val).size()>0)
+                result[i]=map.get(val).removeFirst();
+            else{
+                //lost max of remaining added in A so that it may win with this..
+                int value=unused.remove(unused.size()-1);
+                result[i]=value;
+            }
+            i++;
+        }
+        
+        return result;
+    }
+}

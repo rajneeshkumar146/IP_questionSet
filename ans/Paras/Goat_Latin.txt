@@ -1,0 +1,33 @@
+class Solution {
+    public String toGoatLatin(String S) {
+     String[] words=S.split("\\ ");
+        
+        
+        String added="";
+        String ans="";
+        
+        for(String word:words){
+            
+            added=added+"a";
+            
+            // if oth character matched added the things needed to be added ie ma and a's ;
+            if(checkvowel(word.charAt(0)))
+            {
+                word=word+"ma"+added;        
+            }else{
+                word=word.substring(1)+word.charAt(0)+"ma"+added;
+            }
+            
+            ans+=word+" "; 
+        }
+        ans=ans.substring(0,ans.length()-1);
+        return ans;
+    }
+    
+    //function to check if given character is a vowel or not
+     boolean checkvowel(char c)
+     {     if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u'||c=='A'||c=='E'||c=='I'||c=='O'||c=='U')
+            return true;
+        return false;
+    }
+}

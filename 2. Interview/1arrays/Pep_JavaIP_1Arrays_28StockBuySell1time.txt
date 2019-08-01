@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+Given an array, where A(i) represents price of stock on ith day. We are allowed
+to make at most 1 transaction. Transaction here refers to the act buying and 
+selling the stock once. Following the constraints, we have to print the maximum
+profit that can be generated. 
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+Ola, MakeMyTrip
+https://www.geeksforgeeks.org/maximum-difference-between-two-elements/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. We can solve the questions by taking a 'minimum' and 'maxprofit' variable. 'minimum' is 
+initialized with arr[0]. We will loop between i=1 to arr.length-1. 
+2. If arr[i] becomes less than minimum, then we would update minimum.
+3. Nevertheless, we will always find the difference between arr[i] and min.
+4. If the difference becomes greater that maxprofit, we will update it.
+5. We would return maxprofit. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Arrays;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_1Arrays_28StockBuySell1time {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		//Geeks
+		/*int t = scn.nextInt();
+		for (int not = 0; not < t; not++) {
+
+			int[] arr = new int[scn.nextInt()];
+			for (int i = 0; i < arr.length; i++) {
+				arr[i] = scn.nextInt();
+			}
+			System.out.println(solve(arr));
+		}*/
+	
+		//Hackerrank
+		int[] arr = new int[scn.nextInt()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = scn.nextInt();
+		}
+		System.out.println(solve(arr));
+		
+	}
+	
+	public static int solve(int[] arr) {
+		int min=arr[0];
+		int maxprofit=Integer.MIN_VALUE;
+		
+		
+		for(int i=1; i<arr.length; i++) {
+			if(arr[i]<min) {
+				min=arr[i];
+			}
+			
+			if(arr[i]-min>maxprofit) {
+				maxprofit=arr[i]-min;
+			}
+			
+		}
+		
+		return maxprofit;
+				
+	}
+
+}
+

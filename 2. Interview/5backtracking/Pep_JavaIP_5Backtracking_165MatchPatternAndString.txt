@@ -1,0 +1,81 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given a string and a pattern. You've to check if the string is of the
+same structure as pattern. E.G.
+"GraphTreesGraph" as string and "aba" as pattern.
+If we map 'a' to "Graph" and 'b' to "Trees", the string can be expressed as
+the pattern. Print the mapping of characters to parts of string, so that string
+could be expressed as pattern. If multiple such maps are possible, print each in
+separate line. Consult Output format for more details.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/match-a-pattern-and-string-without-using-regular-expressions/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Approach the problem, by the attacking the pattern character-by-character
+2. If a new character (not in map yet) is found, try assigning it all the
+prefixes possible in questions and recurse. Remember to remove while recursing
+out.
+3. If a new character is found in the map, yank a prefix of same length from
+question, if it is not same as prefix against character in map, abort future
+calls. Otherwise, continue with remaining pattern and question.
+4. Recursion ends when pattern ends, but for a valid solution question must also
+finish then.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.backtracking;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Pep_JavaIP_5Backtracking_165MatchPatternAndString {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		String ques = scn.nextLine();
+		String pat = scn.nextLine();
+
+		HashMap<Character, String> map = new HashMap<>();
+		solve(ques, pat, map);
+	}
+
+
+	private static void solve(String ques, String pat, HashMap<Character, String> map) {
+		if (pat.length() == 0) {
+			if (ques.length() == 0) {
+				System.out.println(map);
+			}
+			return;
+		}
+
+		char chpat = pat.charAt(0);
+		String rop = pat.substring(1);
+
+		// try assigning all prefixes to character
+		if (map.containsKey(chpat) == false) {
+			for (int i = 1; i <= ques.length(); i++) {
+				String prefix = ques.substring(0, i);
+				String roq = ques.substring(prefix.length());
+
+				map.put(chpat, prefix);
+				solve(roq, rop, map);
+				map.remove(chpat);
+			}
+		} else {
+			// if a pre-assigned character is met, but the question does not have same prefix upfront
+			// abort mission.
+			String prefixFromMap = map.get(chpat);
+			String prefixFromQues = ques.length() >= prefixFromMap.length() ?
+															ques.substring(0, prefixFromMap.length()): "";
+			if (prefixFromMap.equals(prefixFromQues)) {
+				String roq = ques.substring(prefixFromQues.length());
+				solve(roq, rop, map);
+			}
+		}
+	}
+
+}

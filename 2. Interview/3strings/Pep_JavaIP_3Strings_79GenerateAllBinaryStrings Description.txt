@@ -1,0 +1,58 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+1. You are given a binary string which contains 0s and 1s and ?s. ?s can be replaced
+by either 0 or 1.
+2. Print all possible combinations of binary strings formed by replacing ?s.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/generate-all-binary-strings-from-given-pattern/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Pehle String ko character array ke andar convert kar lo.
+2. Fir array ko traverse karne ke liye vidx ko use kar lo.
+3. agar array[vidx] par '?' milta h toh 2 calls : ek '0' karke aur dusra '1' karke.
+Waapis aate hue changes ko revert back jarur karna.
+4. Agar array[vidx] par '1' or '0', toh sirf vidx badha kar call lagani h. Base 
+case would be to print all characters of character array. 
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package Strings;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_3Strings_79GenerateAllBinaryStrings {
+
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		String s = scn.next();
+		char[] sarray = s.toCharArray();
+		generateBinaryStrings(sarray, 0);
+
+	}
+
+	private static void generateBinaryStrings(char[] sarray, int vidx) {
+		if (vidx == sarray.length) {
+			for (char val : sarray)
+				System.out.print(val);
+			System.out.println();
+			return;
+		}
+		
+		if (sarray[vidx] == '?') {
+			sarray[vidx] = '0';
+			generateBinaryStrings(sarray, vidx + 1);
+			sarray[vidx] = '1';
+			generateBinaryStrings(sarray, vidx + 1);
+			sarray[vidx]='?';
+			
+
+		}else {
+			generateBinaryStrings(sarray, vidx+1);
+		}
+	}
+
+}

@@ -1,0 +1,26 @@
+Time-O(n)
+Space-O(1)
+
+class Solution {
+    public int maxScoreSightseeingPair(int[] A) {
+        
+        int  distance=A[0];
+        
+        
+        int max=Integer.MIN_VALUE;
+        int n=A.length;
+        for(int i=1;i<n;i++)
+        {
+            distance--;
+            
+            if(A[i]+distance>max)
+                max=A[i]+distance;
+            
+            if(distance<A[i])
+                distance=A[i];
+            
+        }
+        
+        return max;
+    }
+}

@@ -1,0 +1,87 @@
+--------------------------------------------------------------------------------
+Description
+--------------------------------------------------------------------------------
+You are given a rectangular maze - where 0s represent obstacles and 1s represent
+valid passage. There is a "player" sitting in top-left and intends to reach
+bottom-right. The "player" can move top, left, bottom or right but only 1 step
+at a time. The "player" can't pass through an obstacle.
+Besides, you are given a limit on the number of moves allowed. You've to find
+out whether the "player" can reach destination honoring the rules of game within
+maximum permitted moves.
+--------------------------------------------------------------------------------
+Source
+--------------------------------------------------------------------------------
+https://www.geeksforgeeks.org/backttracking-set-2-rat-in-a-maze/
+--------------------------------------------------------------------------------
+Important Information
+--------------------------------------------------------------------------------
+1. Flood fill's variation.
+2. Mark a spot as soon as you visit it.
+3. Avail all the valid spots from this spot - a valid spot is in the board and
+unvisited. Also, make sure that there are moves left.
+4. If any valid spot returns a true, return a true.
+5. Otherwise, mark the spot unvisited (important for becoming part of another
+route) and return false.
+--------------------------------------------------------------------------------
+Code
+--------------------------------------------------------------------------------
+package interview.backtracking;
+
+import java.util.Scanner;
+
+public class Pep_JavaIP_5Backtracking_155RatInAMaze {
+
+	// all 4 directions open, moves limited
+	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt(); // size of array
+		int[][] maze = new int[n][n];
+
+		for (int r = 0; r < maze.length; r++) {
+			for (int c = 0; c < maze[0].length; c++) {
+				maze[r][c] = scn.nextInt();
+			}
+		}
+
+		int limit = scn.nextInt();
+
+		boolean[][] visited = new boolean[maze.length][maze[0].length];
+		System.out.println(solve(maze, 0, 0, limit, visited));
+	}
+
+	private static boolean solve(int[][] maze, int x, int y, int remMoves, boolean[][] visited) {
+		if (x == maze.length - 1 && y == maze[0].length - 1) {
+			return true;
+		}
+
+		if (InvalidSpot(maze, visited, x, y, remMoves) == true) {
+			return false;
+		}
+
+		visited[x][y] = true;
+
+		boolean r = solve(maze, x + 1, y, remMoves - 1, visited);
+		boolean d = solve(maze, x, y + 1, remMoves - 1, visited);
+		boolean l = solve(maze, x - 1, y, remMoves - 1, visited);
+		boolean u = solve(maze, x, y - 1, remMoves - 1, visited);
+
+		visited[x][y] = false;
+
+		return r || d || l || u;
+	}
+
+	private static boolean InvalidSpot(int[][] maze, boolean[][] visited, int x, int y, int remMoves) {
+		if (x < 0 || x >= maze.length || y < 0 || y >= maze[0].length) {
+			return true;
+		} else if (maze[x][y] == 0) {
+			return true;
+		} else if (visited[x][y] == true) {
+			return true;
+		} else if (remMoves < 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+}
